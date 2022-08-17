@@ -5,16 +5,20 @@ import type { RouteRecordRaw } from 'vue-router'
  * @description 所有路由都在这里集中管理
  */
 const routes: RouteRecordRaw[] = [
-  /**
-   * 首页
-   */
   {
     path: '/',
     name: 'home',
-    component: () => import(/* webpackChunkName: "home" */ '@views/home.vue'),
-    meta: {
-      title: 'Home',
-    },
+    component: () => import('@views/home.vue'),
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@views/auth/index.vue'),
+  },
+  {
+    path: '/log',
+    name: 'log',
+    component: () => import('@views/auth/index.vue'),
   },
   /**
    * 子路由示例
