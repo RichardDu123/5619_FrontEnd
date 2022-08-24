@@ -1,7 +1,7 @@
 <template>
   <div class="signup" ref="target">
     <div class="signUpBox">
-      <van-form @submit="onSubmit">
+      <van-form @submit="onSubmit" class="sigUpForm">
         <van-cell-group inset>
           <van-field
             v-model="username"
@@ -81,7 +81,6 @@ onClickOutside(target, () => emit('complete'))
 <style lang="less" scoped>
 .signup {
   width: 300px;
-  height: 500px;
   border-radius: 40px;
   background-color: whitesmoke;
   position: absolute;
@@ -94,5 +93,9 @@ onClickOutside(target, () => emit('complete'))
 }
 .submitBtn {
   margin-top: 50px;
+  .signUpForm {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
 }
 </style>

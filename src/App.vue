@@ -7,18 +7,20 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { watch, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
 //only login page has animation
-const route = useRoute()
+const router = useRouter()
 const aniName = ref<string>('')
-watch(route, (to) => {
-  if (to.path === '/login') {
+// 调用全局钩子
+router.beforeEach((to, from) => {
+  if (to.path === '/login' || from.path === '/login') {
     aniName.value = 'ani'
   } else {
     aniName.value = ''
   }
+  console.log(to, from)
 })
 </script>
 <style scoped lang="less">

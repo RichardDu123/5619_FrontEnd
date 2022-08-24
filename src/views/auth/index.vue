@@ -59,17 +59,23 @@ import { defineComponent, ref } from 'vue'
 import type { FieldType } from 'vant'
 import { usernameValidator, passwordValidator } from '../../utils/validator'
 import SignUp from './components/signUp.vue'
+import { getUserInfo } from '@/api/user'
 
 const show = ref<boolean>(false)
+
 //handle submit
 const username = ref<string>('')
 const password = ref<string>('')
 const isLoading = ref<boolean>(false)
 const onSubmit = (): void => {
-  isLoading.value = false
-  const timer = setTimeout(() => {
-    isLoading.value = true
-  }, 2000)
+  isLoading.value = true
+  getUserInfo({
+    username: username.value,
+    password: password.value,
+  }).then((value) => {
+    console.log(value)
+    isLoading.value = false
+  })
 }
 
 //show password or not
@@ -118,14 +124,6 @@ const showPwd = (): void => {
     width: 250px;
     height: 40px;
     margin-left: 50px;
-  }
-  .register {
-    margin-top: 40px;
-    margin-left: 25px;
-    color: @color-blue;
-    b {
-      text-decoration: underline;
-    }
   }
 }
 </style>
