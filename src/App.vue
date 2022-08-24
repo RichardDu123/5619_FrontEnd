@@ -11,16 +11,15 @@ import { useRoute } from 'vue-router'
 import { watch, ref } from 'vue'
 
 //only login page has animation
-const route = useRoute();
+const route = useRoute()
 const aniName = ref<string>('')
-watch(route, (to, from) => {
+watch(route, (to) => {
   if (to.path === '/login') {
     aniName.value = 'ani'
   } else {
     aniName.value = ''
   }
 })
-
 </script>
 <style scoped lang="less">
 .ani-enter-active,
