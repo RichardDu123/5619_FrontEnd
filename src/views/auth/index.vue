@@ -3,19 +3,48 @@
     <van-nav-bar title="Login Page" class="navBar" />
     <van-form @submit="onSubmit" class="loginForm">
       <van-cell-group inset>
-        <van-field v-model="username" name="username" label="Username" placeholder="username"
-          :rules="[{ validator: usernameValidator }]" left-icon="friends-o" />
-        <van-field ref="fieldRef" v-model="password" :type="inputType" name="password" label="Password"
-          placeholder="password" :rules="[{ validator: passwordValidator }]" left-icon="shield-o" :right-icon="iconShow"
-          @click-right-icon="showPwd()" />
+        <van-field
+          v-model="username"
+          name="username"
+          label="Username"
+          placeholder="username"
+          :rules="[{ validator: usernameValidator }]"
+          left-icon="friends-o"
+        />
+        <van-field
+          ref="fieldRef"
+          v-model="password"
+          :type="inputType"
+          name="password"
+          label="Password"
+          placeholder="password"
+          :rules="[{ validator: passwordValidator }]"
+          left-icon="shield-o"
+          :right-icon="iconShow"
+          @click-right-icon="showPwd()"
+        />
       </van-cell-group>
-      <div style="margin: 16px;">
-        <van-button round block type="primary" native-type="submit" :loading="isLoading" loading-type="spinner"
-          class="loginBtn">
-          login
+      <br />
+      <div style="margin: 16px">
+        <van-button @click="show = true" round type="default" class="signUpBtn"
+          >Sign up
+        </van-button>
+        <van-button
+          round
+          block
+          type="primary"
+          native-type="submit"
+          :loading="isLoading"
+          loading-type="spinner"
+          class="loginBtn"
+        >
+          Sign in
         </van-button>
       </div>
     </van-form>
+    <van-overlay :show="show">
+      <sign-up @complete="show = false" />
+    </van-overlay>
   </div>
 </template>
 
@@ -26,33 +55,21 @@ export default defineComponent({
 })
 </script>
 <script setup lang="ts">
-import { defineComponent, onBeforeUnmount, onUnmounted, ref } from 'vue';
-import type { FieldType } from 'vant';
+import { defineComponent, ref } from 'vue'
+import type { FieldType } from 'vant'
+import { usernameValidator, passwordValidator } from '../../utils/validator'
+import SignUp from './components/signUp.vue'
 
+const show = ref<boolean>(false)
 //handle submit
 const username = ref<string>('')
 const password = ref<string>('')
 const isLoading = ref<boolean>(false)
 const onSubmit = (): void => {
-  isLoading.value = true
+  isLoading.value = false
   const timer = setTimeout(() => {
-    isLoading.value = false
+    isLoading.value = true
   }, 2000)
-}
-//input validator
-const usernameValidator = (username: string): string | boolean => {
-  if (!/^[\da-zA-Z]{6,10}$/.test(username)) {
-    return 'Username must contain 6-10 alphabetical and numeric characters!'
-  } else {
-    return true
-  }
-}
-const passwordValidator = (password: string): string | boolean => {
-  if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
-    return 'Password must contain contain 8 characters, at least one letter and one number!'
-  } else {
-    return true
-  }
 }
 
 //show password or not
@@ -67,9 +84,6 @@ const showPwd = (): void => {
     inputType.value = 'password'
   }
 }
-
-
-
 </script>
 
 <style scoped lang="less">
@@ -79,14 +93,39 @@ const showPwd = (): void => {
   :deep(.van-nav-bar__title) {
     color: @color-white;
     font-style: italic;
+    font-size: 20px;
   }
 }
 
 .loginForm {
-  margin-top: 150px;
-
+  margin-top: 100px;
+  .signUpBtn {
+    :deep(.van-button__text) {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 20px;
+    }
+    margin-left: 50px;
+    width: 250px;
+    height: 40px;
+    margin-bottom: 20px;
+    border-color: black;
+  }
   .loginBtn {
-    margin-top: 50px;
+    :deep(.van-button__text) {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 20px;
+    }
+    width: 250px;
+    height: 40px;
+    margin-left: 50px;
+  }
+  .register {
+    margin-top: 40px;
+    margin-left: 25px;
+    color: @color-blue;
+    b {
+      text-decoration: underline;
+    }
   }
 }
 </style>
