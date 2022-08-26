@@ -7,8 +7,30 @@ import type { RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'home',
-    component: () => import('@views/home.vue'),
+    redirect: '/home',
+    component: () => import('@views/layout/index.vue'),
+    children: [
+      {
+        path: 'home',
+        name: 'home',
+        component: () => import('@/views/home/index.vue'),
+      },
+      {
+        path: 'my',
+        name: 'my',
+        component: () => import('@/views/my/index.vue'),
+      },
+      {
+        path: 'friends',
+        name: 'friends',
+        component: () => import('@/views/friends/index.vue'),
+      },
+      {
+        path: 'new',
+        name: 'new',
+        component: () => import('@/views/new/index.vue'),
+      },
+    ],
   },
   {
     path: '/login',
