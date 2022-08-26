@@ -14,13 +14,12 @@ import { ref } from 'vue'
 const router = useRouter()
 const aniName = ref<string>('')
 // 调用全局钩子
-router.beforeEach((to, from) => {
-  if (to.path === '/login' || from.path === '/login') {
+router.beforeEach((to) => {
+  if (to.path === '/login') {
     aniName.value = 'ani'
   } else {
     aniName.value = ''
   }
-  console.log(to, from)
 })
 </script>
 <style scoped lang="less">

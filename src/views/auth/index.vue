@@ -1,6 +1,11 @@
 <template>
   <div class="loginContainer">
-    <van-nav-bar title="Login Page" class="navBar" />
+    <van-nav-bar
+      title="Login Page"
+      class="navBar"
+      left-arrow
+      @click-left="onClickLeft"
+    />
     <van-form @submit="onSubmit" class="loginForm">
       <van-cell-group inset>
         <van-field
@@ -60,6 +65,7 @@ import type { FieldType } from 'vant'
 import { usernameValidator, passwordValidator } from '../../utils/validator'
 import SignUp from './components/signUp.vue'
 import { getUserInfo } from '@/api/user'
+import { useRouter } from 'vue-router'
 
 const show = ref<boolean>(false)
 
@@ -90,19 +96,27 @@ const showPwd = (): void => {
     inputType.value = 'password'
   }
 }
+
+//navbar click return back
+const router = useRouter()
+const onClickLeft = () => {
+  router.back()
+}
 </script>
 
 <style scoped lang="less">
 .navBar {
   background-color: @color-blue;
-
   :deep(.van-nav-bar__title) {
     color: @color-white;
     font-style: italic;
     font-size: 20px;
   }
 }
-
+:deep(.van-nav-bar .van-icon) {
+  color: @color-white;
+  font-size: large;
+}
 .loginForm {
   margin-top: 100px;
   .signUpBtn {
