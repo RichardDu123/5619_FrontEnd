@@ -1,7 +1,7 @@
 <template>
   <div class="signup" ref="target">
     <div class="signUpBox">
-      <van-form @submit="onSubmit" class="sigUpForm">
+      <van-form @submit="onSubmit" class="sigUpForm" ref="form">
         <van-cell-group inset>
           <van-field
             v-model="username"
@@ -10,6 +10,7 @@
             placeholder="username"
             :rules="[{ validator: usernameValidator }]"
             left-icon="friends-o"
+            autocomplete="off"
           />
           <van-field
             v-model="Password"
@@ -51,6 +52,7 @@
 import { usernameValidator, passwordValidator } from '@/utils/validator'
 import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
+import { FormInstance } from 'vant'
 
 const username = ref('')
 const Password = ref('')
@@ -75,7 +77,16 @@ const onSubmit = (): void => {
 //handle clickoutside to close the layout
 const target = ref(null)
 const emit = defineEmits(['complete'])
-onClickOutside(target, () => emit('complete'))
+const form = ref<FormInstance | null>(null)
+onClickOutside(target, () => {
+  if (form.value) {
+    form.value.resetValidation()
+    username.value = ''
+    Password.value = ''
+    repassword.value = ''
+  }
+  emit('complete')
+})
 </script>
 
 <style lang="less" scoped>
