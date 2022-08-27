@@ -13,7 +13,7 @@
             autocomplete="off"
           />
           <van-field
-            v-model="Password"
+            v-model="password"
             type="password"
             name="password"
             label="Password"
@@ -39,6 +39,7 @@
             class="submitBtn"
             native-type="submit"
             :loading="isLoading"
+            @click="signup"
           >
             Sign Up
           </van-button>
@@ -53,12 +54,13 @@ import { usernameValidator, passwordValidator } from '@/utils/validator'
 import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { FormInstance } from 'vant'
+import { signUp } from '@/api/user'
 
 const username = ref('')
-const Password = ref('')
+const password = ref('')
 const repassword = ref('')
-const repasswordValidator = (password: string): string | boolean => {
-  if (password !== Password.value) {
+const repasswordValidator = (pwd: string): string | boolean => {
+  if (pwd !== password.value) {
     return 'Please confirm your password!'
   } else {
     return true
@@ -82,11 +84,18 @@ onClickOutside(target, () => {
   if (form.value) {
     form.value.resetValidation()
     username.value = ''
-    Password.value = ''
+    password.value = ''
     repassword.value = ''
   }
   emit('complete')
 })
+
+const signup = () => {
+  signUp({
+    userName: username.value,
+    password: password.value,
+  }).then((value) => console.log(value))
+}
 </script>
 
 <style lang="less" scoped>

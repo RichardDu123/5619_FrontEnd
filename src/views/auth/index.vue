@@ -77,7 +77,7 @@ const isLoading = ref<boolean>(false)
 const onSubmit = (): void => {
   isLoading.value = true
   getUserInfo({
-    username: username.value,
+    userName: username.value,
     password: password.value,
   }).then((value) => {
     console.log(value)

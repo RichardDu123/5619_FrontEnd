@@ -38,6 +38,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@views/auth/index.vue'),
   },
   {
+    path: '/addPost',
+    name: 'addPost',
+    component: () => import('@views/new/posts/index.vue'),
+  },
+  {
     path: '/log',
     name: 'log',
     component: () => import('@views/auth/index.vue'),
