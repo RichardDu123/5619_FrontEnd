@@ -15,6 +15,7 @@
           placeholder="username"
           :rules="[{ validator: usernameValidator }]"
           left-icon="friends-o"
+          autocomplete="off"
         />
         <van-field
           ref="fieldRef"
