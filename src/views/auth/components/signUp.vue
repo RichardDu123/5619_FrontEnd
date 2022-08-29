@@ -11,6 +11,17 @@
             :rules="[{ validator: usernameValidator }]"
             left-icon="friends-o"
             autocomplete="off"
+            @end-validate="onEnd"
+          />
+          <van-icon name="success" class="success" v-if="isSuccessShow" />
+          <van-field
+            v-model="Email"
+            name="Email"
+            label="Email"
+            placeholder="Email"
+            :rules="[{ validator: emailValidator }]"
+            left-icon="envelop-o"
+            autocomplete="off"
           />
           <van-field
             v-model="password"
@@ -50,7 +61,11 @@
 </template>
 
 <script setup lang="ts">
-import { usernameValidator, passwordValidator } from '@/utils/validator'
+import {
+  usernameValidator,
+  passwordValidator,
+  emailValidator,
+} from '@/utils/validator'
 import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { FormInstance } from 'vant'
@@ -59,6 +74,7 @@ import { signUp } from '@/api/user'
 const username = ref('')
 const password = ref('')
 const repassword = ref('')
+const Email = ref('')
 const repasswordValidator = (pwd: string): string | boolean => {
   if (pwd !== password.value) {
     return 'Please confirm your password!'
@@ -86,6 +102,8 @@ onClickOutside(target, () => {
     username.value = ''
     password.value = ''
     repassword.value = ''
+    Email.value = ''
+    isSuccessShow.value = false
   }
   emit('complete')
 })
@@ -95,6 +113,16 @@ const signup = () => {
     userName: username.value,
     password: password.value,
   }).then((value) => console.log(value))
+}
+
+//success icon show or not
+const isSuccessShow = ref(false)
+const onEnd = (res: any) => {
+  if (res.status === 'passed') {
+    isSuccessShow.value = true
+  } else {
+    isSuccessShow.value = false
+  }
 }
 </script>
 
@@ -110,6 +138,15 @@ const signup = () => {
 }
 .signUpBox {
   margin-top: 130px;
+  position: relative;
+  .success {
+    position: absolute;
+    font-size: 25px;
+    right: 25px;
+    top: 10px;
+    z-index: 2;
+    color: green;
+  }
 }
 .submitBtn {
   margin-top: 50px;

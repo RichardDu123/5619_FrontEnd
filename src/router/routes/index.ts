@@ -43,9 +43,9 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@views/new/posts/index.vue'),
   },
   {
-    path: '/log',
-    name: 'log',
-    component: () => import('@views/auth/index.vue'),
+    path: '/search',
+    name: 'search',
+    component: () => import('@views/search/index.vue'),
   },
   /**
    * 子路由示例
