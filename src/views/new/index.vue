@@ -6,7 +6,7 @@
         <van-icon name="plus" />
         New Post
       </div>
-      <div class="Panel">
+      <div class="Panel" @click="$router.push('/addPet')">
         <van-icon name="plus" />
         New Pet
       </div>
