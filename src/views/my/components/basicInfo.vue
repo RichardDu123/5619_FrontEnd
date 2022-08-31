@@ -20,8 +20,7 @@
     </div>
     <div class="swipeBanner">
       <van-icon name="edit" class="edit" />
-      <!--      :autoplay="3000"-->
-      <van-swipe vertical lazy-render class="swipe">
+      <van-swipe vertical :autoplay="3000" lazy-render class="swipe">
         <van-swipe-item v-for="i in 4" :key="i"><pet-item /></van-swipe-item>
       </van-swipe>
     </div>
