@@ -43,6 +43,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@views/new/posts/index.vue'),
   },
   {
+    path: '/addPet',
+    name: 'addPet',
+    component: () => import('@views/new/pets/index.vue'),
+  },
+  {
     path: '/search',
     name: 'search',
     component: () => import('@views/search/index.vue'),
