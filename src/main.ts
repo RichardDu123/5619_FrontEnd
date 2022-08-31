@@ -10,6 +10,6 @@ import '@less/global.less'
 import '@/mock'
 
 createApp(App)
-  .use(createPinia()) // 启用 Pinia
+  .use(createPinia()) // 启用 Pina
   .use(router)
   .mount('#app')

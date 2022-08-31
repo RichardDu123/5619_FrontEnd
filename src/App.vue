@@ -17,6 +17,8 @@ const aniName = ref<string>('')
 router.beforeEach((to) => {
   if (to.path === '/login') {
     aniName.value = 'ani'
+  } else if (to.path === '/addPost') {
+    aniName.value = 'add'
   } else {
     aniName.value = ''
   }
@@ -36,6 +38,17 @@ router.beforeEach((to) => {
 
 .ani-enter-to,
 .ani-leave-from {
+  transform: none;
+  opacity: 1;
+}
+.add-enter-active {
+  transition: all 0.5s ease-out;
+}
+.add-enter-from {
+  transform: translateY(100%);
+  opacity: 0;
+}
+.add-enter-to {
   transform: none;
   opacity: 1;
 }

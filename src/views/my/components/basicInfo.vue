@@ -20,11 +20,9 @@
     </div>
     <div class="swipeBanner">
       <van-icon name="edit" class="edit" />
-      <van-swipe vertical :autoplay="3000" lazy-render class="swipe">
-        <van-swipe-item>1</van-swipe-item>
-        <van-swipe-item>2</van-swipe-item>
-        <van-swipe-item>3</van-swipe-item>
-        <van-swipe-item>4</van-swipe-item>
+      <!--      :autoplay="3000"-->
+      <van-swipe vertical lazy-render class="swipe">
+        <van-swipe-item v-for="i in 4" :key="i"><pet-item /></van-swipe-item>
       </van-swipe>
     </div>
   </div>
@@ -32,6 +30,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import PetItem from '@views/my/components/petItem.vue'
 // import { Pet } from '@/types'
 
 defineProps({
@@ -85,7 +84,6 @@ const avatarUrl = ref('https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg')
     .van-swipe-item {
       color: #fff;
       font-size: 20px;
-      line-height: 150px;
       text-align: center;
       background-color: #39a9ed;
       border-radius: 15px;

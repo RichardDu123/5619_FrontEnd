@@ -15,11 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import BasicInfo from './components/basicInfo.vue'
 import PostItem from '@/components/postItem.vue'
 import { getPosts } from '@/api/post'
 import { ref } from 'vue'
 import { Post } from '@/types'
+import BasicInfo from '@views/my/components/basicInfo.vue'
 const postList = ref<Array<Post[]>>([])
 const loading = ref(false)
 const finished = ref(false)

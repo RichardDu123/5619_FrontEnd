@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
 import banner from 'vite-plugin-banner'
 import pkg from './package.json'
+// @ts-ignore
 import px2vw from 'postcss-px-to-viewport'
 import { VantResolver } from 'unplugin-vue-components/resolvers'
 

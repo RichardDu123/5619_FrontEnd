@@ -48,25 +48,59 @@
         </van-button>
       </div>
     </van-form>
+    <p class="forgot" @click="forgotShow = true">Forgot password?</p>
     <van-overlay :show="show">
       <sign-up @complete="show = false" />
     </van-overlay>
+    <van-dialog
+      v-model:show="forgotShow"
+      title="Please enter email address"
+      close-on-click-overlay
+      show-cancel-button
+      confirm-button-text="OK"
+      cancel-button-text="Cancel"
+      @closed="resetForm"
+    >
+      <van-form ref="targetForm">
+        <van-cell-group inset>
+          <van-field
+            v-model="Email"
+            name="Email"
+            placeholder="Email"
+            :rules="[{ validator: emailValidator }]"
+            autocomplete="off"
+          >
+            <template #button>
+              <van-button size="small" type="primary">Send code</van-button>
+            </template>
+          </van-field>
+          <van-field v-model="code" placeholder="varification code" />
+          <van-field
+            v-model="newPassword"
+            placeholder="password"
+            :rules="[{ validator: passwordValidator }]"
+            type="password"
+          />
+        </van-cell-group>
+      </van-form>
+    </van-dialog>
   </div>
 </template>
 
-<script lang="ts">
-defineComponent
-export default defineComponent({
-  name: 'login',
-})
-</script>
 <script setup lang="ts">
-import { defineComponent, ref } from 'vue'
+import { ref } from 'vue'
 import type { FieldType } from 'vant'
-import { usernameValidator, passwordValidator } from '../../utils/validator'
+import {
+  usernameValidator,
+  passwordValidator,
+  emailValidator,
+} from '@/utils/validator'
 import SignUp from './components/signUp.vue'
 import { getUserInfo } from '@/api/user'
 import { useRouter } from 'vue-router'
+import { Dialog } from 'vant'
+import 'vant/es/dialog/style'
+import { FormInstance } from 'vant/lib/form'
 
 const show = ref<boolean>(false)
 
@@ -103,9 +137,27 @@ const router = useRouter()
 const onClickLeft = () => {
   router.back()
 }
+// forgot password
+const VanDialog = Dialog.Component
+const forgotShow = ref(false)
+const Email = ref('')
+const code = ref('')
+const newPassword = ref('')
+const targetForm = ref<FormInstance>()
+const resetForm = () => {
+  Email.value = ''
+  code.value = ''
+  newPassword.value = ''
+  targetForm.value?.resetValidation()
+}
 </script>
 
 <style scoped lang="less">
+.forgot {
+  color: @color-blue;
+  text-decoration: underline;
+  margin-left: 20px;
+}
 .navBar {
   background-color: @color-blue;
   :deep(.van-nav-bar__title) {

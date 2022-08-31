@@ -1,5 +1,6 @@
 import { Toast } from 'vant'
 import 'vant/es/toast/style'
+import { checkId } from '@/api/user'
 export const usernameValidator = async (
   username: string
 ): Promise<string | boolean> => {
@@ -9,12 +10,9 @@ export const usernameValidator = async (
   Toast.loading({
     forbidClick: true,
   })
-  await new Promise((resolve) =>
-    setTimeout(() => {
-      Toast.clear()
-      resolve(1)
-    }, 2000)
-  )
+  const res = await checkId({ username })
+  Toast.clear()
+  console.log(res)
   return true
 }
 

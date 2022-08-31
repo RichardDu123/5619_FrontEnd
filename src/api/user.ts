@@ -7,3 +7,6 @@ export const getUserInfo = (params: object): Promise<any> => {
 export const signUp = (params: object): Promise<any> => {
   return request('/signup', 'post', params)
 }
+export const checkId = (params: object): Promise<any> => {
+  return request('/username', 'post', params)
+}

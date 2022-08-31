@@ -112,6 +112,7 @@ const signup = () => {
   signUp({
     userName: username.value,
     password: password.value,
+    email: Email.value,
   }).then((value) => console.log(value))
 }
 
