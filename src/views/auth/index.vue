@@ -87,20 +87,14 @@
   </div>
 </template>
 
-<script lang="ts">
-defineComponent
-export default defineComponent({
-  name: 'login',
-})
-</script>
 <script setup lang="ts">
-import { defineComponent, ref } from 'vue'
+import { ref } from 'vue'
 import type { FieldType } from 'vant'
 import {
   usernameValidator,
   passwordValidator,
   emailValidator,
-} from '../../utils/validator'
+} from '@/utils/validator'
 import SignUp from './components/signUp.vue'
 import { getUserInfo } from '@/api/user'
 import { useRouter } from 'vue-router'

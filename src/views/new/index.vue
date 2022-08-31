@@ -3,9 +3,13 @@
     <van-nav-bar title="Create New" fixed />
     <div class="panels">
       <div class="Panel" @click="$router.push('/addPost')">
-        <van-icon name="plus" /> New Post
+        <van-icon name="plus" />
+        New Post
       </div>
-      <div class="Panel"><van-icon name="plus" /> New Pet</div>
+      <div class="Panel">
+        <van-icon name="plus" />
+        New Pet
+      </div>
     </div>
   </div>
 </template>
@@ -15,12 +19,14 @@
 <style scoped lang="less">
 .newContainer {
   padding-top: 50px;
+
   .panels {
     height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     margin: 50px 20px;
+
     .Panel {
       height: 200px;
       background-color: white;
@@ -32,10 +38,12 @@
       line-height: 200px;
       font-size: 30px;
       font-weight: bolder;
+
       &:active {
         background-color: @color-blue;
         opacity: 0.5;
       }
+
       &::after {
         position: absolute;
         content: '';
@@ -49,6 +57,7 @@
         box-shadow: 0 10px 8px rgba(0, 0, 0, 0.2);
         opacity: 0;
       }
+
       &:active::after {
         opacity: 1;
       }

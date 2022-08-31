@@ -83,20 +83,24 @@ export default {
 <style scoped lang="less">
 .addPost {
   padding-top: 50px;
+
   .add-post-upload-image {
     margin-top: 15px;
     margin-left: 15px;
     margin-bottom: 5px;
     display: flex;
     justify-content: space-evenly;
+
     .img {
       flex: 1;
     }
   }
 }
+
 .add-post-button {
   padding-top: 30px;
   text-align: center;
+
   .postBtn {
     width: 300px;
   }
