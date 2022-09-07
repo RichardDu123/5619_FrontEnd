@@ -43,6 +43,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { submitPosts } from '@/api/post'
+import { computed } from 'vue'
 
 export default {
   setup() {
@@ -57,12 +58,14 @@ export default {
     const onClickLeft = () => {
       router.back()
     }
-
+    const fileListArr = computed(() => {
+      return fileList.value.map((item: any) => item.content)
+    })
     const onClickSubmitPost = () => {
       submitPosts({
         title: title.value,
         postContent: description.value,
-        base64Data: fileList.value,
+        base64Data: fileListArr.value,
       }).then((value) => {
         console.log(value)
       })
