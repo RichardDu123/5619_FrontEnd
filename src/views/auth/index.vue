@@ -13,7 +13,7 @@
           name="username"
           label="Username"
           placeholder="username"
-          :rules="[{ validator: usernameValidator }]"
+          :rules="[{ validator: usernameValidatorLogin }]"
           left-icon="friends-o"
           autocomplete="off"
         />
@@ -91,7 +91,7 @@
 import { ref } from 'vue'
 import type { FieldType } from 'vant'
 import {
-  usernameValidator,
+  usernameValidatorLogin,
   passwordValidator,
   emailValidator,
 } from '@/utils/validator'

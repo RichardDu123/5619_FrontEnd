@@ -5,5 +5,5 @@ export const getPosts = (params: object): Promise<any> => {
 }
 
 export const submitPosts = (params: object): Promise<any> => {
-  return request('/submitPosts', 'post', params)
+  return request('/upload', 'post', params)
 }
