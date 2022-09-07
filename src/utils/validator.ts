@@ -10,15 +10,15 @@ export const usernameValidator = async (
   Toast.loading({
     forbidClick: true,
   })
-  const res = await checkId({ username })
+  const res = await checkId({ userName: username })
   Toast.clear()
   console.log(res)
   return true
 }
 
 export const passwordValidator = (password: string): string | boolean => {
-  if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
-    return 'Password must contain contain 8 characters, at least one letter and one number!'
+  if (!/[A-Za-z\d]{6,}$/.test(password)) {
+    return 'Password must contain contain 6 characters'
   } else {
     return true
   }

@@ -8,5 +8,5 @@ export const signUp = (params: object): Promise<any> => {
   return request('/signup', 'post', params)
 }
 export const checkId = (params: object): Promise<any> => {
-  return request('/username', 'post', params)
+  return request('/username', 'get', params)
 }
