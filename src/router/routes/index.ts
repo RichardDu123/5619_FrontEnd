@@ -52,6 +52,11 @@ const routes: RouteRecordRaw[] = [
     name: 'search',
     component: () => import('@views/search/index.vue'),
   },
+  {
+    path: '/post/:postId',
+    name: 'post',
+    component: () => import('@/components/postPage.vue'),
+  },
   /**
    * 子路由示例
    */

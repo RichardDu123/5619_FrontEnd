@@ -62,7 +62,7 @@ export default {
       submitPosts({
         title: title.value,
         postContent: description.value,
-        imageUrlList: fileList.value,
+        base64Data: fileList.value,
       }).then((value) => {
         console.log(value)
       })

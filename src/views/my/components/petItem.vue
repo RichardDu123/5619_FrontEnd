@@ -7,12 +7,12 @@
     />
     <div class="petInfo">
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-Pets"></use>
+        <use xlink:href="#icon-zhenhuichongtubiaozhizuo-kuozhan-"></use>
       </svg>
       <span>asdasd</span>
       &nbsp;
       <svg class="icon petIcon" aria-hidden="true">
-        <use xlink:href="#icon-ExoticPetVet"></use>
+        <use xlink:href="#icon-pet"></use>
       </svg>
       <span>as</span>
     </div>

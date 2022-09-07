@@ -24,13 +24,14 @@ export default defineConfig({
    */
   server: {
     port: 3000,
-    // proxy: {
-    //   '/devapi': {
-    //     target: 'http://192.168.10.198',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/devapi/, ''),
-    //   },
-    // },
+    proxy: {
+      '/api': {
+        // target: 'http://35.189.27.6:8080/',
+        target: 'http://localhost:8080/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
   },
 
   // build: {

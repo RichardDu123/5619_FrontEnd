@@ -1,7 +1,7 @@
 import axios from 'axios'
 import router from '../router'
 
-const BASE_URL = 'http://localhost:8080/'
+const BASE_URL = '/api'
 
 //create axios instance
 const instance = axios.create({
@@ -25,7 +25,6 @@ instance.interceptors.response.use(
     }
   }
 )
-
 //export instance
 export default (
   url: string,

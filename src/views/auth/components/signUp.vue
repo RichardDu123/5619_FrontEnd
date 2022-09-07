@@ -120,6 +120,7 @@ const signup = () => {
 const isSuccessShow = ref(false)
 const onEnd = (res: any) => {
   if (res.status === 'passed') {
+    console.log(res.status)
     isSuccessShow.value = true
   } else {
     isSuccessShow.value = false
