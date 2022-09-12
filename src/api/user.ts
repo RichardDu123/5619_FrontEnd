@@ -10,3 +10,6 @@ export const signUp = (params: object): Promise<any> => {
 export const checkId = (params: object): Promise<any> => {
   return request('/username', 'get', params)
 }
+export const sendCode = (params: object): Promise<any> => {
+  return request('/email', 'post', params)
+}

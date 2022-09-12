@@ -1,6 +1,7 @@
 <template>
   <div class="myContainer">
     <van-nav-bar title="My Profile" class="myNav" fixed />
+    <van-icon name="exchange" class="logout" @click="logout" />
     <BasicInfo type="my" />
     <van-list
       v-model:loading="loading"
@@ -20,6 +21,8 @@ import { getPosts } from '@/api/post'
 import { ref } from 'vue'
 import { Post } from '@/types'
 import BasicInfo from '@views/my/components/basicInfo.vue'
+import { useUserStore } from '@/stores'
+import { useRouter } from 'vue-router'
 const postList = ref<Array<Post[]>>([])
 const loading = ref(false)
 const finished = ref(false)
@@ -40,10 +43,26 @@ const onLoad = () => {
     }
   })
 }
+//logout
+const userStore = useUserStore()
+const router = useRouter()
+const logout = () => {
+  userStore.$reset()
+  router.push({
+    name: 'login',
+  })
+}
 </script>
 
 <style lang="less" scoped>
 .myContainer {
+  position: relative;
+  .logout {
+    font-size: 32px;
+    top: 60px;
+    right: 20px;
+    position: absolute;
+  }
   padding-bottom: 50px;
   padding-top: 50px;
 }

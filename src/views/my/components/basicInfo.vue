@@ -1,8 +1,27 @@
 <template>
   <div class="basicInfo">
     <div class="avatarLine">
-      <van-image round :src="avatarUrl" class="avatar" fit="cover" />
-      <van-button icon="edit" type="primary" round>Eidt</van-button>
+      <van-image
+        round
+        :src="avatarUrl"
+        class="avatar"
+        fit="cover"
+        @click="avatarClick"
+      />
+      <van-uploader
+        accept="image/png, image/jpeg"
+        v-model="fileList"
+        ref="target"
+        v-show="false"
+      ></van-uploader>
+      <van-button
+        icon="edit"
+        type="primary"
+        round
+        @click="handleClick"
+        class="btn"
+        >{{ status }}</van-button
+      >
     </div>
     <div>
       <van-cell-group inset>
@@ -28,8 +47,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onUnmounted, ref } from 'vue'
 import PetItem from '@views/my/components/petItem.vue'
+import { usePostStore } from '@/stores/post'
+import { computed } from 'vue'
 // import { Pet } from '@/types'
 
 defineProps({
@@ -40,10 +61,38 @@ defineProps({
   },
 })
 //data
-const disable = ref<boolean>(true)
+const postStore = usePostStore()
+const disable = computed(() => !postStore.isDeleteShow)
 const description = ref('I am a cat')
-const avatarUrl = ref('https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg')
+const defaultUrl = 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
 // const pets = ref<Pet[]>([])
+
+//changeEdit
+const status = computed(() => (postStore.isDeleteShow ? 'Save' : 'Edit'))
+const handleClick = () => {
+  if (status.value === 'Edit') {
+    postStore.isDeleteShow = true
+  } else {
+    postStore.isDeleteShow = false
+  }
+}
+//upload avatar
+const target = ref<any>(null)
+const fileList = ref<any>([])
+const avatarClick = () => {
+  if (status.value === 'Save') {
+    target.value.chooseFile()
+  }
+}
+const avatarUrl = computed(() => {
+  return !fileList.value.length
+    ? defaultUrl
+    : fileList.value[fileList.value.length - 1].content
+})
+//Unmounted
+onUnmounted(() => {
+  postStore.isDeleteShow = false
+})
 </script>
 
 <style scoped lang="less">
@@ -62,6 +111,9 @@ const avatarUrl = ref('https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg')
     }
     :deep(.van-button--round) {
       border-radius: 20px;
+    }
+    .btn {
+      width: 100px;
     }
   }
   .swipeBanner {

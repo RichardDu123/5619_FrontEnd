@@ -12,7 +12,9 @@ export const usernameValidator = async (
   })
   const res = await checkId({ userName: username })
   Toast.clear()
-  console.log(res)
+  if (res.message === 'Fail') {
+    return 'Username already exists!'
+  }
   return true
 }
 

@@ -1,7 +1,11 @@
 <template>
   <div class="postList" v-if="data">
-    <div class="postItem">
-      <van-image :src="data[0].postImgUrl" fit="cover" class="img">
+    <div class="postItem" :class="{ onlyOne: isOnlyOne }">
+      <van-image
+        :src="`data:image/png;base64,${data[0].imageUrlList[0]}`"
+        fit="cover"
+        class="img"
+      >
         <template v-slot:loading>
           <van-loading type="spinner" size="20" />
         </template>
@@ -13,18 +17,27 @@
         class="delete"
         color="linear-gradient(to right, #ff6034, #ee0a24)"
         @click="handleDelete"
+        v-if="isDeleteShow"
       />
       <div class="foot">
         <div class="leftFoot">
-          {{ data[0].postTitle }}
+          {{ data[0].topic }}
         </div>
         <div class="rightFoot">
-          <van-image round :src="data[0].userImgUrl" class="avatar" />
+          <van-image
+            round
+            :src="`data:image/png;base64,${data[0].userAvatar}`"
+            class="avatar"
+          />
         </div>
       </div>
     </div>
     <div class="postItem" v-if="data[1].postId">
-      <van-image :src="data[1].postImgUrl" fit="cover" class="img">
+      <van-image
+        :src="`data:image/png;base64,${data[1].imageUrlList[0]}`"
+        fit="cover"
+        class="img"
+      >
         <template v-slot:loading>
           <van-loading type="spinner" size="20" />
         </template>
@@ -36,13 +49,18 @@
         class="delete"
         color="linear-gradient(to right, #ff6034, #ee0a24)"
         @click="handleDelete"
+        v-if="isDeleteShow"
       />
       <div class="foot">
         <div class="leftFoot">
-          {{ data[1].postTitle }}
+          {{ data[1].topic }}
         </div>
         <div class="rightFoot">
-          <van-image round :src="data[1].userImgUrl" class="avatar" />
+          <van-image
+            round
+            :src="`data:image/png;base64,${data[1].userAvatar}`"
+            class="avatar"
+          />
         </div>
       </div>
     </div>
@@ -53,9 +71,12 @@
 import { Post } from '@/types'
 import { Dialog } from 'vant'
 import 'vant/es/dialog/style'
-defineProps({
+import { computed } from 'vue'
+import { usePostStore } from '@/stores/post'
+const props = defineProps({
   data: {
     type: Array<Post>,
+    required: true,
   },
 })
 const handleDelete = () => {
@@ -72,6 +93,16 @@ const handleDelete = () => {
       // on cancel
     })
 }
+// listen to the edit actoin
+const postStore = usePostStore()
+const isDeleteShow = computed(() => {
+  return postStore.isDeleteShow
+})
+//Only one post css
+const isOnlyOne = !props.data[1].postId
+
+//imageTest
+console.log('data:image/png;base64,' + props.data[0].userAvatar)
 </script>
 
 <style scoped lang="less">
@@ -79,6 +110,9 @@ const handleDelete = () => {
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 12px;
+  .onlyOne {
+    transform: translateX(-50%);
+  }
   .postItem {
     width: 180px;
     position: relative;
