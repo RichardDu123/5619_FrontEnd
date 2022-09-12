@@ -11,7 +11,7 @@
       class="pet-list"
       v-model:loading="loading"
       :finished="finished"
-      finished-text="没有更多了"
+      finished-text="No more pets"
       @load="onLoad"
     >
       <RelationItem
@@ -28,6 +28,7 @@
 import { GetPetList } from '../../api/pet'
 import { ref } from 'vue'
 import RelationItem from '@/components/relationItem.vue'
+import router from '../../router'
 
 export default {
   components: {
@@ -49,12 +50,18 @@ export default {
       })
     }
 
+    const onClickLeft = () => {
+      router.back()
+    }
+
     return {
       petList,
       loading,
       finished,
 
       onLoad,
+      onClickLeft,
+
       RelationItem,
     }
   },
@@ -63,6 +70,7 @@ export default {
 
 <style scoped lang="less">
 .pet-list {
+  margin-top: 50px;
   padding: 20px;
 }
 </style>
