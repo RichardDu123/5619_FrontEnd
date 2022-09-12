@@ -5,5 +5,9 @@ export const getPosts = (params: object): Promise<any> => {
 }
 
 export const submitPosts = (params: object): Promise<any> => {
-  return request('/upload', 'post', params)
+  return request('/post/newPost', 'post', params)
+}
+
+export const getImage = (params: object): Promise<any> => {
+  return request('/getImage', 'get', params)
 }

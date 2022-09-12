@@ -1,11 +1,6 @@
 <template>
   <div class="loginContainer">
-    <van-nav-bar
-      title="Login Page"
-      class="navBar"
-      left-arrow
-      @click-left="onClickLeft"
-    />
+    <van-nav-bar title="Login Page" class="navBar" />
     <van-form @submit="onSubmit" class="loginForm">
       <van-cell-group inset>
         <van-field
@@ -64,14 +59,24 @@
       <van-form ref="targetForm">
         <van-cell-group inset>
           <van-field
+            v-model="emailUser"
+            placeholder="Username"
+            :rules="[{ validator: usernameValidatorLogin }]"
+            autocomplete="off"
+          >
+          </van-field>
+          <van-field
             v-model="Email"
             name="Email"
             placeholder="Email"
             :rules="[{ validator: emailValidator }]"
             autocomplete="off"
+            ref="emailTarget"
           >
             <template #button>
-              <van-button size="small" type="primary">Send code</van-button>
+              <van-button size="small" type="primary" @click="sendEmail"
+                >Send code</van-button
+              >
             </template>
           </van-field>
           <van-field v-model="code" placeholder="varification code" />
@@ -98,9 +103,13 @@ import {
 import SignUp from './components/signUp.vue'
 import { getUserInfo } from '@/api/user'
 import { useRouter } from 'vue-router'
-import { Dialog } from 'vant'
+import { Dialog, Toast } from 'vant'
 import 'vant/es/dialog/style'
 import { FormInstance } from 'vant/lib/form'
+import { FieldInstance } from 'vant/lib/field'
+import { useUserStore } from '@/stores'
+import 'vant/es/toast/style'
+import { sendCode } from '@/api/user'
 
 const show = ref<boolean>(false)
 
@@ -108,15 +117,30 @@ const show = ref<boolean>(false)
 const username = ref<string>('')
 const password = ref<string>('')
 const isLoading = ref<boolean>(false)
+const userStore = useUserStore()
+const router = useRouter()
 const onSubmit = (): void => {
   isLoading.value = true
   getUserInfo({
     userName: username.value,
     password: password.value,
-  }).then((value) => {
-    console.log(value)
-    isLoading.value = false
   })
+    .then((value) => {
+      let { data } = value
+      userStore.setUser({
+        uuid: data.uuid,
+        userImageAddress: data.userImageAddress,
+        userName: data.userName,
+        id: data.id,
+        nickName: data.nickName,
+      })
+      isLoading.value = false
+      router.push({ name: 'home' })
+    })
+    .catch((err) => {
+      isLoading.value = false
+      Toast(err.response.data.message)
+    })
 }
 
 //show password or not
@@ -132,23 +156,38 @@ const showPwd = (): void => {
   }
 }
 
-//navbar click return back
-const router = useRouter()
-const onClickLeft = () => {
-  router.back()
-}
 // forgot password
 const VanDialog = Dialog.Component
 const forgotShow = ref(false)
+const emailUser = ref('')
 const Email = ref('')
 const code = ref('')
 const newPassword = ref('')
 const targetForm = ref<FormInstance>()
+const emailTarget = ref<FieldInstance>()
 const resetForm = () => {
   Email.value = ''
   code.value = ''
   newPassword.value = ''
+  emailUser.value = ''
   targetForm.value?.resetValidation()
+}
+const sendEmail = () => {
+  if (
+    targetForm.value?.getValidationStatus().Email === 'passed' &&
+    emailUser.value
+  ) {
+    sendCode({
+      email: Email.value,
+      emailUser: emailUser.value,
+    })
+      .then((value) => {
+        console.log(value)
+      })
+      .catch((err) => {
+        Toast(err)
+      })
+  }
 }
 </script>
 

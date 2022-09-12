@@ -8,7 +8,13 @@
       fixed
     />
     <div class="add-post-upload-image">
-      <van-uploader v-model="fileList" multiple :max-count="6" class="img" />
+      <van-uploader
+        v-model="fileList"
+        multiple
+        :max-count="6"
+        class="img"
+        accept="image/png, image/jpeg"
+      />
     </div>
     <van-cell-group inset>
       <van-field v-model="title" placeholder="Add Title" />

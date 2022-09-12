@@ -68,8 +68,9 @@ import {
 } from '@/utils/validator'
 import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import { FormInstance } from 'vant'
+import { FormInstance, Toast } from 'vant'
 import { signUp } from '@/api/user'
+import 'vant/es/toast/style'
 
 const username = ref('')
 const password = ref('')
@@ -113,7 +114,12 @@ const signup = () => {
     userName: username.value,
     password: password.value,
     email: Email.value,
-  }).then((value) => console.log(value))
+  }).then((value) => {
+    if (value.message === 'Success') {
+      Toast('success')
+      emit('complete')
+    }
+  })
 }
 
 //success icon show or not

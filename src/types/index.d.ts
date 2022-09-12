@@ -4,9 +4,9 @@ export interface Pet {
   petAvatar: string
 }
 export interface Post {
-  postImgUrl: string
-  postTitle: string
+  imageUrlList: Array<string>
+  topic: string
   postId: string
   userId: string
-  userImgUrl: string
+  userAvatar: string
 }

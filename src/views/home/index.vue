@@ -4,6 +4,7 @@
       v-model="searchVal"
       placeholder="Search by title"
       @focus="onFocus"
+      class="search"
     />
     <van-dropdown-menu class="dropDown">
       <van-dropdown-item
@@ -17,6 +18,7 @@
       :finished="finished"
       finished-text="reach the end"
       @load="onLoad"
+      class="list"
     >
       <PostItem v-for="(item, index) in postList" :key="index" :data="item" />
       <template #loading><van-loading color="#1989fa" /></template>
@@ -30,23 +32,13 @@ import { useRouter } from 'vue-router'
 import { Post } from '@/types'
 import { getPosts } from '@/api/post'
 import PostItem from '@/components/postItem.vue'
-//search
+
 const searchVal = ref('')
 const router = useRouter()
 const onFocus = () => {
   router.push('/search')
 }
-//dropdown menu
-const option = ref(0)
-const options = [
-  { text: 'Sort by time', value: 0 },
-  { text: 'Sort by likes', value: 1 },
-]
-const onChange = (value: number) => {
-  console.log(value)
-  postList.value = []
-  onLoad()
-}
+
 //render posts
 const postList = ref<Array<Post[]>>([])
 const loading = ref(false)
@@ -62,19 +54,48 @@ const onLoad = () => {
       }
     }
     loading.value = false
-    if (postList.value.length === 18) {
+    if (postList.value.length === Math.ceil(2 / 2)) {
       finished.value = true
     }
   })
+}
+//dropdown menu
+const option = ref(0)
+const options = [
+  { text: 'Sort by time', value: 0 },
+  { text: 'Sort by likes', value: 1 },
+]
+const onChange = (value: number) => {
+  console.log(value)
+  postList.value = []
+  finished.value = false
+  onLoad()
 }
 </script>
 
 <style lang="less" scoped>
 .homeContainer {
+  margin-bottom: 50px;
+  overflow: hidden;
+
+  .search {
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+  }
   .dropDown {
     :deep(.van-dropdown-menu__bar) {
       box-shadow: none;
     }
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    top: 50px;
+  }
+  .list {
+    margin-top: 100px;
+    height: 83vh;
+    overflow-y: auto;
   }
 }
 </style>
