@@ -62,6 +62,21 @@ const routes: RouteRecordRaw[] = [
     name: 'post',
     component: () => import('@/components/postPage.vue'),
   },
+  {
+    path: '/friends',
+    name: 'friends',
+    component: () => import('@views/friends/index.vue'),
+  },
+  {
+    path: '/friendList',
+    name: 'friendList',
+    component: () => import('@views/friends/friendList/index.vue'),
+  },
+  {
+    path: '/friendRequest',
+    name: 'friendRequest',
+    component: () => import('@views/friends/friendRequest/index.vue'),
+  },
   /**
    * 子路由示例
    */

@@ -24,10 +24,10 @@
   </div>
 </template>
 
-<script>
-import { GetPetList } from '../../api/pet'
+<script lang="ts">
+import { GetPetList } from '@/api/pet'
 import { ref } from 'vue'
-import RelationItem from '@/components/relationItem.vue'
+import RelationItem from '@/views/pets/components/relationItem.vue'
 import router from '../../router'
 
 export default {
