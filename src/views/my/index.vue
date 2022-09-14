@@ -3,15 +3,17 @@
     <van-nav-bar title="My Profile" class="myNav" fixed />
     <van-icon name="exchange" class="logout" @click="logout" />
     <BasicInfo type="my" />
-    <van-list
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="reach the end"
-      @load="onLoad"
-    >
-      <PostItem v-for="(item, index) in postList" :key="index" :data="item" />
-      <template #loading><van-loading color="#1989fa" /></template>
-    </van-list>
+    <div>
+      <van-list
+        v-model:loading="loading"
+        :finished="finished"
+        finished-text="reach the end"
+        @load="onLoad"
+      >
+        <PostItem v-for="(item, index) in postList" :key="index" :data="item" />
+        <template #loading><van-loading color="#1989fa" /></template>
+      </van-list>
+    </div>
   </div>
 </template>
 

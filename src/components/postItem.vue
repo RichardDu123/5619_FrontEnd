@@ -73,6 +73,7 @@ import { Dialog } from 'vant'
 import 'vant/es/dialog/style'
 import { computed } from 'vue'
 import { usePostStore } from '@/stores/post'
+
 const props = defineProps({
   data: {
     type: Array<Post>,

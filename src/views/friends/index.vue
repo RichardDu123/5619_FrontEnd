@@ -12,7 +12,7 @@
         class="request-button"
         round
         type="success"
-        @click="jumpToRequestPage"
+        @click="toRequestPage"
         >Friend Request
       </van-button>
     </div>
@@ -49,7 +49,7 @@ export default {
     const friendList = ref([])
     const loading = ref(false)
     const finished = ref(false)
-    const jumpToRequestPage = () => {
+    const toRequestPage = () => {
       router.push('/friendRequest')
     }
 
@@ -74,7 +74,7 @@ export default {
       finished,
 
       onLoad,
-      jumpToRequestPage,
+      toRequestPage,
       onClickLeft,
     }
   },
