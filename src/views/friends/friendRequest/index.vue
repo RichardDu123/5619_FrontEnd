@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="friend-request-page">
     <van-nav-bar
       left-arrow
       @click-left="onClickLeft"
@@ -7,32 +7,32 @@
       class="myNav"
       fixed
     />
-    <van-list
-      class="friend-request"
-      v-model="loading"
-      :finished="finished"
-      finished-text="No more requests"
-      @load="onLoad"
-    >
-      <FriendRequest
-        v-for="item in friendRequestList"
-        :name="item"
-        :key="item"
-        :title="item"
-      />
-    </van-list>
+    <div class="friend-request-list-container">
+      <van-list
+        class="friend-request-list"
+        v-model="loading"
+        :finished="finished"
+        finished-text="No more requests"
+        @load="onLoad"
+      >
+        <FriendRequest
+          v-for="item in friendRequestList"
+          :name="item"
+          :key="item"
+          :title="item"
+        />
+      </van-list>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import router from '../../../router'
-import FriendRequest from '@views/friends/friendList/components/requestItem.vue'
+import FriendRequest from '@views/friends/friendRequest/components/requestItem.vue'
 import { ref } from 'vue'
 import { GetFriendRequestList } from '@/api/friends'
 
 export default {
-  name: 'friendRequest',
-
   components: { FriendRequest },
 
   setup() {
@@ -67,4 +67,13 @@ export default {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.friend-request-page {
+  .friend-request-list-container {
+    margin: 10px;
+    .friend-request-list {
+      margin: 10px;
+    }
+  }
+}
+</style>

@@ -7,27 +7,32 @@
       class="myNav"
       fixed
     />
-    <van-button
-      class="request-button"
-      round
-      type="success"
-      @click="jumpToRequestPage"
-      >Friend Request
-    </van-button>
-    <van-list
-      class="friend-list"
-      v-model="loading"
-      :finished="finished"
-      finished-text="No more pets"
-      @load="onLoad"
-    >
-      <FriendItem
-        v-for="item in friendList"
-        :name="item"
-        :key="item"
-        :title="item"
-      />
-    </van-list>
+    <div class="friend-request-button-container">
+      <van-button
+        class="request-button"
+        round
+        type="success"
+        @click="jumpToRequestPage"
+        >Friend Request
+      </van-button>
+    </div>
+
+    <div class="friend-list-container">
+      <van-list
+        class="friend-list"
+        v-model="loading"
+        :finished="finished"
+        finished-text="No more pets"
+        @load="onLoad"
+      >
+        <FriendItem
+          v-for="item in friendList"
+          :name="item"
+          :key="item"
+          :title="item"
+        />
+      </van-list>
+    </div>
   </div>
 </template>
 
@@ -45,14 +50,12 @@ export default {
     const loading = ref(false)
     const finished = ref(false)
     const jumpToRequestPage = () => {
-      router.push({
-        name: '/friendRequest',
-      })
+      router.push('/friendRequest')
     }
 
     const onLoad = () => {
       GetFriendList({}).then((value) => {
-        // console.log('value is:', value)
+        console.log('value is:', value)
         for (let i = 0; i < value.data.length; i++) {
           friendList.value.push(value.data[i])
         }
@@ -80,8 +83,19 @@ export default {
 
 <style lang="less" scoped>
 .friend-page {
-  .request-button {
-    margin-top: 50px;
+  .friend-request-button-container {
+    justify-content: center;
+    display: flex;
+    .request-button {
+      margin-top: 60px;
+      width: 300px;
+    }
+  }
+  .friend-list-container {
+    margin: 10px;
+    .friend-list {
+      margin: 10px;
+    }
   }
 }
 </style>

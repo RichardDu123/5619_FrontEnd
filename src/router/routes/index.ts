@@ -68,12 +68,12 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@views/friends/index.vue'),
   },
   {
-    path: '/friend-list',
+    path: '/friendList',
     name: 'friendList',
     component: () => import('@views/friends/friendList/index.vue'),
   },
   {
-    path: '/friend-request',
+    path: '/friendRequest',
     name: 'friendRequest',
     component: () => import('@views/friends/friendRequest/index.vue'),
   },
