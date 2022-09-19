@@ -11,3 +11,7 @@ export const submitPosts = (params: object): Promise<any> => {
 export const getImage = (params: object): Promise<any> => {
   return request('/getImage', 'get', params)
 }
+
+export const getPostById = (url: string, params: object): Promise<any> => {
+  return request(`/getPost/${url}`, 'get', params)
+}

@@ -1,6 +1,10 @@
 <template>
   <div class="postList" v-if="data">
-    <div class="postItem" :class="{ onlyOne: isOnlyOne }">
+    <div
+      class="postItem"
+      :class="{ onlyOne: isOnlyOne }"
+      @click="handleItemClick(data[0].postId)"
+    >
       <van-image
         :src="`data:image/png;base64,${data[0].imageUrlList[0]}`"
         fit="cover"
@@ -32,7 +36,11 @@
         </div>
       </div>
     </div>
-    <div class="postItem" v-if="data[1].postId">
+    <div
+      class="postItem"
+      v-if="data[1].postId"
+      @click="handleItemClick(data[1].postId)"
+    >
       <van-image
         :src="`data:image/png;base64,${data[1].imageUrlList[0]}`"
         fit="cover"
@@ -73,6 +81,7 @@ import { Dialog } from 'vant'
 import 'vant/es/dialog/style'
 import { computed } from 'vue'
 import { usePostStore } from '@/stores/post'
+import { useRouter } from 'vue-router'
 const props = defineProps({
   data: {
     type: Array<Post>,
@@ -101,8 +110,16 @@ const isDeleteShow = computed(() => {
 //Only one post css
 const isOnlyOne = !props.data[1].postId
 
-//imageTest
-console.log('data:image/png;base64,' + props.data[0].userAvatar)
+//点击跳转
+const router = useRouter()
+const handleItemClick = (id: string) => {
+  router.push({
+    name: 'post',
+    params: {
+      postId: id,
+    },
+  })
+}
 </script>
 
 <style scoped lang="less">

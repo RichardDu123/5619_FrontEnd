@@ -1,5 +1,6 @@
 <template>
   <div class="newContainer" @touchstart="() => {}">
+    <button @click="$router.back()">cc</button>
     <van-nav-bar title="Create New" fixed />
     <div class="panels">
       <div class="Panel" @click="$router.push('/addPost')">

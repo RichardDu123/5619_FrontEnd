@@ -72,7 +72,16 @@
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 import CommentList from './commentList.vue'
+import { getPostById } from '@/api/post'
 const route = useRoute()
+//render page
+// const pageContet = reactive({
+//   topic: '',
+//   userAvatar: '',
+// })
+const postId = route.params.postId as string
+getPostById(postId, {}).then((value) => console.log(value))
+
 const title = route.params.postId as string
 //swiper
 const images = [
