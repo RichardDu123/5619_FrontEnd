@@ -59,8 +59,8 @@
 
 <script lang="ts">
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
-import { submitPosts } from '@/api/post'
+import { computed, ref } from 'vue'
+import { createPet } from '@/api/post'
 
 export default {
   setup() {
@@ -94,16 +94,16 @@ export default {
 
     // input or change pet image
     const petImageList = ref([])
-    const afterReadPet = (file: any) => {
-      console.log(file)
-    }
+    const petImageListArr = computed(() => {
+      return petImageList.value.map((item: any) => item.content)
+    })
 
     // submit new pet
     const onClickSubmitPost = () => {
-      submitPosts({
+      createPet({
         petName: petName.value,
         petDescription: description.value,
-        petImageAddress: petImageList.value,
+        petImageAddress: petImageListArr.value,
       }).then((value) => {
         console.log(value)
       })
@@ -120,7 +120,6 @@ export default {
       onClickLeft,
       afterReadAvatar,
       triggerUpload,
-      afterReadPet,
       onClickSubmitPost,
     }
   },

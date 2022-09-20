@@ -40,7 +40,9 @@
     <div class="swipeBanner">
       <van-icon name="edit" class="edit" />
       <van-swipe vertical :autoplay="3000" lazy-render class="swipe">
-        <van-swipe-item v-for="i in 4" :key="i"><pet-item /></van-swipe-item>
+        <van-swipe-item v-for="i in 4" :key="i"
+          ><pet-item @click="toPetPage"
+        /></van-swipe-item>
       </van-swipe>
     </div>
   </div>
@@ -51,6 +53,7 @@ import { onUnmounted, ref } from 'vue'
 import PetItem from '@views/my/components/petItem.vue'
 import { usePostStore } from '@/stores/post'
 import { computed } from 'vue'
+import router from '@/router'
 // import { Pet } from '@/types'
 
 defineProps({
@@ -66,6 +69,9 @@ const disable = computed(() => !postStore.isDeleteShow)
 const description = ref('I am a cat')
 const defaultUrl = 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
 // const pets = ref<Pet[]>([])
+const toPetPage = () => {
+  router.push('/pets')
+}
 
 //changeEdit
 const status = computed(() => (postStore.isDeleteShow ? 'Save' : 'Edit'))

@@ -19,6 +19,7 @@
     <van-cell-group inset>
       <van-field v-model="title" placeholder="Add Title" />
     </van-cell-group>
+
     <van-divider></van-divider>
 
     <van-cell-group inset>
@@ -32,6 +33,25 @@
         show-word-limit
       />
     </van-cell-group>
+
+    <van-divider></van-divider>
+
+    <div class="tag-choice-container">
+      <van-radio-group v-model="checked">
+        <van-cell-group inset>
+          <van-cell title="Cat" clickable @click="checked = 'cat'">
+            <template #right-icon>
+              <van-radio name="cat" />
+            </template>
+          </van-cell>
+          <van-cell title="Dog" clickable @click="checked = 'dog'">
+            <template #right-icon>
+              <van-radio name="dog" />
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-radio-group>
+    </div>
     <div class="add-post-button">
       <van-button
         round
@@ -56,10 +76,9 @@ export default {
     const fileList = ref([])
     const title = ref('')
     const description = ref('')
-    const afterRead = (file: any) => {
-      // 此时可以自行将文件上传至服务器
-      console.log(file)
-    }
+    // cat or dog
+    const checked = ref('cat')
+
     const router = useRouter()
     const onClickLeft = () => {
       router.back()
@@ -72,6 +91,7 @@ export default {
         postTopic: title.value,
         postContent: description.value,
         base64Data: fileListArr.value,
+        tag: checked.value,
       }).then((value) => {
         console.log(value)
       })
@@ -81,7 +101,8 @@ export default {
       title,
       description,
       fileList,
-      afterRead,
+      checked,
+
       onClickLeft,
       onClickSubmitPost,
     }

@@ -20,7 +20,7 @@
         size="mini"
         class="delete"
         color="linear-gradient(to right, #ff6034, #ee0a24)"
-        @click="handleDelete"
+        @click.stop="handleDelete"
         v-if="isDeleteShow"
       />
       <div class="foot">
@@ -153,10 +153,13 @@ const handleItemClick = (id: string) => {
       border-bottom-right-radius: 10px;
       border-bottom-left-radius: 10px;
       background-color: white;
+      justify-content: space-between;
       .leftFoot {
+        line-height: 38px;
+        text-align: left;
         padding-left: 5px;
         font-size: 15px;
-        .mixin-line-clamp(2);
+        .mixin-line-clamp(1);
       }
       .rightFoot {
         .avatar {
