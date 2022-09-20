@@ -58,10 +58,8 @@ export default {
       petList,
       loading,
       finished,
-
       onLoad,
       onClickLeft,
-
       RelationItem,
     }
   },

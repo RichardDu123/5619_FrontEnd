@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import PostItem from '@/components/postItem.vue'
 import { getPosts } from '@/api/post'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { Post } from '@/types'
 import BasicInfo from '@views/my/components/basicInfo.vue'
 import { useUserStore } from '@/stores'
@@ -28,10 +28,17 @@ import { useRouter } from 'vue-router'
 const postList = ref<Array<Post[]>>([])
 const loading = ref(false)
 const finished = ref(false)
-
+const page = reactive({
+  currPage: 0,
+  pageSize: 10,
+})
+let totalPosts = 0
 const onLoad = () => {
+  if (postList.value.length >= totalPosts) {
+    finished.value = true
+  }
   loading.value = true
-  getPosts({}).then((value) => {
+  getPosts({ ...page }).then((value) => {
     for (let i = 0; i < value.data.length; i = i + 2) {
       if (i + 1 !== value.data.length) {
         postList.value.push([value.data[i], value.data[i + 1]])
@@ -40,9 +47,6 @@ const onLoad = () => {
       }
     }
     loading.value = false
-    if (postList.value.length === 18) {
-      finished.value = true
-    }
   })
 }
 //logout

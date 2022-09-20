@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Post } from '@/types'
 import { getPosts } from '@/api/post'
@@ -43,20 +43,26 @@ const onFocus = () => {
 const postList = ref<Array<Post[]>>([])
 const loading = ref(false)
 const finished = ref(false)
+const page = reactive({
+  currPage: 0,
+  pageSize: 10,
+})
+let totalPosts = 0
 const onLoad = () => {
+  if (postList.value.length >= totalPosts) {
+    finished.value = true
+  }
   loading.value = true
-  getPosts({}).then((value) => {
+  getPosts({ ...page }).then((value) => {
     for (let i = 0; i < value.data.length; i = i + 2) {
       if (i + 1 !== value.data.length) {
         postList.value.push([value.data[i], value.data[i + 1]])
       } else {
         postList.value.push([value.data[i], {}])
       }
+      totalPosts = value.data[i].totalPosts
     }
     loading.value = false
-    if (postList.value.length === Math.ceil(2 / 2)) {
-      finished.value = true
-    }
   })
 }
 //dropdown menu
@@ -69,7 +75,7 @@ const onChange = (value: number) => {
   console.log(value)
   postList.value = []
   finished.value = false
-  onLoad()
+  totalPosts = 0
 }
 </script>
 

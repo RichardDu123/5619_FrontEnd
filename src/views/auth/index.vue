@@ -55,6 +55,7 @@
       confirm-button-text="OK"
       cancel-button-text="Cancel"
       @closed="resetForm"
+      @confirm="resetPass"
     >
       <van-form ref="targetForm">
         <van-cell-group inset>
@@ -74,8 +75,14 @@
             ref="emailTarget"
           >
             <template #button>
-              <van-button size="small" type="primary" @click="sendEmail"
-                >Send code</van-button
+              <van-button
+                size="small"
+                type="primary"
+                @click="sendEmail"
+                :loading="isSending"
+                :disabled="isDisable"
+                class="codeBtn"
+                >{{ codeText }}</van-button
               >
             </template>
           </van-field>
@@ -101,7 +108,7 @@ import {
   emailValidator,
 } from '@/utils/validator'
 import SignUp from './components/signUp.vue'
-import { getUserInfo } from '@/api/user'
+import { getUserInfo, resetPassword } from '@/api/user'
 import { useRouter } from 'vue-router'
 import { Dialog, Toast } from 'vant'
 import 'vant/es/dialog/style'
@@ -165,6 +172,9 @@ const code = ref('')
 const newPassword = ref('')
 const targetForm = ref<FormInstance>()
 const emailTarget = ref<FieldInstance>()
+const isSending = ref(false)
+const codeText = ref<string | number>('Send Code')
+const isDisable = ref(false)
 const resetForm = () => {
   Email.value = ''
   code.value = ''
@@ -177,17 +187,37 @@ const sendEmail = () => {
     targetForm.value?.getValidationStatus().Email === 'passed' &&
     emailUser.value
   ) {
+    isSending.value = true
+    isDisable.value = true
+    console.log('click')
     sendCode({
       email: Email.value,
-      emailUser: emailUser.value,
+      userName: emailUser.value,
     })
-      .then((value) => {
-        console.log(value)
+      .then(() => {
+        isSending.value = false
+        codeText.value = 20
+        let timer = setInterval(() => {
+          ;(codeText.value as number) = (codeText.value as number) - 1
+          if (codeText.value === 0) {
+            codeText.value = 'Send Code'
+            isDisable.value = false
+            clearInterval(timer)
+          }
+        }, 1000)
+        Toast('Code has been sent')
       })
       .catch((err) => {
         Toast(err)
       })
+  } else {
+    Toast('Need more information')
   }
+}
+const resetPass = () => {
+  resetPassword({ userName: emailUser.value, code: code.value }).then(
+    (value) => [Toast(value)]
+  )
 }
 </script>
 
