@@ -2,7 +2,7 @@
   <div class="pageContainer">
     <van-nav-bar
       left-arrow
-      :title="title"
+      :title="pageContet.topic"
       class="myNav"
       fixed
       @click-left="$router.back()"
@@ -11,19 +11,23 @@
       <van-image
         round
         fit="cover"
-        src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
+        :src="pageContet.userAvatar"
         class="avatar"
       />
-      <span>name</span>
+      <span>{{
+        pageContet.nickName === 'lazy to set name'
+          ? pageContet.userName
+          : pageContet.nickName
+      }}</span>
     </div>
     <van-swipe :autoplay="3000" lazy-render class="imgSwipe">
-      <van-swipe-item v-for="image in images" :key="image">
+      <van-swipe-item v-for="image in pageContet.imageUrlList" :key="image">
         <img :src="image" />
       </van-swipe-item>
     </van-swipe>
     <van-divider />
     <p class="content">
-      1231311111111111111111111111112313111111111111111111111111123131111111111111111111111111231311111111111111111111111112313111111111111111111111111123131111111111111111111111111231311111111111111111111111112313111111111111111111111111123131111111111111111111111111231311111111111111111111111112313111111111111111111111111123131111111111111111111111111231311111111111111111111111112313111111111111111111111111
+      {{ pageContet.content }}
     </p>
     <van-popup
       closeable
@@ -62,23 +66,44 @@
       >
       <div>
         <van-icon name="like-o" />
-        <p>123</p>
+        <p>{{ pageContet.love }}</p>
       </div>
     </div>
   </div>
 </template>
 )
 <script setup lang="ts">
+// :src="`data:image/png;base64,${data[0].imageUrlList[0]}`"
 import { useRoute } from 'vue-router'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import CommentList from './commentList.vue'
+import { getPostById } from '@/api/post'
 const route = useRoute()
-const title = route.params.postId as string
-//swiper
-const images = [
-  'https://fastly.jsdelivr.net/npm/@vant/assets/apple-1.jpeg',
-  'https://fastly.jsdelivr.net/npm/@vant/assets/apple-2.jpeg',
-]
+//render page
+const pageContet = reactive({
+  topic: '',
+  userAvatar: '',
+  nickName: '',
+  userName: '',
+  imageUrlList: [] as string[],
+  content: '',
+  commentList: [],
+  love: 0,
+  loved: false,
+})
+const postId = route.params.postId as string
+getPostById(postId, {}).then((value) => {
+  const { data } = value
+  pageContet.topic = 'default'
+  pageContet.userAvatar = `data:image/png;base64,${data.userAvatar}`
+  pageContet.nickName = data.nickName
+  pageContet.userName = data.userName
+  data.imageUrlList.forEach((item: string[]) => {
+    pageContet.imageUrlList.push(`data:image/png;base64,${item}`)
+  })
+  pageContet.content = data.postContent
+})
+
 //comment
 const show = ref(false)
 const message = ref('')
@@ -136,8 +161,9 @@ const message = ref('')
   }
   .avatarBanner {
     margin-top: 20px;
+    margin-left: 20px;
     display: flex;
-    justify-content: center;
+    justify-self: start;
     align-items: center;
     .avatar {
       width: 60px;

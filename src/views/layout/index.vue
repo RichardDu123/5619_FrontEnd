@@ -5,27 +5,40 @@
         <component :is="Component" />
       </transition>
     </router-view>
-    <van-tabbar route>
-      <van-tabbar-item replace @click="$router.push('/home')" icon="home-o"
+    <van-tabbar v-model="currTag">
+      <van-tabbar-item name="home" @click="handlePush('home')" icon="home-o"
         >Home</van-tabbar-item
       >
-      <van-tabbar-item replace @click="$router.push('/my')" icon="user-o"
+      <van-tabbar-item name="my" @click="handlePush('my')" icon="user-o"
         >My</van-tabbar-item
       >
       <van-tabbar-item
-        replace
-        @click="$router.push('/friends')"
+        name="friends"
+        @click="handlePush('friends')"
         icon="friends-o"
         >Friends</van-tabbar-item
       >
-      <van-tabbar-item replace @click="$router.push('/new')" icon="add-o"
+      <van-tabbar-item name="new" @click="handlePush('new')" icon="add-o"
         >New</van-tabbar-item
       >
     </van-tabbar>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
+const route = useRoute()
+const currTag = ref(route.name as string)
+const router = useRouter()
+const handlePush = (tag: string) => {
+  currTag.value = tag
+  router.push(tag)
+}
+onBeforeRouteUpdate((to) => {
+  currTag.value = to.name as string
+})
+</script>
 
 <style lang="less" scoped>
 .animation-enter-active,

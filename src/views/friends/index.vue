@@ -1,12 +1,6 @@
 <template>
   <div class="friend-page">
-    <van-nav-bar
-      left-arrow
-      @click-left="onClickLeft"
-      title="Your Friends"
-      class="myNav"
-      fixed
-    />
+    <van-nav-bar title="Your Friends" class="myNav" fixed />
     <div class="friend-request-button-container">
       <van-button
         class="request-button"
@@ -64,10 +58,6 @@ export default {
       })
     }
 
-    const onClickLeft = () => {
-      router.back()
-    }
-
     return {
       friendList,
       loading,
@@ -75,7 +65,6 @@ export default {
 
       onLoad,
       toRequestPage,
-      onClickLeft,
     }
   },
 }

@@ -13,3 +13,6 @@ export const checkId = (params: object): Promise<any> => {
 export const sendCode = (params: object): Promise<any> => {
   return request('/email', 'post', params)
 }
+export const resetPassword = (params: object): Promise<any> => {
+  return request('/validate', 'post', params)
+}

@@ -63,11 +63,6 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/components/postPage.vue'),
   },
   {
-    path: '/friends',
-    name: 'friends',
-    component: () => import('@views/friends/index.vue'),
-  },
-  {
     path: '/friendList',
     name: 'friendList',
     component: () => import('@views/friends/friendList/index.vue'),

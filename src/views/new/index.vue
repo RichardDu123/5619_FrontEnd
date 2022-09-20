@@ -1,6 +1,5 @@
 <template>
   <div class="newContainer" @touchstart="() => {}">
-    <button @click="show">click</button>
     <van-nav-bar title="Create New" fixed />
     <div class="panels">
       <div class="Panel" @click="$router.push('/addPost')">
@@ -15,16 +14,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
-
-const route = useRoute()
-const router = useRouter()
-const show = () => {
-  console.log(route.matched)
-  console.log(router)
-}
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="less">
 .newContainer {

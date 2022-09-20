@@ -88,7 +88,7 @@ export default {
     })
     const onClickSubmitPost = () => {
       submitPosts({
-        title: title.value,
+        postTopic: title.value,
         postContent: description.value,
         base64Data: fileListArr.value,
         tag: checked.value,
