@@ -43,6 +43,22 @@
           :after-read-="afterReadPet"
         />
       </div>
+      <div class="tag-choice-container">
+        <van-radio-group v-model="checked">
+          <van-cell-group inset>
+            <van-cell title="Cat" clickable @click="checked = 'cat'">
+              <template #right-icon>
+                <van-radio name="cat" />
+              </template>
+            </van-cell>
+            <van-cell title="Dog" clickable @click="checked = 'dog'">
+              <template #right-icon>
+                <van-radio name="dog" />
+              </template>
+            </van-cell>
+          </van-cell-group>
+        </van-radio-group>
+      </div>
       <div class="add-post-button">
         <van-button
           round
@@ -109,6 +125,19 @@ export default {
       })
     }
 
+    // cat or dog
+    const checked = ref('cat')
+    const onClickSubmitPet = () => {
+      createPet({
+        postTopic: petName.value,
+        postContent: description.value,
+        base64Data: petImageList.value,
+        tag: checked.value,
+      }).then((value) => {
+        console.log(value)
+      })
+    }
+
     return {
       petName,
       showUploader,
@@ -116,11 +145,13 @@ export default {
       target,
       petImageList,
       description,
+      checked,
 
       onClickLeft,
       afterReadAvatar,
       triggerUpload,
       onClickSubmitPost,
+      onClickSubmitPet,
     }
   },
 }
