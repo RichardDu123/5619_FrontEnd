@@ -70,7 +70,8 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { submitPosts } from '@/api/post'
 import { computed } from 'vue'
-
+import { Notify } from 'vant'
+import 'vant/es/notify/style'
 export default {
   setup() {
     const fileList = ref([])
@@ -94,6 +95,8 @@ export default {
         tag: checked.value,
       }).then((value) => {
         console.log(value)
+        Notify({ type: 'success', message: 'Successfully add post.' })
+        router.back()
       })
     }
 

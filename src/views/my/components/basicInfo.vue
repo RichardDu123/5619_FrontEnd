@@ -13,6 +13,7 @@
         v-model="fileList"
         ref="target"
         v-show="false"
+        v-if="type === 'my'"
       ></van-uploader>
       <van-button
         icon="edit"
@@ -20,11 +21,28 @@
         round
         @click="handleClick"
         class="btn"
+        v-if="type === 'my'"
         >{{ status }}</van-button
+      >
+      <van-button
+        icon="plus"
+        type="primary"
+        round
+        @click="sendFriend"
+        class="btn"
+        v-if="type === 'user'"
+        >Friend</van-button
       >
     </div>
     <div>
       <van-cell-group inset>
+        <van-field
+          v-model="nickName"
+          label="Nick Name: "
+          placeholder="Please enter nick name"
+          :disabled="type === 'my' && disable"
+          :readonly="type === 'user'"
+        />
         <van-field
           v-model="description"
           rows="2"
@@ -32,8 +50,9 @@
           type="textarea"
           maxlength="50"
           placeholder="Description of yourself"
-          show-word-limit
-          :disabled="disable"
+          :disabled="type === 'my' && disable"
+          :readonly="type === 'user'"
+          :show-word-limit="type === 'my'"
         />
       </van-cell-group>
     </div>
@@ -67,6 +86,7 @@ defineProps({
 const postStore = usePostStore()
 const disable = computed(() => !postStore.isDeleteShow)
 const description = ref('I am a cat')
+const nickName = ref('nick')
 const defaultUrl = 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
 // const pets = ref<Pet[]>([])
 const toPetPage = () => {
@@ -99,6 +119,11 @@ const avatarUrl = computed(() => {
 onUnmounted(() => {
   postStore.isDeleteShow = false
 })
+
+//user profile
+const sendFriend = () => {
+  console.log('send friend')
+}
 </script>
 
 <style scoped lang="less">

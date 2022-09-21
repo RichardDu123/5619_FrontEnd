@@ -13,6 +13,7 @@
         fit="cover"
         :src="pageContet.userAvatar"
         class="avatar"
+        @click="handlAvatarClick"
       />
       <span>{{
         pageContet.nickName === 'lazy to set name'
@@ -22,7 +23,7 @@
     </div>
     <van-swipe :autoplay="3000" lazy-render class="imgSwipe">
       <van-swipe-item v-for="image in pageContet.imageUrlList" :key="image">
-        <img :src="image" />
+        <img :src="image" @click="handlePreview" />
       </van-swipe-item>
     </van-swipe>
     <van-divider />
@@ -62,7 +63,7 @@
         round
         color="linear-gradient(to right, #4e9aec, #2b89ee)"
         class="btn"
-        >大号按钮</van-button
+        >Comments</van-button
       >
       <div>
         <van-icon name="like-o" />
@@ -74,10 +75,12 @@
 )
 <script setup lang="ts">
 // :src="`data:image/png;base64,${data[0].imageUrlList[0]}`"
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { reactive, ref } from 'vue'
 import CommentList from './commentList.vue'
 import { getPostById } from '@/api/post'
+import { ImagePreview } from 'vant'
+import 'vant/es/image-preview/style'
 const route = useRoute()
 //render page
 
@@ -91,10 +94,12 @@ const pageContet = reactive({
   commentList: [],
   love: 0,
   loved: false,
+  userId: '',
 })
 const postId = route.params.postId as string
 getPostById(postId, {}).then((value) => {
   const { data } = value
+  pageContet.userId = data.userId
   pageContet.topic = 'default'
   pageContet.userAvatar = `data:image/png;base64,${data.userAvatar}`
   pageContet.nickName = data.nickName
@@ -107,12 +112,28 @@ getPostById(postId, {}).then((value) => {
 //comment
 const show = ref(false)
 const message = ref('')
+
+//avatar click
+const router = useRouter()
+const handlAvatarClick = () => {
+  router.push({
+    name: 'user',
+    params: {
+      userId: pageContet.userId,
+    },
+  })
+}
+//preview images
+const handlePreview = () => {
+  ImagePreview(pageContet.imageUrlList)
+}
 </script>
 
 <style scoped lang="less">
 .pageContainer {
   padding-top: 50px;
   .footer {
+    margin-bottom: 20px;
     width: 100%;
     position: fixed;
     bottom: 0;
@@ -146,8 +167,9 @@ const message = ref('')
   }
   .content {
     margin: 20px 10px;
-    min-height: 100px;
     word-wrap: break-word;
+    max-height: 330px;
+    overflow-y: scroll;
   }
   .imgSwipe {
     margin-top: 20px;

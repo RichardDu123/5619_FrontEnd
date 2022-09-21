@@ -72,6 +72,11 @@ const routes: RouteRecordRaw[] = [
     name: 'friendRequest',
     component: () => import('@views/friends/friendRequest/index.vue'),
   },
+  {
+    path: '/user/:userId',
+    name: 'user',
+    component: () => import('@/views/user/index.vue'),
+  },
 ]
 
 export default routes
