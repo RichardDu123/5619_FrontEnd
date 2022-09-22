@@ -16,15 +16,10 @@
         class="friend-list"
         v-model="loading"
         :finished="finished"
-        finished-text="No more pets"
+        finished-text="No more results"
         @load="onLoad"
       >
-        <FriendItem
-          v-for="item in friendList"
-          :name="item"
-          :key="item"
-          :title="item"
-        />
+        <FriendItem v-for="item in friendList" :data="item" :key="item" />
       </van-list>
     </div>
   </div>
@@ -35,12 +30,13 @@ import router from '../../router'
 import FriendItem from '@views/friends/friendList/components/friendItem.vue'
 import { ref } from 'vue'
 import { GetFriendList } from '@/api/friends'
+import { User } from '@/types'
 
 export default {
   components: { FriendItem },
 
   setup() {
-    const friendList = ref([])
+    const friendList = ref<User[]>([])
     const loading = ref(false)
     const finished = ref(false)
     const toRequestPage = () => {
@@ -51,7 +47,12 @@ export default {
       GetFriendList({}).then((value) => {
         console.log('value is:', value)
         for (let i = 0; i < value.data.length; i++) {
-          friendList.value.push(value.data[i])
+          const friend: User = {
+            name: value.data[i].name,
+            description: value.data[i].description,
+            userAvatar: value.data[i].userAvatar,
+          }
+          friendList.value.push(friend)
         }
         loading.value = false
         finished.value = true
@@ -78,6 +79,8 @@ export default {
     .request-button {
       margin-top: 60px;
       width: 300px;
+      background-color: coral;
+      border: 1px solid coral;
     }
   }
   .friend-list-container {

@@ -17,9 +17,8 @@
       >
         <FriendRequest
           v-for="item in friendRequestList"
-          :name="item"
+          :data="item"
           :key="item"
-          :title="item"
         />
       </van-list>
     </div>
@@ -31,20 +30,26 @@ import router from '../../../router'
 import FriendRequest from '@views/friends/friendRequest/components/requestItem.vue'
 import { ref } from 'vue'
 import { GetFriendRequestList } from '@/api/friends'
+import { NewFriendRequest } from '@/types'
 
 export default {
   components: { FriendRequest },
 
   setup() {
-    const friendRequestList = ref([])
+    const friendRequestList = ref<NewFriendRequest[]>([])
     const loading = ref(false)
     const finished = ref(false)
 
     const onLoad = () => {
       GetFriendRequestList({}).then((value) => {
-        // console.log('value is:', value)
+        console.log('value is:', value)
         for (let i = 0; i < value.data.length; i++) {
-          friendRequestList.value.push(value.data[i])
+          const request: NewFriendRequest = {
+            userName: value.data[i].userName,
+            requestText: value.data[i].requestText,
+            userAvatar: value.data[i].userAvatar,
+          }
+          friendRequestList.value.push(request)
         }
         loading.value = false
         finished.value = true
@@ -69,8 +74,9 @@ export default {
 
 <style lang="less" scoped>
 .friend-request-page {
+  margin-top: 60px;
   .friend-request-list-container {
-    margin: 10px;
+    margin: 20px;
     .friend-request-list {
       margin: 10px;
     }

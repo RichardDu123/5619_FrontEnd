@@ -1,14 +1,18 @@
 <template>
-  <div class="friend-list">
-    <div class="friend-item">
+  <div class="pet-list">
+    <div class="pet-item">
       <van-swipe-cell>
         <van-card
-          class="friend-card"
-          :desc="data.description"
+          class="pet-card"
+          :desc="data.petDescription"
           :title="data.name"
-          :thumb="`data:image/png;base64,${data.userAvatar}`"
+          :thumb="`data:image/png;base64,${data.petAvatar}`"
           centered="centered"
-        />
+        >
+          <template #tags>
+            <van-tag plain type="danger">{{ data.category }}</van-tag>
+          </template>
+        </van-card>
         <!--        <van-card :border="false" :value="name" />-->
         <template #right>
           <van-button
@@ -25,20 +29,20 @@
 </template>
 
 <script setup lang="ts">
-import { Dialog } from 'vant'
-import { User } from '@/types'
 import 'vant/es/dialog/style'
+import { Pet } from '@/types'
+import { Dialog } from 'vant'
 
 defineProps({
   data: {
-    type: Object as () => User,
+    type: Object as () => Pet,
   },
 })
 
 const handleDelete = () => {
   Dialog.confirm({
-    title: 'Are you sure to delete this friend?',
-    message: 'Click OK to delete this friend',
+    title: 'Are you sure to delete this pet?',
+    message: 'Click OK to delete this pet',
     confirmButtonText: 'Yes',
     cancelButtonText: 'No',
   })
@@ -52,7 +56,7 @@ const handleDelete = () => {
 </script>
 
 <style scoped lang="less">
-.friend-card {
+.pet-card {
   margin: 0;
   background-color: white;
   text-align: center;

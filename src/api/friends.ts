@@ -7,3 +7,7 @@ export const GetFriendList = (params: object): Promise<any> => {
 export const GetFriendRequestList = (params: object): Promise<any> => {
   return request('/getFriendRequestList', 'get', params)
 }
+
+export const PostFriendRequestDecision = (params: object): Promise<any> => {
+  return request('/postFriendRequestDecision', 'post', params)
+}

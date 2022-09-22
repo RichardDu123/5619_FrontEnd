@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pet-page">
     <van-nav-bar
       left-arrow
       @click-left="onClickLeft"
@@ -7,43 +7,47 @@
       class="myNav"
       fixed
     />
-    <van-list
-      class="pet-list"
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="No more pets"
-      @load="onLoad"
-    >
-      <RelationItem
-        v-for="item in petList"
-        :name="item"
-        :key="item"
-        :title="item"
-      />
-    </van-list>
+    <div class="pet-list-container">
+      <van-list
+        class="pet-list"
+        v-model:loading="loading"
+        :finished="finished"
+        finished-text="No more pets"
+        @load="onLoad"
+      >
+        <PetItem v-for="item in petList" :data="item" :key="item" />
+      </van-list>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { GetPetList } from '@/api/pet'
 import { ref } from 'vue'
-import RelationItem from '@/views/pets/components/relationItem.vue'
+import PetItem from '@views/pets/components/petItem.vue'
 import router from '../../router'
+import { Pet } from '@/types'
 
 export default {
   components: {
-    RelationItem,
+    PetItem,
   },
   setup() {
     const loading = ref(false)
     const finished = ref(false)
-    const petList = ref([])
+    const petList = ref<Pet[]>([])
 
     const onLoad = () => {
       GetPetList({}).then((value) => {
-        // console.log('value is:', value)
+        console.log('value is:', value)
         for (let i = 0; i < value.data.length; i++) {
-          petList.value.push(value.data[i])
+          const pet: Pet = {
+            name: value.data[i].name,
+            category: value.data[i].category,
+            petAvatar: value.data[i].petAvatar,
+            petDescription: value.data[i].petDescription,
+          }
+          petList.value.push(pet)
         }
         loading.value = false
         finished.value = true
@@ -55,20 +59,24 @@ export default {
     }
 
     return {
+      PetItem,
       petList,
       loading,
       finished,
       onLoad,
       onClickLeft,
-      RelationItem,
     }
   },
 }
 </script>
 
 <style scoped lang="less">
-.pet-list {
-  margin-top: 50px;
-  padding: 20px;
+.pet-page {
+  .pet-list-container {
+    margin-top: 60px;
+    .pet-list {
+      margin: 10px;
+    }
+  }
 }
 </style>
