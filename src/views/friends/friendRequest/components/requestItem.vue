@@ -2,13 +2,27 @@
   <div class="friend-request-list">
     <div class="friend-request-item">
       <van-swipe-cell>
-        <van-cell :border="false" :value="name" />
+        <van-card
+          class="request-card"
+          :desc="data.requestText"
+          :title="data.userName"
+          :thumb="`data:image/png;base64,${data.userAvatar}`"
+          centered="centered"
+        />
         <template #right>
           <van-button
+            class="approve-button"
             square
             type="danger"
-            text="Delete"
-            @click="handleDelete"
+            text="Approve"
+            @click="handleApprove"
+          />
+          <van-button
+            class="deny-button"
+            square
+            type="primary"
+            text="Deny"
+            @click="handleDeny"
           />
         </template>
       </van-swipe-cell>
@@ -17,25 +31,41 @@
 </template>
 
 <script setup lang="ts">
-import { Dialog } from 'vant'
 import 'vant/es/dialog/style'
+import { NewFriendRequest } from '@/types'
+import { Dialog } from 'vant'
+import { PostFriendRequestDecision } from '@/api/friends'
+
+// const isApprove = ref(false)
+const handleApprove = () => {
+  // isApprove.value = true
+  PostFriendRequestDecision({
+    isApprove: true,
+  }).then((value) => {
+    console.log(value)
+  })
+}
 
 defineProps({
-  name: {
-    type: String,
-    default: 'default',
+  data: {
+    type: Object as () => NewFriendRequest,
   },
 })
 
-const handleDelete = () => {
+const handleDeny = () => {
   Dialog.confirm({
-    title: 'Are you sure to delete this request?',
-    message: 'Click OK to delete this request',
+    title: 'Are you sure to delete this friend request?',
+    message: 'Click OK to delete this friend request',
     confirmButtonText: 'Yes',
     cancelButtonText: 'No',
   })
     .then(() => {
       // on confirm
+      PostFriendRequestDecision({
+        isApprove: false,
+      }).then((value) => {
+        console.log(value)
+      })
     })
     .catch(() => {
       // on cancel
@@ -43,4 +73,22 @@ const handleDelete = () => {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.request-card {
+  margin: 0;
+  background-color: white;
+  text-align: center;
+  :deep(.van-card__title) {
+    font-size: 18px;
+    font-family: 'Gill Sans', sans-serif;
+    margin: 5px;
+  }
+}
+
+.approve-button {
+  height: 100%;
+}
+.deny-button {
+  height: 100%;
+}
+</style>
