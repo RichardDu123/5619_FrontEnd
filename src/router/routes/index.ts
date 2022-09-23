@@ -77,6 +77,11 @@ const routes: RouteRecordRaw[] = [
     name: 'user',
     component: () => import('@/views/user/index.vue'),
   },
+  {
+    path: '/pet/:petId',
+    name: 'pet',
+    component: () => import('@/components/petPage.vue'),
+  },
 ]
 
 export default routes
