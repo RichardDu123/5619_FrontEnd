@@ -1,7 +1,7 @@
 export interface Pet {
-  name: string
+  petName: string
   category: string
-  petAvatar: string
+  petImageAddress: string
   petDescription: string
 }
 
