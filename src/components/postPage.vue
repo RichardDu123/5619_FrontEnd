@@ -66,7 +66,7 @@
         >Comments</van-button
       >
       <div>
-        <van-icon name="like-o" />
+        <van-icon :name="icon" @click="clickLove" />
         <p>{{ pageContet.love }}</p>
       </div>
     </div>
@@ -78,13 +78,15 @@
 import { useRoute, useRouter } from 'vue-router'
 import { reactive, ref } from 'vue'
 import CommentList from './commentList.vue'
-import { getPostById } from '@/api/post'
+import { getPostById, createLove, deleteLove } from '@/api/post'
 import { ImagePreview } from 'vant'
 import 'vant/es/image-preview/style'
+import { computed } from 'vue'
 const route = useRoute()
 //render page
 
 const pageContet = reactive({
+  postId: '',
   topic: '',
   userAvatar: '',
   nickName: '',
@@ -99,6 +101,9 @@ const pageContet = reactive({
 const postId = route.params.postId as string
 getPostById(postId, {}).then((value) => {
   const { data } = value
+  pageContet.postId = data.postId
+  pageContet.love = data.love
+  pageContet.loved = data.loved
   pageContet.userId = data.userId
   pageContet.topic = 'default'
   pageContet.userAvatar = `data:image/png;base64,${data.userAvatar}`
@@ -126,6 +131,23 @@ const handlAvatarClick = () => {
 //preview images
 const handlePreview = () => {
   ImagePreview(pageContet.imageUrlList)
+}
+
+//click love
+
+const icon = computed(() => {
+  return pageContet.loved ? 'like' : 'like-o'
+})
+const clickLove = async () => {
+  if (!pageContet.loved) {
+    await createLove(pageContet.postId, {})
+    pageContet.loved = true
+    pageContet.love++
+  } else {
+    await deleteLove(pageContet.postId, {})
+    pageContet.loved = false
+    pageContet.love--
+  }
 }
 </script>
 

@@ -56,11 +56,13 @@
         />
       </van-cell-group>
     </div>
+
     <div class="swipeBanner">
+      <p v-if="petList.length === 0">No pet List</p>
       <van-icon name="edit" class="edit" />
       <van-swipe vertical :autoplay="3000" lazy-render class="swipe">
-        <van-swipe-item v-for="i in 4" :key="i"
-          ><pet-item @click="toPetPage"
+        <van-swipe-item v-for="pet in petList" :key="pet"
+          ><pet-item @click="toPetPage" :pet="pet"
         /></van-swipe-item>
       </van-swipe>
     </div>
@@ -72,10 +74,10 @@ import { onUnmounted, ref } from 'vue'
 import PetItem from '@views/my/components/petItem.vue'
 import { usePostStore } from '@/stores/post'
 import { computed } from 'vue'
-import router from '@/router'
-// import { Pet } from '@/types'
+import { getProfile, getProfileById } from '@/api/post'
+import { useRoute, useRouter } from 'vue-router'
 
-defineProps({
+const props = defineProps({
   type: {
     type: String,
     required: true,
@@ -85,12 +87,33 @@ defineProps({
 //data
 const postStore = usePostStore()
 const disable = computed(() => !postStore.isDeleteShow)
-const description = ref('I am a cat')
-const nickName = ref('nick')
-const defaultUrl = 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
-// const pets = ref<Pet[]>([])
+const description = ref('')
+const nickName = ref('')
+const defaultUrl = ref('')
+const petList = ref([])
+const route = useRoute()
+if (props.type === 'my') {
+  getProfile({}).then((value) => {
+    const { data } = value
+    defaultUrl.value = `data:image/png;base64,${data.userImageAddress}`
+    nickName.value = data.nickName
+    description.value = data.description
+    petList.value = data.petList
+  })
+} else {
+  getProfileById(route.params.userId as string, {}).then((value) => {
+    const { data } = value
+    defaultUrl.value = `data:image/png;base64,${data.userImageAddress}`
+    nickName.value = data.nickName
+    description.value = data.description
+    petList.value = data.petList
+  })
+}
+const router = useRouter()
 const toPetPage = () => {
-  router.push('/pets')
+  if (props.type === 'my') {
+    router.push('/pets')
+  }
 }
 
 //changeEdit
@@ -112,7 +135,7 @@ const avatarClick = () => {
 }
 const avatarUrl = computed(() => {
   return !fileList.value.length
-    ? defaultUrl
+    ? defaultUrl.value
     : fileList.value[fileList.value.length - 1].content
 })
 //Unmounted

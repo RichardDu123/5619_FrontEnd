@@ -10,7 +10,13 @@
         finished-text="reach the end"
         @load="onLoad"
       >
-        <PostItem v-for="(item, index) in postList" :key="index" :data="item" />
+        <PostItem
+          v-for="(item, index) in posts"
+          :key="index"
+          :data="item"
+          :avatar="avatarUrl"
+          @update-posts="updatePosts"
+        />
         <template #loading><van-loading color="#1989fa" /></template>
       </van-list>
     </div>
@@ -19,34 +25,35 @@
 
 <script setup lang="ts">
 import PostItem from '@/components/postItem.vue'
-import { getPosts } from '@/api/post'
-import { reactive, ref } from 'vue'
+import { getProfile } from '@/api/post'
+import { ref } from 'vue'
 import { Post } from '@/types'
 import BasicInfo from '@views/my/components/basicInfo.vue'
 import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
-const postList = ref<Array<Post[]>>([])
+const posts = ref<Array<Post[]>>([])
 const loading = ref(false)
 const finished = ref(false)
-const page = reactive({
-  currPage: 0,
-  pageSize: 10,
+const avatarUrl = ref('')
+getProfile({}).then((value) => {
+  avatarUrl.value = value.data.userImageAddress
 })
-let totalPosts = 0
 const onLoad = () => {
-  if (postList.value.length >= totalPosts) {
-    finished.value = true
-  }
+  posts.value = []
   loading.value = true
-  getPosts({ ...page }).then((value) => {
-    for (let i = 0; i < value.data.length; i = i + 2) {
-      if (i + 1 !== value.data.length) {
-        postList.value.push([value.data[i], value.data[i + 1]])
+  getProfile({}).then((value) => {
+    const {
+      data: { postList },
+    } = value
+    for (let i = 0; i < postList.length; i = i + 2) {
+      if (i + 1 !== postList.length) {
+        posts.value.push([postList[i], postList[i + 1]])
       } else {
-        postList.value.push([value.data[i], {}])
+        posts.value.push([postList[i], {}])
       }
     }
     loading.value = false
+    finished.value = true
   })
 }
 //logout
@@ -57,6 +64,11 @@ const logout = () => {
   router.push({
     name: 'login',
   })
+}
+
+//updatePosts
+const updatePosts = () => {
+  onLoad()
 }
 </script>
 

@@ -16,7 +16,12 @@
         finished-text="reach the end"
         @load="onLoad"
       >
-        <PostItem v-for="(item, index) in postList" :key="index" :data="item" />
+        <PostItem
+          v-for="(item, index) in posts"
+          :key="index"
+          :data="item"
+          :avatar="avatar"
+        />
         <template #loading><van-loading color="#1989fa" /></template>
       </van-list>
     </div>
@@ -27,31 +32,31 @@
 import BasicInfo from '@views/my/components/basicInfo.vue'
 import PostItem from '@/components/postItem.vue'
 import { Post } from '@/types'
-import { reactive, ref } from 'vue'
-import { getPosts } from '@/api/post'
-import { useRouter } from 'vue-router'
-const postList = ref<Array<Post[]>>([])
+import { ref } from 'vue'
+import { getProfileById } from '@/api/post'
+import { useRoute, useRouter } from 'vue-router'
+const posts = ref<Array<Post[]>>([])
 const loading = ref(false)
 const finished = ref(false)
-const page = reactive({
-  currPage: 0,
-  pageSize: 10,
-})
-let totalPosts = 0
+const route = useRoute()
+const avatar = ref('')
 const onLoad = () => {
-  if (postList.value.length >= totalPosts) {
-    finished.value = true
-  }
   loading.value = true
-  getPosts({ ...page }).then((value) => {
-    for (let i = 0; i < value.data.length; i = i + 2) {
-      if (i + 1 !== value.data.length) {
-        postList.value.push([value.data[i], value.data[i + 1]])
+  getProfileById(route.params.userId as string, {}).then((value) => {
+    console.log(value)
+    avatar.value = value.data.userImageAddress
+    const {
+      data: { postList },
+    } = value
+    for (let i = 0; i < postList.length; i = i + 2) {
+      if (i + 1 !== postList.length) {
+        posts.value.push([postList[i], postList[i + 1]])
       } else {
-        postList.value.push([value.data[i], {}])
+        posts.value.push([postList[i], {}])
       }
     }
     loading.value = false
+    finished.value = true
   })
 }
 const router = useRouter()

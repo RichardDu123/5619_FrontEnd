@@ -30,7 +30,9 @@
         <div class="rightFoot">
           <van-image
             round
-            :src="`data:image/png;base64,${data[0].userAvatar}`"
+            :src="`data:image/png;base64,${
+              avatar !== undefined ? avatar : data[0].userAvatar
+            }`"
             class="avatar"
           />
         </div>
@@ -66,7 +68,9 @@
         <div class="rightFoot">
           <van-image
             round
-            :src="`data:image/png;base64,${data[1].userAvatar}`"
+            :src="`data:image/png;base64,${
+              avatar !== undefined ? avatar : data[1].userAvatar
+            }`"
             class="avatar"
           />
         </div>
@@ -82,12 +86,17 @@ import 'vant/es/dialog/style'
 import { computed } from 'vue'
 import { usePostStore } from '@/stores/post'
 import { useRouter } from 'vue-router'
+import { deletePostById } from '@/api/post'
 const props = defineProps({
   data: {
     type: Array<Post>,
     required: true,
   },
+  avatar: {
+    type: String,
+  },
 })
+const emits = defineEmits(['updatePosts'])
 const handleDelete = () => {
   Dialog.confirm({
     title: 'Are you sure to delete the post?',
@@ -97,6 +106,9 @@ const handleDelete = () => {
   })
     .then(() => {
       // on confirm
+      deletePostById(props.data[0].postId, {}).then(() => {
+        emits('updatePosts')
+      })
     })
     .catch(() => {
       // on cancel

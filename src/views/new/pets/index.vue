@@ -40,7 +40,6 @@
           multiple
           :max-count="6"
           class="img"
-          :after-read-="afterReadPet"
         />
       </div>
       <div class="tag-choice-container">
@@ -64,9 +63,9 @@
           round
           color="linear-gradient(to right, #ff6034, #ee0a24)"
           class="postBtn"
-          @click="onClickSubmitPost"
+          @click="onClickSubmitPet"
         >
-          Add Post
+          Add Pet
         </van-button>
       </div>
     </div>
@@ -76,8 +75,9 @@
 <script lang="ts">
 import { useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
-import { createPet } from '@/api/post'
-
+import { createPet } from '@/api/pet'
+import { Notify } from 'vant'
+import 'vant/es/notify/style'
 export default {
   setup() {
     // route back
@@ -87,13 +87,10 @@ export default {
     }
 
     // add or change avatar
-    const avatarUrl = ref(
-      'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
-    )
+    const avatarUrl = ref('')
     const showUploader = ref(true)
     const afterReadAvatar = (file: any) => {
       avatarUrl.value = file.content
-      console.log(file)
     }
     const target = ref()
     const triggerUpload = () => {
@@ -113,28 +110,19 @@ export default {
     const petImageListArr = computed(() => {
       return petImageList.value.map((item: any) => item.content)
     })
-
-    // submit new pet
-    const onClickSubmitPost = () => {
-      createPet({
-        petName: petName.value,
-        petDescription: description.value,
-        petImageAddress: petImageListArr.value,
-      }).then((value) => {
-        console.log(value)
-      })
-    }
-
     // cat or dog
     const checked = ref('cat')
     const onClickSubmitPet = () => {
       createPet({
-        postTopic: petName.value,
-        postContent: description.value,
-        base64Data: petImageList.value,
-        tag: checked.value,
+        avatarUrl: avatarUrl.value,
+        petName: petName.value,
+        petDescription: description.value,
+        petImageListArr: petImageListArr.value,
+        category: checked.value,
       }).then((value) => {
         console.log(value)
+        Notify({ type: 'success', message: 'Successfully add pet.' })
+        route.back()
       })
     }
 
@@ -150,7 +138,6 @@ export default {
       onClickLeft,
       afterReadAvatar,
       triggerUpload,
-      onClickSubmitPost,
       onClickSubmitPet,
     }
   },
