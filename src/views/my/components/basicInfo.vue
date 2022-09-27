@@ -76,7 +76,9 @@ import { usePostStore } from '@/stores/post'
 import { computed } from 'vue'
 import { getProfile, getProfileById } from '@/api/post'
 import { useRoute, useRouter } from 'vue-router'
-
+import { updateUserInfo } from '@/api/user'
+import { Notify } from 'vant'
+import 'vant/es/notify/style'
 const props = defineProps({
   type: {
     type: String,
@@ -116,15 +118,6 @@ const toPetPage = () => {
   }
 }
 
-//changeEdit
-const status = computed(() => (postStore.isDeleteShow ? 'Save' : 'Edit'))
-const handleClick = () => {
-  if (status.value === 'Edit') {
-    postStore.isDeleteShow = true
-  } else {
-    postStore.isDeleteShow = false
-  }
-}
 //upload avatar
 const target = ref<any>(null)
 const fileList = ref<any>([])
@@ -138,6 +131,25 @@ const avatarUrl = computed(() => {
     ? defaultUrl.value
     : fileList.value[fileList.value.length - 1].content
 })
+//changeEdit
+const status = computed(() => (postStore.isDeleteShow ? 'Save' : 'Edit'))
+const handleClick = () => {
+  if (status.value === 'Edit') {
+    postStore.isDeleteShow = true
+  } else {
+    postStore.isDeleteShow = false
+    updateUserInfo({
+      userImageAddress: avatarUrl.value,
+      nickName: nickName.value,
+      description: description.value,
+    }).then((value) => {
+      if (value.message === 'Success') {
+        Notify({ type: 'success', message: 'Successfully update.' })
+      }
+    })
+  }
+}
+
 //Unmounted
 onUnmounted(() => {
   postStore.isDeleteShow = false
