@@ -5,8 +5,8 @@
         <van-card
           class="pet-card"
           :desc="data.petDescription"
-          :title="data.name"
-          :thumb="`data:image/png;base64,${data.petAvatar}`"
+          :title="data.petName"
+          :thumb="`data:image/png;base64,${data.petImageAddress}`"
           centered="centered"
         >
           <template #tags>

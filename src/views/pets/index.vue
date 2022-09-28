@@ -41,10 +41,12 @@ export default {
       GetPetList({}).then((value) => {
         console.log('value is:', value)
         for (let i = 0; i < value.data.length; i++) {
+          // console.log('name:' + value.data[i].petName)
+          // console.log('avatar:' + value.data[i].petImageAddress)
           const pet: Pet = {
-            name: value.data[i].name,
+            petName: value.data[i].petName,
             category: value.data[i].category,
-            petAvatar: value.data[i].petAvatar,
+            petImageAddress: value.data[i].petImageAddress,
             petDescription: value.data[i].petDescription,
           }
           petList.value.push(pet)
