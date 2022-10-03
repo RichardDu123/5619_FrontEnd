@@ -3,6 +3,13 @@
     <van-nav-bar title="My Profile" class="myNav" fixed />
     <van-icon name="exchange" class="logout" @click="logout" />
     <BasicInfo type="my" />
+    <van-divider :style="{ padding: '0 16px' }"> My Posts </van-divider>
+    <div class="add-first-post" @click="toAddPostPage" @load="onLoad">
+      <van-row justify="center" v-if="posts.length === 0">
+        <van-col><van-icon name="add-o" /></van-col>
+        <van-col span="10">Add your first post</van-col>
+      </van-row>
+    </div>
     <div>
       <van-list
         v-model:loading="loading"
@@ -10,13 +17,15 @@
         finished-text="reach the end"
         @load="onLoad"
       >
-        <PostItem
-          v-for="(item, index) in posts"
-          :key="index"
-          :data="item"
-          :avatar="avatarUrl"
-          @update-posts="updatePosts"
-        />
+        <div v-if="posts.length !== 0">
+          <PostItem
+            v-for="(item, index) in posts"
+            :key="index"
+            :data="item"
+            :avatar="avatarUrl"
+            @update-posts="updatePosts"
+          />
+        </div>
         <template #loading><van-loading color="#1989fa" /></template>
       </van-list>
     </div>
@@ -41,10 +50,12 @@ getProfile({}).then((value) => {
 const onLoad = () => {
   posts.value = []
   loading.value = true
+  console.log('profile on load')
   getProfile({}).then((value) => {
     const {
       data: { postList },
     } = value
+    console.log('post length:', value.date.length)
     for (let i = 0; i < postList.length; i = i + 2) {
       if (i + 1 !== postList.length) {
         posts.value.push([postList[i], postList[i + 1]])
@@ -70,11 +81,18 @@ const logout = () => {
 const updatePosts = () => {
   onLoad()
 }
+
+const toAddPostPage = () => {
+  router.push('/addPost')
+}
 </script>
 
 <style lang="less" scoped>
 .myContainer {
   position: relative;
+  .add-first-post {
+    text-align: center;
+  }
   .logout {
     font-size: 32px;
     top: 60px;

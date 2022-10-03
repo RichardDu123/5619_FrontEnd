@@ -54,6 +54,7 @@ const onLoad = () => {
   }
   loading.value = true
   getPosts({ ...page }).then((value) => {
+    console.log('home page post length:', value.data.length)
     for (let i = 0; i < value.data.length; i = i + 2) {
       if (i + 1 !== value.data.length) {
         postList.value.push([value.data[i], value.data[i + 1]])
