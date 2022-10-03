@@ -47,20 +47,33 @@ const page = reactive({
   currPage: 0,
   pageSize: 10,
 })
-let totalPosts = 0
+let totalPosts = ref(+Infinity)
 const onLoad = () => {
-  if (postList.value.length >= totalPosts) {
-    finished.value = true
-  }
+  console.log(
+    `load执行了,postList长度为${postList.value.length},total的长度为${
+      postList.value.length * 2
+    },currPage为${page.currPage}`
+  )
   loading.value = true
   getPosts({ ...page }).then((value) => {
+    console.log(value)
     for (let i = 0; i < value.data.length; i = i + 2) {
       if (i + 1 !== value.data.length) {
         postList.value.push([value.data[i], value.data[i + 1]])
       } else {
         postList.value.push([value.data[i], {}])
       }
-      totalPosts = value.data[i].totalPosts
+      totalPosts.value = value.data[i].totalPosts
+      page.currPage = page.currPage + 2
+      if (postList.value.length * 2 >= totalPosts.value) {
+        console.log('结束时的长度为', postList.value.length * 2)
+
+        finished.value = true
+        break
+      }
+    }
+    if (totalPosts.value - postList.value.length * 2 < page.pageSize) {
+      page.pageSize = totalPosts.value - postList.value.length * 2
     }
     loading.value = false
   })
@@ -75,13 +88,13 @@ const onChange = (value: number) => {
   console.log(value)
   postList.value = []
   finished.value = false
-  totalPosts = 0
+  totalPosts.value = 0
 }
 </script>
 
 <style lang="less" scoped>
 .homeContainer {
-  margin-bottom: 50px;
+  margin-bottom: 38px;
   overflow: hidden;
 
   .search {

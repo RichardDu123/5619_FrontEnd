@@ -2,7 +2,7 @@
   <div class="petContainer">
     <van-image
       class="petImg"
-      :src="`data:image/png;base64,${pet.petImageAddress}`"
+      :src="`http://${pet.petImageAddress}`"
       fit="cover"
     />
     <div class="petInfo">

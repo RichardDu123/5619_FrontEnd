@@ -35,3 +35,11 @@ export const getProfileById = (url: string, params: object): Promise<any> => {
 export const deletePostById = (url: string, params: object): Promise<any> => {
   return request(`/post/deletePost/${url}`, 'delete', params)
 }
+
+export const addComment = (postId: string, params: object): Promise<any> => {
+  return request(`/Post/addComment/${postId}`, 'post', params)
+}
+
+export const getCommets = (postId: string, params: object): Promise<any> => {
+  return request(`getCommentsByPostId/${postId}`, 'get', params)
+}

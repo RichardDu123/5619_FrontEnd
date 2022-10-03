@@ -97,7 +97,7 @@ const route = useRoute()
 if (props.type === 'my') {
   getProfile({}).then((value) => {
     const { data } = value
-    defaultUrl.value = `data:image/png;base64,${data.userImageAddress}`
+    defaultUrl.value = `http://${data.userImageAddress}`
     nickName.value = data.nickName
     description.value = data.description
     petList.value = data.petList
@@ -105,7 +105,7 @@ if (props.type === 'my') {
 } else {
   getProfileById(route.params.userId as string, {}).then((value) => {
     const { data } = value
-    defaultUrl.value = `data:image/png;base64,${data.userImageAddress}`
+    defaultUrl.value = `http://${data.userImageAddress}`
     nickName.value = data.nickName
     description.value = data.description
     petList.value = data.petList

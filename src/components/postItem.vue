@@ -6,7 +6,7 @@
       @click="handleItemClick(data[0].postId)"
     >
       <van-image
-        :src="`data:image/png;base64,${data[0].imageUrlList[0]}`"
+        :src="`http://${data[0].imageUrlList[0]}`"
         fit="cover"
         class="img"
       >
@@ -30,7 +30,7 @@
         <div class="rightFoot">
           <van-image
             round
-            :src="`data:image/png;base64,${
+            :src="`http://${
               avatar !== undefined ? avatar : data[0].userAvatar
             }`"
             class="avatar"
@@ -44,7 +44,7 @@
       @click="handleItemClick(data[1].postId)"
     >
       <van-image
-        :src="`data:image/png;base64,${data[1].imageUrlList[0]}`"
+        :src="`http://${data[1].imageUrlList[0]}`"
         fit="cover"
         class="img"
       >
@@ -68,7 +68,7 @@
         <div class="rightFoot">
           <van-image
             round
-            :src="`data:image/png;base64,${
+            :src="`http://${
               avatar !== undefined ? avatar : data[1].userAvatar
             }`"
             class="avatar"

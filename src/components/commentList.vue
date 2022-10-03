@@ -6,7 +6,11 @@
       finished-text="no more comments"
       @load="onLoad"
     >
-      <CommentItem v-for="i in 4" :key="i" />
+      <CommentItem
+        v-for="(comment, index) in comments"
+        :key="index"
+        :comment="comment"
+      />
     </van-list>
   </div>
 </template>
@@ -14,26 +18,31 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import CommentItem from './commentItem.vue'
-
-const list = ref<number[]>([])
+import { getCommets } from '@/api/post'
+const porps = defineProps<{ id: string }>()
 const loading = ref(false)
 const finished = ref(false)
-
+const comments = ref<any[]>([])
 const onLoad = () => {
-  setTimeout(() => {
-    for (let i = 0; i < 10; i++) {
-      list.value.push(list.value.length + 1)
-    }
-
-    // 加载状态结束
+  loading.value = true
+  getCommets(porps.id, {}).then((value) => {
+    const { data } = value
+    data.forEach((item: any) => {
+      comments.value.push({
+        userName: item.userName,
+        nickName: item.nickName,
+        avatar: item.userAvatar,
+        content: item.commentContent,
+      })
+    })
+    console.log(comments.value)
     loading.value = false
-
-    // 数据全部加载完成
-    if (list.value.length >= 40) {
-      finished.value = true
-    }
-  }, 1000)
+    finished.value = true
+  })
 }
+defineExpose({
+  onLoad,
+})
 </script>
 
 <style scoped lang="less">

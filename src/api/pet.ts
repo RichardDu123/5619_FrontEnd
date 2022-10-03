@@ -7,3 +7,7 @@ export const GetPetList = (params: object): Promise<any> => {
 export const createPet = (params: object): Promise<any> => {
   return request('/pet/newPet', 'post', params)
 }
+
+export const getPetById = (url: string, params: object): Promise<any> => {
+  return request(`/pet/${url}`, 'get', params)
+}
