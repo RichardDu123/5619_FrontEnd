@@ -27,9 +27,6 @@
       </van-cell-group>
       <br />
       <div style="margin: 16px">
-        <van-button @click="show = true" round type="default" class="signUpBtn"
-          >Sign up
-        </van-button>
         <van-button
           round
           block
@@ -41,6 +38,9 @@
         >
           Sign in
         </van-button>
+        <van-button @click="show = true" round type="default" class="signUpBtn"
+          >Sign up
+        </van-button>
       </div>
     </van-form>
     <p class="forgot" @click="forgotShow = true">Forgot password?</p>
@@ -49,7 +49,7 @@
     </van-overlay>
     <van-dialog
       v-model:show="forgotShow"
-      title="Please enter email address"
+      title="Reset your password"
       close-on-click-overlay
       show-cancel-button
       confirm-button-text="OK"
@@ -86,10 +86,10 @@
               >
             </template>
           </van-field>
-          <van-field v-model="code" placeholder="varification code" />
+          <van-field v-model="code" placeholder="Verification Code" />
           <van-field
             v-model="newPassword"
-            placeholder="password"
+            placeholder="New Password"
             :rules="[{ validator: passwordValidator }]"
             type="password"
           />
@@ -211,7 +211,7 @@ const sendEmail = () => {
         Toast(err)
       })
   } else {
-    Toast('Need more information')
+    Toast('Please enter a valid email address')
   }
 }
 const resetPass = () => {
@@ -249,7 +249,6 @@ const resetPass = () => {
     margin-left: 50px;
     width: 250px;
     height: 40px;
-    margin-bottom: 20px;
     border-color: black;
   }
   .loginBtn {
@@ -259,6 +258,7 @@ const resetPass = () => {
     }
     width: 250px;
     height: 40px;
+    margin-bottom: 20px;
     margin-left: 50px;
   }
 }
