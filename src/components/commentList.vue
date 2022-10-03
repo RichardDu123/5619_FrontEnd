@@ -3,7 +3,7 @@
     <van-list
       v-model:loading="loading"
       :finished="finished"
-      finished-text="no more comments"
+      finished-text="No more comments"
       @load="onLoad"
     >
       <CommentItem
