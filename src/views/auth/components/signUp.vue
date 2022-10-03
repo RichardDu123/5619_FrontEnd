@@ -18,7 +18,7 @@
             v-model="Email"
             name="Email"
             label="Email"
-            placeholder="Email"
+            placeholder="email"
             :rules="[{ validator: emailValidator }]"
             left-icon="envelop-o"
             autocomplete="off"
@@ -37,7 +37,7 @@
             type="password"
             name="repassword"
             label=""
-            placeholder="Confirm Password"
+            placeholder="confirm password"
             :rules="[{ validator: repasswordValidator }]"
             left-icon="shield-o"
           />
