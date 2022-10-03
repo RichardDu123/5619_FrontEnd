@@ -37,10 +37,11 @@
 </template>
 
 <script lang="ts">
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { reactive } from 'vue'
 import { ImagePreview } from 'vant'
 import 'vant/es/image-preview/style'
+import { getPetById } from '@/api/pet'
 export default {
   setup() {
     // route back
@@ -48,6 +49,10 @@ export default {
     const onClickLeft = () => {
       route.back()
     }
+    const currRoute = useRoute()
+    getPetById(currRoute.params.petId as string, {}).then((value) =>
+      console.log(value)
+    )
     const petContent = reactive({
       petAvatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
       petName: 'meow',

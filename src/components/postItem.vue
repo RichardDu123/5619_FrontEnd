@@ -6,7 +6,7 @@
       @click="handleItemClick(data[0].postId)"
     >
       <van-image
-        :src="`data:image/png;base64,${data[0].imageUrlList[0]}`"
+        :src="`http://${data[0].imageUrlList[0]}`"
         fit="cover"
         class="img"
       >
@@ -27,25 +27,15 @@
         <div class="foot-title">
           {{ data[0].topic }}
         </div>
-        <div style="margin-right: 5px; margin-left: 5px">
-          <van-row justify="end">
-            <van-col span="3" style="margin: auto">
-              <van-icon name="like-o" />
-            </van-col>
-            <van-col span="5">
-              <p>123</p>
-            </van-col>
-            <van-col span="12"></van-col>
-            <van-col span="4" class="rightFoot">
-              <van-image
-                round
-                :src="`data:image/png;base64,${
-                  avatar !== undefined ? avatar : data[0].userAvatar
-                }`"
-                class="avatar"
-              />
-            </van-col>
-          </van-row>
+        <div class="rightFoot">
+          <van-image
+            round
+            :src="`http://${
+              avatar !== undefined ? avatar : data[0].userAvatar
+            }`"
+            class="avatar"
+          />
+
         </div>
       </div>
     </div>
@@ -55,7 +45,7 @@
       @click="handleItemClick(data[1].postId)"
     >
       <van-image
-        :src="`data:image/png;base64,${data[1].imageUrlList[0]}`"
+        :src="`http://${data[1].imageUrlList[0]}`"
         fit="cover"
         class="img"
       >
@@ -76,25 +66,16 @@
         <div class="foot-title">
           {{ data[1].topic }}
         </div>
-        <div style="margin-right: 5px; margin-left: 5px">
-          <van-row justify="end">
-            <van-col span="3" style="margin: auto">
-              <van-icon name="like-o" />
-            </van-col>
-            <van-col span="5">
-              <p>123</p>
-            </van-col>
-            <van-col span="12"></van-col>
-            <van-col span="4" class="rightFoot">
-              <van-image
-                round
-                :src="`data:image/png;base64,${
-                  avatar !== undefined ? avatar : data[1].userAvatar
-                }`"
-                class="avatar"
-              />
-            </van-col>
-          </van-row>
+
+        <div class="rightFoot">
+          <van-image
+            round
+            :src="`http://${
+              avatar !== undefined ? avatar : data[1].userAvatar
+            }`"
+            class="avatar"
+          />
+
         </div>
       </div>
     </div>

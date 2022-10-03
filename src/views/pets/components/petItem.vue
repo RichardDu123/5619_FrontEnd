@@ -6,8 +6,8 @@
           class="pet-card"
           :desc="data.petDescription"
           :title="data.petName"
-          :thumb="`data:image/png;base64,${data.petImageAddress}`"
-          centered="centered"
+          :thumb="`http://${data.petImageAddress}`"
+          centered
         >
           <template #tags>
             <van-tag plain type="danger">{{ data.category }}</van-tag>
@@ -36,6 +36,7 @@ import { Dialog } from 'vant'
 defineProps({
   data: {
     type: Object as () => Pet,
+    required: true,
   },
 })
 

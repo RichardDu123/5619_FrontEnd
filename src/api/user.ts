@@ -16,3 +16,6 @@ export const sendCode = (params: object): Promise<any> => {
 export const resetPassword = (params: object): Promise<any> => {
   return request('/validate', 'post', params)
 }
+export const updateUserInfo = (params: object): Promise<any> => {
+  return request('/edit', 'post', params)
+}

@@ -15,7 +15,12 @@
         finished-text="No more pets"
         @load="onLoad"
       >
-        <PetItem v-for="item in petList" :data="item" :key="item" />
+        <PetItem
+          v-for="item in petList"
+          :data="item"
+          :key="item"
+          @click="handlePet(item.petId)"
+        />
       </van-list>
     </div>
   </div>
@@ -48,6 +53,7 @@ export default {
             category: value.data[i].category,
             petImageAddress: value.data[i].petImageAddress,
             petDescription: value.data[i].petDescription,
+            petId: value.data[i].petId,
           }
           petList.value.push(pet)
         }
@@ -59,7 +65,14 @@ export default {
     const onClickLeft = () => {
       router.back()
     }
-
+    const handlePet = (id: string) => {
+      router.push({
+        name: 'pet',
+        params: {
+          petId: id,
+        },
+      })
+    }
     return {
       PetItem,
       petList,
@@ -67,6 +80,7 @@ export default {
       finished,
       onLoad,
       onClickLeft,
+      handlePet,
     }
   },
 }

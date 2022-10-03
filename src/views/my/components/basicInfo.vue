@@ -87,7 +87,9 @@ import { usePostStore } from '@/stores/post'
 import { computed } from 'vue'
 import { getProfile, getProfileById } from '@/api/post'
 import { useRoute, useRouter } from 'vue-router'
-
+import { updateUserInfo } from '@/api/user'
+import { Notify } from 'vant'
+import 'vant/es/notify/style'
 const props = defineProps({
   type: {
     type: String,
@@ -106,7 +108,7 @@ const route = useRoute()
 if (props.type === 'my') {
   getProfile({}).then((value) => {
     const { data } = value
-    defaultUrl.value = `data:image/png;base64,${data.userImageAddress}`
+    defaultUrl.value = `http://${data.userImageAddress}`
     nickName.value = data.nickName
     description.value = data.description
     petList.value = data.petList
@@ -114,7 +116,7 @@ if (props.type === 'my') {
 } else {
   getProfileById(route.params.userId as string, {}).then((value) => {
     const { data } = value
-    defaultUrl.value = `data:image/png;base64,${data.userImageAddress}`
+    defaultUrl.value = `http://${data.userImageAddress}`
     nickName.value = data.nickName
     description.value = data.description
     petList.value = data.petList
@@ -127,21 +129,6 @@ const toPetPage = () => {
   }
 }
 
-const toAddPetPage = () => {
-  if (props.type === 'my') {
-    router.push('/addPet')
-  }
-}
-
-//changeEdit
-const status = computed(() => (postStore.isDeleteShow ? 'Save' : 'Edit'))
-const handleClick = () => {
-  if (status.value === 'Edit') {
-    postStore.isDeleteShow = true
-  } else {
-    postStore.isDeleteShow = false
-  }
-}
 //upload avatar
 const target = ref<any>(null)
 const fileList = ref<any>([])
@@ -155,6 +142,25 @@ const avatarUrl = computed(() => {
     ? defaultUrl.value
     : fileList.value[fileList.value.length - 1].content
 })
+//changeEdit
+const status = computed(() => (postStore.isDeleteShow ? 'Save' : 'Edit'))
+const handleClick = () => {
+  if (status.value === 'Edit') {
+    postStore.isDeleteShow = true
+  } else {
+    postStore.isDeleteShow = false
+    updateUserInfo({
+      userImageAddress: avatarUrl.value,
+      nickName: nickName.value,
+      description: description.value,
+    }).then((value) => {
+      if (value.message === 'Success') {
+        Notify({ type: 'success', message: 'Successfully update.' })
+      }
+    })
+  }
+}
+
 //Unmounted
 onUnmounted(() => {
   postStore.isDeleteShow = false

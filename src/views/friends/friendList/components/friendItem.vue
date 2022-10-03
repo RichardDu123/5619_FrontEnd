@@ -6,8 +6,8 @@
           class="friend-card"
           :desc="data.description"
           :title="data.name"
-          :thumb="`data:image/png;base64,${data.userAvatar}`"
-          centered="centered"
+          :thumb="`http://${data.userAvatar}`"
+          centered
         />
         <!--        <van-card :border="false" :value="name" />-->
         <template #right>
@@ -32,6 +32,7 @@ import 'vant/es/dialog/style'
 defineProps({
   data: {
     type: Object as () => User,
+    required: true,
   },
 })
 

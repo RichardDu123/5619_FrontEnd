@@ -39,7 +39,7 @@
     >
       <template #default>
         <h3>comments</h3>
-        <comment-list />
+        <comment-list :id="postId" ref="target" />
         <div class="newComment">
           <van-cell-group inset>
             <van-field
@@ -51,7 +51,9 @@
               placeholder="Enter your comment"
             />
           </van-cell-group>
-          <van-button type="primary" size="small">send</van-button>
+          <van-button type="primary" size="small" @click="postMessage"
+            >send</van-button
+          >
         </div>
       </template>
     </van-popup>
@@ -59,10 +61,10 @@
       <van-button
         type="primary"
         size="large"
-        @click="show = true"
         round
         color="linear-gradient(to right, #4e9aec, #2b89ee)"
         class="btn"
+        @click="clickComment"
         >Comments</van-button
       >
       <div>
@@ -74,14 +76,15 @@
 </template>
 )
 <script setup lang="ts">
-// :src="`data:image/png;base64,${data[0].imageUrlList[0]}`"
 import { useRoute, useRouter } from 'vue-router'
 import { reactive, ref } from 'vue'
 import CommentList from './commentList.vue'
-import { getPostById, createLove, deleteLove } from '@/api/post'
+import { getPostById, createLove, deleteLove, addComment } from '@/api/post'
 import { ImagePreview } from 'vant'
 import 'vant/es/image-preview/style'
 import { computed } from 'vue'
+import { Notify } from 'vant'
+import 'vant/es/notify/style'
 const route = useRoute()
 //render page
 
@@ -106,17 +109,28 @@ getPostById(postId, {}).then((value) => {
   pageContet.loved = data.loved
   pageContet.userId = data.userId
   pageContet.topic = 'default'
-  pageContet.userAvatar = `data:image/png;base64,${data.userAvatar}`
+  pageContet.userAvatar = `http://${data.userAvatar}`
   pageContet.nickName = data.nickName
   pageContet.userName = data.userName
   data.imageUrlList.forEach((item: string[]) => {
-    pageContet.imageUrlList.push(`data:image/png;base64,${item}`)
+    pageContet.imageUrlList.push(`http://${item}`)
   })
   pageContet.content = data.postContent
 })
 //comment
 const show = ref(false)
 const message = ref('')
+const postMessage = () => {
+  addComment(pageContet.postId, { commentContent: message.value }).then(
+    (value) => {
+      if (value.status === 200) {
+        message.value = ''
+        show.value = false
+        Notify({ type: 'success', message: 'Success.' })
+      }
+    }
+  )
+}
 
 //avatar click
 const router = useRouter()
@@ -134,7 +148,6 @@ const handlePreview = () => {
 }
 
 //click love
-
 const icon = computed(() => {
   return pageContet.loved ? 'like' : 'like-o'
 })
@@ -148,6 +161,12 @@ const clickLove = async () => {
     pageContet.loved = false
     pageContet.love--
   }
+}
+//comment
+const target = ref<InstanceType<typeof CommentList> | null>(null)
+const clickComment = () => {
+  target.value?.onLoad()
+  show.value = true
 }
 </script>
 

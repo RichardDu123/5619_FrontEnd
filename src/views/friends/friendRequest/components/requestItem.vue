@@ -6,8 +6,8 @@
           class="request-card"
           :desc="data.requestText"
           :title="data.userName"
-          :thumb="`data:image/png;base64,${data.userAvatar}`"
-          centered="centered"
+          :thumb="`http://${data.userAvatar}`"
+          centered
         />
         <template #right>
           <van-button
@@ -49,6 +49,7 @@ const handleApprove = () => {
 defineProps({
   data: {
     type: Object as () => NewFriendRequest,
+    required: true,
   },
 })
 

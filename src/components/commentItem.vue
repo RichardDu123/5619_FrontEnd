@@ -1,22 +1,24 @@
 <template>
   <div class="commentItem">
-    <van-image
-      round
-      fit="cover"
-      src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
-      class="avatar"
-    />
+    <van-image round fit="cover" :src="comment.avatar" class="avatar" />
     <div class="text">
-      <p>name</p>
       <p>
-        My cat My catMy catMy catMy catMy catMy catMy catMy catMy catMy catMy
-        cat My cat
+        {{
+          comment.nickName === 'lazy to set name'
+            ? comment.userName
+            : comment.nickName
+        }}
+      </p>
+      <p>
+        {{ comment.content }}
       </p>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{ comment: any }>()
+</script>
 
 <style scoped lang="less">
 .commentItem {
