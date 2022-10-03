@@ -55,7 +55,7 @@ const onLoad = () => {
     const {
       data: { postList },
     } = value
-    console.log('post length:', value.date.length)
+    // console.log('post length:', value.data.length)
     for (let i = 0; i < postList.length; i = i + 2) {
       if (i + 1 !== postList.length) {
         posts.value.push([postList[i], postList[i + 1]])

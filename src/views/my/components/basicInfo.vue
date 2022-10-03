@@ -61,7 +61,7 @@
     <div
       class="add-first-pet"
       @click="toAddPetPage"
-      v-if="petList.length === 0"
+      v-if="petList.length === 0 && type === 'my'"
     >
       <van-row justify="center">
         <van-col><van-icon name="add-o" /></van-col>
@@ -69,7 +69,7 @@
       </van-row>
     </div>
 
-    <div class="swipeBanner" v-if="petList.length !== 0">
+    <div class="swipeBanner" v-if="petList.length !== 0 && type === 'my'">
       <van-icon name="edit" class="edit" />
       <van-swipe vertical :autoplay="3000" lazy-render class="swipe">
         <van-swipe-item v-for="pet in petList" :key="pet"
@@ -126,6 +126,12 @@ const router = useRouter()
 const toPetPage = () => {
   if (props.type === 'my') {
     router.push('/pets')
+  }
+}
+
+const toAddPetPage = () => {
+  if (props.type === 'my') {
+    router.push('/addPet')
   }
 }
 
