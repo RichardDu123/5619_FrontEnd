@@ -1,35 +1,40 @@
 <template>
   <div class="pageContainer">
-    <van-nav-bar
-      left-arrow
-      :title="pageContet.topic"
-      class="myNav"
-      fixed
-      @click-left="$router.back()"
-    />
-    <div class="avatarBanner">
-      <van-image
-        round
-        fit="cover"
-        :src="pageContet.userAvatar"
-        class="avatar"
-        @click="handlAvatarClick"
+    <div class="post-page-header">
+      <van-nav-bar
+        left-arrow
+        title="Post"
+        class="myNav"
+        fixed
+        @click-left="$router.back()"
       />
-      <span>{{
-        pageContet.nickName === 'lazy to set name'
-          ? pageContet.userName
-          : pageContet.nickName
-      }}</span>
+      <div class="avatarBanner" style="">
+        <van-image
+          round
+          fit="cover"
+          :src="pageContent.userAvatar"
+          class="avatar"
+          @click="handlAvatarClick"
+        />
+        <span>{{
+          pageContent.nickName === 'lazy to set name'
+            ? pageContent.userName
+            : pageContent.nickName
+        }}</span>
+      </div>
     </div>
-    <van-swipe :autoplay="3000" lazy-render class="imgSwipe">
-      <van-swipe-item v-for="image in pageContet.imageUrlList" :key="image">
-        <img :src="image" @click="handlePreview" />
-      </van-swipe-item>
-    </van-swipe>
-    <van-divider />
-    <p class="content">
-      {{ pageContet.content }}
-    </p>
+    <div class="post-content-container">
+      <van-swipe :autoplay="3000" lazy-render class="imgSwipe">
+        <van-swipe-item v-for="image in pageContent.imageUrlList" :key="image">
+          <img :src="image" @click="handlePreview" />
+        </van-swipe-item>
+      </van-swipe>
+      <van-divider />
+      <div class="content">
+        <h3>{{ pageContent.topic }}</h3>
+        <p>{{ pageContent.content }}</p>
+      </div>
+    </div>
     <van-popup
       closeable
       v-model:show="show"
@@ -38,8 +43,8 @@
       class="popup"
     >
       <template #default>
-        <h3>comments</h3>
-        <comment-list :id="postId" ref="target" />
+        <h3 class="comment-button">Comments</h3>
+        <CommentList :id="postId" ref="target" />
         <div class="newComment">
           <van-cell-group inset>
             <van-field
@@ -51,25 +56,28 @@
               placeholder="Enter your comment"
             />
           </van-cell-group>
-          <van-button type="primary" size="small" @click="postMessage"
-            >send</van-button
+          <van-button type="primary" round size="small" @click="postMessage"
+            >Send</van-button
           >
         </div>
       </template>
     </van-popup>
+
     <div class="footer">
       <van-button
         type="primary"
         size="large"
         round
         color="linear-gradient(to right, #4e9aec, #2b89ee)"
-        class="btn"
+        class="footer-button"
         @click="clickComment"
-        >Comments</van-button
       >
+        <van-icon name="chat-o" style="margin-right: 5px" />
+        Comments
+      </van-button>
       <div>
-        <van-icon :name="icon" @click="clickLove" />
-        <p>{{ pageContet.love }}</p>
+        <van-icon :name="icon" size="25px" color="red" @click="clickLove" />
+        <p class="post-page-love">{{ pageContent.love }}</p>
       </div>
     </div>
   </div>
@@ -88,7 +96,7 @@ import 'vant/es/notify/style'
 const route = useRoute()
 //render page
 
-const pageContet = reactive({
+const pageContent = reactive({
   postId: '',
   topic: '',
   userAvatar: '',
@@ -104,24 +112,24 @@ const pageContet = reactive({
 const postId = route.params.postId as string
 getPostById(postId, {}).then((value) => {
   const { data } = value
-  pageContet.postId = data.postId
-  pageContet.love = data.love
-  pageContet.loved = data.loved
-  pageContet.userId = data.userId
-  pageContet.topic = 'default'
-  pageContet.userAvatar = `http://${data.userAvatar}`
-  pageContet.nickName = data.nickName
-  pageContet.userName = data.userName
+  pageContent.postId = data.postId
+  pageContent.love = data.love
+  pageContent.loved = data.loved
+  pageContent.userId = data.userId
+  pageContent.topic = data.topic
+  pageContent.userAvatar = `http://${data.userAvatar}`
+  pageContent.nickName = data.nickName
+  pageContent.userName = data.userName
   data.imageUrlList.forEach((item: string[]) => {
-    pageContet.imageUrlList.push(`http://${item}`)
+    pageContent.imageUrlList.push(`http://${item}`)
   })
-  pageContet.content = data.postContent
+  pageContent.content = data.postContent
 })
 //comment
 const show = ref(false)
 const message = ref('')
 const postMessage = () => {
-  addComment(pageContet.postId, { commentContent: message.value }).then(
+  addComment(pageContent.postId, { commentContent: message.value }).then(
     (value) => {
       if (value.status === 200) {
         message.value = ''
@@ -138,28 +146,28 @@ const handlAvatarClick = () => {
   router.push({
     name: 'user',
     params: {
-      userId: pageContet.userId,
+      userId: pageContent.userId,
     },
   })
 }
 //preview images
 const handlePreview = () => {
-  ImagePreview(pageContet.imageUrlList)
+  ImagePreview(pageContent.imageUrlList)
 }
 
 //click love
 const icon = computed(() => {
-  return pageContet.loved ? 'like' : 'like-o'
+  return pageContent.loved ? 'like' : 'like-o'
 })
 const clickLove = async () => {
-  if (!pageContet.loved) {
-    await createLove(pageContet.postId, {})
-    pageContet.loved = true
-    pageContet.love++
+  if (!pageContent.loved) {
+    await createLove(pageContent.postId, {})
+    pageContent.loved = true
+    pageContent.love++
   } else {
-    await deleteLove(pageContet.postId, {})
-    pageContet.loved = false
-    pageContet.love--
+    await deleteLove(pageContent.postId, {})
+    pageContent.loved = false
+    pageContent.love--
   }
 }
 //comment
@@ -172,66 +180,83 @@ const clickComment = () => {
 
 <style scoped lang="less">
 .pageContainer {
-  padding-top: 50px;
-  .footer {
-    margin-bottom: 20px;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    .btn {
-      width: 320px;
-    }
-    p {
-      margin: 0;
-    }
-  }
+  padding-top: 44px;
   :deep(.van-button--large) {
     width: 80%;
   }
   :deep(.van-popup--bottom) {
     height: 500px;
   }
-  h3 {
-    text-align: center;
-  }
-  .btn {
-    width: 200px;
-    background: pink;
-  }
-  .newComment {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-  }
-  .content {
-    margin: 20px 10px;
-    word-wrap: break-word;
-    max-height: 330px;
-    overflow-y: scroll;
-  }
-  .imgSwipe {
-    margin-top: 20px;
-    height: 200px;
+
+  .post-page-header {
+    position: fixed;
+    z-index: 1;
     width: 100%;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+    .avatarBanner {
+      padding: 10px 0 10px 20px;
+      display: flex;
+      justify-self: start;
+      align-items: center;
+      background-color: white;
+      .avatar {
+        width: 60px;
+        height: 60px;
+        margin-right: 20px;
+      }
     }
   }
-  .avatarBanner {
-    margin-top: 20px;
-    margin-left: 20px;
+
+  .post-content-container {
+    margin-top: 82px;
+    //background-color: white;
+    .imgSwipe {
+      margin-top: 20px;
+      height: 200px;
+      width: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+    .content {
+      //margin: 20px 20px;
+      padding: 0 20px;
+      word-wrap: break-word;
+      max-height: 330px;
+      overflow-y: scroll;
+    }
+  }
+
+  .footer {
+    border-top: 1px solid lightgray;
+    padding-top: 15px;
+    margin-bottom: 15px;
+    z-index: 1;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
     display: flex;
-    justify-self: start;
+    justify-content: space-evenly;
     align-items: center;
-    .avatar {
-      width: 60px;
-      height: 60px;
-      margin-right: 20px;
+    .footer-button {
+      width: 300px;
+    }
+    .post-page-love {
+      text-align: center;
+      margin: 0;
+    }
+  }
+
+  .popup {
+    .comment-button {
+      text-align: center;
+    }
+    .newComment {
+      display: flex;
+      align-items: center;
+      margin-top: 25px;
+      margin-right: 25px;
     }
   }
 }
