@@ -24,17 +24,28 @@
         v-if="isDeleteShow"
       />
       <div class="foot">
-        <div class="leftFoot">
+        <div class="foot-title">
           {{ data[0].topic }}
         </div>
-        <div class="rightFoot">
-          <van-image
-            round
-            :src="`data:image/png;base64,${
-              avatar !== undefined ? avatar : data[0].userAvatar
-            }`"
-            class="avatar"
-          />
+        <div style="margin-right: 5px; margin-left: 5px">
+          <van-row justify="end">
+            <van-col span="3" style="margin: auto">
+              <van-icon name="like-o" />
+            </van-col>
+            <van-col span="5">
+              <p>123</p>
+            </van-col>
+            <van-col span="12"></van-col>
+            <van-col span="4" class="rightFoot">
+              <van-image
+                round
+                :src="`data:image/png;base64,${
+                  avatar !== undefined ? avatar : data[0].userAvatar
+                }`"
+                class="avatar"
+              />
+            </van-col>
+          </van-row>
         </div>
       </div>
     </div>
@@ -62,17 +73,28 @@
         v-if="isDeleteShow"
       />
       <div class="foot">
-        <div class="leftFoot">
+        <div class="foot-title">
           {{ data[1].topic }}
         </div>
-        <div class="rightFoot">
-          <van-image
-            round
-            :src="`data:image/png;base64,${
-              avatar !== undefined ? avatar : data[1].userAvatar
-            }`"
-            class="avatar"
-          />
+        <div style="margin-right: 5px; margin-left: 5px">
+          <van-row justify="end">
+            <van-col span="3" style="margin: auto">
+              <van-icon name="like-o" />
+            </van-col>
+            <van-col span="5">
+              <p>123</p>
+            </van-col>
+            <van-col span="12"></van-col>
+            <van-col span="4" class="rightFoot">
+              <van-image
+                round
+                :src="`data:image/png;base64,${
+                  avatar !== undefined ? avatar : data[1].userAvatar
+                }`"
+                class="avatar"
+              />
+            </van-col>
+          </van-row>
         </div>
       </div>
     </div>
@@ -160,23 +182,25 @@ const handleItemClick = (id: string) => {
       }
     }
     .foot {
-      height: 38px;
-      display: flex;
+      height: 80px;
       border-bottom-right-radius: 10px;
       border-bottom-left-radius: 10px;
       background-color: white;
-      justify-content: space-between;
-      .leftFoot {
-        line-height: 38px;
+      .foot-title {
+        line-height: 30px;
         text-align: left;
         padding-left: 5px;
         font-size: 15px;
         .mixin-line-clamp(1);
       }
+      .leftFoot {
+      }
       .rightFoot {
+        margin: auto;
+
         .avatar {
-          margin-top: 3px;
-          margin-right: 5px;
+          //margin-top: 3px;
+          //margin-right: 5px;
           width: 32px;
           height: 32px;
         }
