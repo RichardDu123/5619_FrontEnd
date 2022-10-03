@@ -24,7 +24,7 @@
         v-if="isDeleteShow"
       />
       <div class="foot">
-        <div class="foot-title">
+        <div class="leftFoot">
           {{ data[0].topic }}
         </div>
         <div class="rightFoot">
@@ -35,7 +35,6 @@
             }`"
             class="avatar"
           />
-
         </div>
       </div>
     </div>
@@ -63,10 +62,9 @@
         v-if="isDeleteShow"
       />
       <div class="foot">
-        <div class="foot-title">
+        <div class="leftFoot">
           {{ data[1].topic }}
         </div>
-
         <div class="rightFoot">
           <van-image
             round
@@ -75,7 +73,6 @@
             }`"
             class="avatar"
           />
-
         </div>
       </div>
     </div>
@@ -163,25 +160,23 @@ const handleItemClick = (id: string) => {
       }
     }
     .foot {
-      height: 80px;
+      height: 38px;
+      display: flex;
       border-bottom-right-radius: 10px;
       border-bottom-left-radius: 10px;
       background-color: white;
-      .foot-title {
-        line-height: 30px;
+      justify-content: space-between;
+      .leftFoot {
+        line-height: 38px;
         text-align: left;
         padding-left: 5px;
         font-size: 15px;
         .mixin-line-clamp(1);
       }
-      .leftFoot {
-      }
       .rightFoot {
-        margin: auto;
-
         .avatar {
-          //margin-top: 3px;
-          //margin-right: 5px;
+          margin-top: 3px;
+          margin-right: 5px;
           width: 32px;
           height: 32px;
         }
