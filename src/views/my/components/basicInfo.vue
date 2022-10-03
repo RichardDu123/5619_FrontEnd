@@ -34,6 +34,7 @@
         >Friend</van-button
       >
     </div>
+    <van-divider :style="{ padding: '0 16px' }"> Personal Info </van-divider>
     <div>
       <van-cell-group inset>
         <van-field
@@ -56,9 +57,19 @@
         />
       </van-cell-group>
     </div>
+    <van-divider :style="{ padding: '0 16px' }"> Pet Gallery </van-divider>
+    <div
+      class="add-first-pet"
+      @click="toAddPetPage"
+      v-if="petList.length === 0"
+    >
+      <van-row justify="center">
+        <van-col><van-icon name="add-o" /></van-col>
+        <van-col span="10">Add your first pet</van-col>
+      </van-row>
+    </div>
 
-    <div class="swipeBanner">
-      <p v-if="petList.length === 0">No pet List</p>
+    <div class="swipeBanner" v-if="petList.length !== 0">
       <van-icon name="edit" class="edit" />
       <van-swipe vertical :autoplay="3000" lazy-render class="swipe">
         <van-swipe-item v-for="pet in petList" :key="pet"
@@ -181,6 +192,10 @@ const sendFriend = () => {
     .btn {
       width: 100px;
     }
+  }
+  .add-first-pet {
+    margin-top: 20px;
+    text-align: center;
   }
   .swipeBanner {
     // margin-left: 18px;
