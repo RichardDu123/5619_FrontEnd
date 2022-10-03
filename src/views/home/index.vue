@@ -1,28 +1,33 @@
 <template>
   <div class="homeContainer">
-    <van-search
-      v-model="searchVal"
-      placeholder="Search by title"
-      @focus="onFocus"
-      class="search"
-    />
-    <van-dropdown-menu class="dropDown">
-      <van-dropdown-item
-        v-model="option"
-        :options="options"
-        @change="onChange"
+    <div class="search">
+      <van-nav-bar title="Home" class="myNav" />
+      <van-search
+        v-model="searchVal"
+        placeholder="Search by title"
+        @focus="onFocus"
       />
-    </van-dropdown-menu>
-    <van-list
-      v-model:loading="loading"
-      :finished="finished"
-      finished-text="reach the end"
-      @load="onLoad"
-      class="list"
-    >
-      <PostItem v-for="(item, index) in postList" :key="index" :data="item" />
-      <template #loading><van-loading color="#1989fa" /></template>
-    </van-list>
+
+      <van-dropdown-menu>
+        <van-dropdown-item
+          v-model="option"
+          :options="options"
+          @change="onChange"
+        />
+      </van-dropdown-menu>
+    </div>
+    <div class="home-post-list-container">
+      <van-list
+        v-model:loading="loading"
+        :finished="finished"
+        finished-text="reach the end"
+        @load="onLoad"
+        class="list"
+      >
+        <PostItem v-for="(item, index) in postList" :key="index" :data="item" />
+        <template #loading><van-loading color="#1989fa" /></template>
+      </van-list>
+    </div>
   </div>
 </template>
 
@@ -89,20 +94,20 @@ const onChange = (value: number) => {
     position: fixed;
     z-index: 1;
     width: 100%;
-  }
-  .dropDown {
-    :deep(.van-dropdown-menu__bar) {
-      box-shadow: none;
+    .dropDown {
+      :deep(.van-dropdown-menu__bar) {
+        box-shadow: none;
+      }
     }
-    position: fixed;
-    z-index: 1;
-    width: 100%;
-    top: 50px;
   }
-  .list {
-    margin-top: 100px;
-    height: 83vh;
-    overflow-y: auto;
+
+  .home-post-list-container {
+    margin-top: 160px;
+    .list {
+      margin-top: 100px;
+      height: 83vh;
+      overflow-y: auto;
+    }
   }
 }
 </style>
