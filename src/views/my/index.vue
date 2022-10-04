@@ -1,7 +1,6 @@
 <template>
   <div class="myContainer">
     <van-nav-bar title="My Profile" class="myNav" fixed />
-    <van-icon name="exchange" class="logout" @click="logout" />
     <BasicInfo type="my" />
     <van-divider :style="{ padding: '0 16px' }"> My Posts </van-divider>
     <div class="add-first-post" @click="toAddPostPage" @load="onLoad">
@@ -14,7 +13,7 @@
       <van-list
         v-model:loading="loading"
         :finished="finished"
-        finished-text="reach the end"
+        finished-text="THE END"
         @load="onLoad"
       >
         <div v-if="posts.length !== 0">
@@ -38,7 +37,6 @@ import { getProfile } from '@/api/post'
 import { ref } from 'vue'
 import { Post } from '@/types'
 import BasicInfo from '@views/my/components/basicInfo.vue'
-import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
 const posts = ref<Array<Post[]>>([])
 const loading = ref(false)
@@ -67,21 +65,12 @@ const onLoad = () => {
     finished.value = true
   })
 }
-//logout
-const userStore = useUserStore()
-const router = useRouter()
-const logout = () => {
-  userStore.$reset()
-  router.push({
-    name: 'login',
-  })
-}
 
 //updatePosts
 const updatePosts = () => {
   onLoad()
 }
-
+const router = useRouter()
 const toAddPostPage = () => {
   router.push('/addPost')
 }
@@ -89,7 +78,7 @@ const toAddPostPage = () => {
 
 <style lang="less" scoped>
 .myContainer {
-  position: relative;
+  //position: relative;
   .add-first-post {
     text-align: center;
   }
@@ -99,7 +88,7 @@ const toAddPostPage = () => {
     right: 20px;
     position: absolute;
   }
-  padding-bottom: 50px;
-  padding-top: 50px;
+  //padding-bottom: 50px;
+  //padding-top: 50px;
 }
 </style>

@@ -13,7 +13,7 @@
       <van-list
         v-model:loading="loading"
         :finished="finished"
-        finished-text="reach the end"
+        finished-text="THE END"
         @load="onLoad"
       >
         <PostItem

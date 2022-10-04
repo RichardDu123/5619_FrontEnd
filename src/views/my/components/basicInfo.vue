@@ -1,81 +1,122 @@
 <template>
-  <div class="basicInfo">
-    <div class="avatarLine">
-      <van-image
-        round
-        :src="avatarUrl"
-        class="avatar"
-        fit="cover"
-        @click="avatarClick"
-      />
-      <van-uploader
-        accept="image/png, image/jpeg"
-        v-model="fileList"
-        ref="target"
-        v-show="false"
-        v-if="type === 'my'"
-      ></van-uploader>
-      <van-button
-        icon="edit"
-        type="primary"
-        round
-        @click="handleClick"
-        class="btn"
-        v-if="type === 'my'"
-        >{{ status }}</van-button
-      >
-      <van-button
-        icon="plus"
-        type="primary"
-        round
-        @click="sendFriend"
-        class="btn"
-        v-if="type === 'user'"
-        >Friend</van-button
-      >
-    </div>
-    <van-divider :style="{ padding: '0 16px' }"> Personal Info </van-divider>
-    <div>
-      <van-cell-group inset>
-        <van-field
-          v-model="nickName"
-          label="Nick Name: "
-          placeholder="Please enter nick name"
-          :disabled="type === 'my' && disable"
-          :readonly="type === 'user'"
+  <div class="basic-info-container">
+    <div class="basic-info">
+      <div class="profile-page-option-container" v-if="type === 'my'">
+        <van-button
+          hairline
+          plain
+          icon="exchange"
+          type="primary"
+          @click="handleLogoutClick"
+          class="basic-info-logout-button"
+          size="mini"
+          >Log out</van-button
+        >
+        <van-button
+          hairline
+          plain
+          icon="edit"
+          type="primary"
+          @click="handleEditClick"
+          class="basic-info-edit-button"
+          size="mini"
+          >{{ status }}</van-button
+        >
+      </div>
+      <div class="avatarLine">
+        <van-image
+          round
+          :src="avatarUrl"
+          class="avatar"
+          fit="cover"
+          @click="avatarClick"
         />
-        <van-field
-          v-model="description"
-          rows="2"
-          autosize
-          type="textarea"
-          maxlength="50"
-          placeholder="Description of yourself"
-          :disabled="type === 'my' && disable"
-          :readonly="type === 'user'"
-          :show-word-limit="type === 'my'"
-        />
-      </van-cell-group>
-    </div>
-    <van-divider :style="{ padding: '0 16px' }"> Pet Gallery </van-divider>
-    <div
-      class="add-first-pet"
-      @click="toAddPetPage"
-      v-if="petList.length === 0 && type === 'my'"
-    >
-      <van-row justify="center">
-        <van-col><van-icon name="add-o" /></van-col>
-        <van-col span="10">Add your first pet</van-col>
-      </van-row>
-    </div>
+        <van-uploader
+          accept="image/png, image/jpeg"
+          v-model="fileList"
+          ref="target"
+          v-show="false"
+          v-if="type === 'my'"
+        ></van-uploader>
+        <div class="basic-info-display-info">
+          <p class="basic-info-display-nickname">
+            {{ nickName }}
+          </p>
+          <p class="basic-info-display-username">username: {{ userName }}</p>
+        </div>
+      </div>
+      <div class="basic-info-description">
+        <!--        <span class="basic-info-description-prefix">About me: </span>-->
+        <span class="basic-info-description-content">{{ description }}</span>
+      </div>
 
-    <div class="swipeBanner" v-if="petList.length !== 0 && type === 'my'">
-      <van-icon name="edit" class="edit" />
-      <van-swipe vertical :autoplay="3000" lazy-render class="swipe">
-        <van-swipe-item v-for="pet in petList" :key="pet"
-          ><pet-item @click="toPetPage" :pet="pet"
-        /></van-swipe-item>
-      </van-swipe>
+      <div class="user-page-add-friend-container" v-if="type === 'user'">
+        <van-button
+          hairline
+          plain
+          icon="plus"
+          type="primary"
+          @click="sendFriend"
+          class="basic-info-send-button"
+          size="small"
+          >Friend</van-button
+        >
+      </div>
+      <div class="change-info-container" v-if="status !== 'Edit'">
+        <van-divider
+          :style="{
+            padding: '0 16px',
+            color: 'white',
+            borderColor: 'white',
+          }"
+        >
+          Change your profile below
+        </van-divider>
+        <div>
+          <van-cell-group inset>
+            <van-field
+              v-model="nickName"
+              label="Nick Name: "
+              placeholder="Please enter nick name"
+              :disabled="type === 'my' && disable"
+              :readonly="type === 'user'"
+            />
+            <van-field
+              v-model="description"
+              rows="2"
+              autosize
+              type="textarea"
+              maxlength="50"
+              placeholder="Description of yourself"
+              :disabled="type === 'my' && disable"
+              :readonly="type === 'user'"
+              :show-word-limit="type === 'my'"
+            />
+          </van-cell-group>
+        </div>
+      </div>
+    </div>
+    <div class="pet-gallery-container">
+      <van-divider :style="{ padding: '0 16px' }"> Pet Gallery </van-divider>
+      <div
+        class="add-first-pet"
+        @click="toAddPetPage"
+        v-if="petList.length === 0 && type === 'my'"
+      >
+        <van-row justify="center">
+          <van-col><van-icon name="add-o" /></van-col>
+          <van-col span="10">Add your first pet</van-col>
+        </van-row>
+      </div>
+
+      <div class="swipeBanner" v-if="petList.length !== 0 && type === 'my'">
+        <van-icon name="edit" class="edit" />
+        <van-swipe vertical :autoplay="3000" lazy-render class="swipe">
+          <van-swipe-item v-for="pet in petList" :key="pet"
+            ><pet-item @click="toPetPage" :pet="pet"
+          /></van-swipe-item>
+        </van-swipe>
+      </div>
     </div>
   </div>
 </template>
@@ -90,6 +131,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { updateUserInfo } from '@/api/user'
 import { Notify } from 'vant'
 import 'vant/es/notify/style'
+import { useUserStore } from '@/stores'
 const props = defineProps({
   type: {
     type: String,
@@ -102,6 +144,7 @@ const postStore = usePostStore()
 const disable = computed(() => !postStore.isDeleteShow)
 const description = ref('')
 const nickName = ref('')
+const userName = ref('')
 const defaultUrl = ref('')
 const petList = ref([])
 const route = useRoute()
@@ -110,6 +153,7 @@ if (props.type === 'my') {
     const { data } = value
     defaultUrl.value = `http://${data.userImageAddress}`
     nickName.value = data.nickName
+    userName.value = data.userName
     description.value = data.description
     petList.value = data.petList
   })
@@ -150,7 +194,7 @@ const avatarUrl = computed(() => {
 })
 //changeEdit
 const status = computed(() => (postStore.isDeleteShow ? 'Save' : 'Edit'))
-const handleClick = () => {
+const handleEditClick = () => {
   if (status.value === 'Edit') {
     postStore.isDeleteShow = true
   } else {
@@ -166,6 +210,14 @@ const handleClick = () => {
     })
   }
 }
+//logout
+const userStore = useUserStore()
+const handleLogoutClick = () => {
+  userStore.$reset()
+  router.push({
+    name: 'login',
+  })
+}
 
 //Unmounted
 onUnmounted(() => {
@@ -179,25 +231,84 @@ const sendFriend = () => {
 </script>
 
 <style scoped lang="less">
-.basicInfo {
-  margin: 30px 10px;
+.basic-info-container {
+  //margin: 30px 10px;
+  .basic-info {
+    background-image: url('images/hans-ott-DH88eixP5GI-unsplash.jpg');
+    padding-bottom: 10px;
+  }
+
+  .basic-info-options {
+    margin-top: 15px;
+    width: 100%;
+    z-index: 1;
+    position: fixed;
+    background-color: white;
+  }
+  .profile-page-option-container {
+    width: 100%;
+    margin-top: 50px;
+    display: inline-block;
+    .basic-info-edit-button {
+      float: right;
+      margin-right: 5px;
+    }
+    .basic-info-logout-button {
+      float: right;
+      margin-right: 10px;
+    }
+  }
+  .user-page-add-friend-container {
+    width: 100%;
+    margin-top: 5px;
+    display: inline-block;
+    .basic-info-send-button {
+      float: right;
+      margin-right: 10px;
+    }
+  }
   .avatarLine {
     display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-bottom: 20px;
+    //align-items: center;
+    //justify-content: space-around;
+    margin: 10px 10px 10px 20px;
+    //margin-bottom: 20px;
     .avatar {
       width: 132px;
       height: 132px;
-      margin-right: 20px;
+      //margin-right: 20px;
       border: 2px solid white;
     }
     :deep(.van-button--round) {
       border-radius: 20px;
     }
-    .btn {
-      width: 100px;
+    .basic-info-display-info {
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-left: 10px;
+      font-family: 'Gill Sans', sans-serif;
+      .basic-info-display-nickname {
+        color: white;
+        font-size: x-large;
+        font-weight: bolder;
+      }
+      .basic-info-display-username {
+        color: lightgray;
+        font-size: medium;
+      }
     }
+  }
+  .basic-info-description {
+    //font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    font-size: medium;
+    margin-left: 20px;
+    .basic-info-description-content {
+    }
+
+    //font-weight: lighter;
+  }
+  .pet-gallery-container {
   }
   .add-first-pet {
     margin-top: 20px;
