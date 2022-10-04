@@ -14,7 +14,7 @@
           fit="cover"
           :src="pageContent.userAvatar"
           class="avatar"
-          @click="handlAvatarClick"
+          @click="handleAvatarClick"
         />
         <span>{{
           pageContent.nickName === 'lazy to set name'
@@ -142,7 +142,7 @@ const postMessage = () => {
 
 //avatar click
 const router = useRouter()
-const handlAvatarClick = () => {
+const handleAvatarClick = () => {
   router.push({
     name: 'user',
     params: {
