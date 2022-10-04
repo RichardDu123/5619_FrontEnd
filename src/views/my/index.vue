@@ -48,7 +48,6 @@ getProfile({}).then((value) => {
 const onLoad = () => {
   posts.value = []
   loading.value = true
-  console.log('profile on load')
   getProfile({}).then((value) => {
     const {
       data: { postList },

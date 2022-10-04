@@ -93,6 +93,7 @@ import 'vant/es/image-preview/style'
 import { computed } from 'vue'
 import { Notify } from 'vant'
 import 'vant/es/notify/style'
+import { useUserStore } from '@/stores'
 const route = useRoute()
 //render page
 
@@ -142,13 +143,20 @@ const postMessage = () => {
 
 //avatar click
 const router = useRouter()
+const userStore = useUserStore()
 const handleAvatarClick = () => {
-  router.push({
-    name: 'user',
-    params: {
-      userId: pageContent.userId,
-    },
-  })
+  if (pageContent.userId === userStore.userInfo.id) {
+    router.push({
+      name: 'my',
+    })
+  } else {
+    router.push({
+      name: 'user',
+      params: {
+        userId: pageContent.userId,
+      },
+    })
+  }
 }
 //preview images
 const handlePreview = () => {

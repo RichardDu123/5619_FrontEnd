@@ -14,7 +14,7 @@
           </template>
         </van-card>
         <!--        <van-card :border="false" :value="name" />-->
-        <template #right>
+        <template #right v-if="type === 'my'">
           <van-button
             square
             text="Delete"
@@ -32,10 +32,13 @@
 import 'vant/es/dialog/style'
 import { Pet } from '@/types'
 import { Dialog } from 'vant'
-
 defineProps({
   data: {
     type: Object as () => Pet,
+    required: true,
+  },
+  type: {
+    type: String,
     required: true,
   },
 })

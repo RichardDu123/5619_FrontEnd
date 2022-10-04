@@ -45,7 +45,6 @@ export default {
 
     const onLoad = () => {
       GetFriendList({}).then((value) => {
-        console.log('value is:', value)
         for (let i = 0; i < value.data.length; i++) {
           const friend: User = {
             name: value.data[i].name,

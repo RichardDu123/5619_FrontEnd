@@ -48,7 +48,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@views/new/pets/index.vue'),
   },
   {
-    path: '/pets',
+    path: '/pets/:type',
     name: 'pets',
     component: () => import('@views/pets/index.vue'),
   },

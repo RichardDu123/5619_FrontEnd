@@ -173,7 +173,19 @@ if (props.type === 'my') {
 const router = useRouter()
 const toPetPage = () => {
   if (props.type === 'my') {
-    router.push('/pets')
+    router.push({
+      name: 'pets',
+      params: {
+        type: 'my',
+      },
+    })
+  } else {
+    router.push({
+      name: 'pets',
+      params: {
+        type: 'user',
+      },
+    })
   }
 }
 

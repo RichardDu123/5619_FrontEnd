@@ -49,18 +49,20 @@ export default {
     const onClickLeft = () => {
       route.back()
     }
-    const currRoute = useRoute()
-    getPetById(currRoute.params.petId as string, {}).then((value) =>
-      console.log(value)
-    )
     const petContent = reactive({
-      petAvatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-      petName: 'meow',
-      description: 'I am a cat',
-      petImgList: [
-        'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-        'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-      ],
+      petAvatar: '',
+      petName: '',
+      description: '',
+      petImgList: [],
+    })
+    const currRoute = useRoute()
+    getPetById(currRoute.params.petId as string, {}).then((value) => {
+      const { data } = value
+      console.log(value)
+      petContent.petAvatar = data.petImageAddress
+      petContent.petName = data.petName
+      petContent.description = data.petDescription
+      petContent.petImgList = data.petImageList
     })
     const handlePreview = () => {
       ImagePreview(petContent.petImgList)

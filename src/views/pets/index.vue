@@ -20,6 +20,7 @@
           :data="item"
           :key="item"
           @click="handlePet(item.petId)"
+          :type="type"
         />
       </van-list>
     </div>
@@ -32,6 +33,7 @@ import { ref } from 'vue'
 import PetItem from '@views/pets/components/petItem.vue'
 import router from '../../router'
 import { Pet } from '@/types'
+import { useRoute } from 'vue-router'
 
 export default {
   components: {
@@ -41,10 +43,8 @@ export default {
     const loading = ref(false)
     const finished = ref(false)
     const petList = ref<Pet[]>([])
-
     const onLoad = () => {
       GetPetList({}).then((value) => {
-        console.log('value is:', value)
         for (let i = 0; i < value.data.length; i++) {
           // console.log('name:' + value.data[i].petName)
           // console.log('avatar:' + value.data[i].petImageAddress)
@@ -73,11 +73,16 @@ export default {
         },
       })
     }
+    //type
+    const route = useRoute()
+    const type = route.params.type as string
+
     return {
       PetItem,
       petList,
       loading,
       finished,
+      type,
       onLoad,
       onClickLeft,
       handlePet,

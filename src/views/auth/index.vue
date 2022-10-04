@@ -133,6 +133,7 @@ const onSubmit = (): void => {
     password: password.value,
   })
     .then((value) => {
+      console.log(value)
       let { data } = value
       userStore.setUser({
         uuid: data.uuid,
