@@ -8,7 +8,8 @@
       left-arrow
       @click-left="onClickLeft"
     />
-    <BasicInfo type="user" />
+    <BasicInfo class="user-page-basic-info" type="user" />
+    <van-divider :style="{ padding: '0 16px' }"> User's Posts </van-divider>
     <div>
       <van-list
         v-model:loading="loading"
@@ -65,4 +66,7 @@ const onClickLeft = () => {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.user-page-basic-info {
+}
+</style>
