@@ -108,8 +108,11 @@
           <van-col span="10">Add your first pet</van-col>
         </van-row>
       </div>
+      <div v-if="petList.length === 0 && type === 'user'">
+        This guy is very lazy to add pets
+      </div>
 
-      <div class="swipeBanner" v-if="petList.length !== 0 && type === 'my'">
+      <div class="swipeBanner" v-if="petList.length !== 0">
         <van-icon name="edit" class="edit" />
         <van-swipe vertical :autoplay="3000" lazy-render class="swipe">
           <van-swipe-item v-for="pet in petList" :key="pet"
@@ -162,6 +165,7 @@ if (props.type === 'my') {
     const { data } = value
     defaultUrl.value = `http://${data.userImageAddress}`
     nickName.value = data.nickName
+    userName.value = data.userName
     description.value = data.description
     petList.value = data.petList
   })
@@ -247,13 +251,15 @@ const sendFriend = () => {
   }
   .profile-page-option-container {
     width: 100%;
-    margin-top: 50px;
+    margin-top: 55px;
     display: inline-block;
     .basic-info-edit-button {
+      color: black;
       float: right;
       margin-right: 5px;
     }
     .basic-info-logout-button {
+      color: black;
       float: right;
       margin-right: 10px;
     }
@@ -263,6 +269,7 @@ const sendFriend = () => {
     margin-top: 5px;
     display: inline-block;
     .basic-info-send-button {
+      color: crimson;
       float: right;
       margin-right: 10px;
     }
@@ -271,11 +278,11 @@ const sendFriend = () => {
     display: flex;
     //align-items: center;
     //justify-content: space-around;
-    margin: 10px 10px 10px 20px;
-    //margin-bottom: 20px;
+    margin: 0 10px 10px 20px;
+    padding-top: 20px;
     .avatar {
-      width: 132px;
-      height: 132px;
+      width: 120px;
+      height: 120px;
       //margin-right: 20px;
       border: 2px solid white;
     }
@@ -288,11 +295,13 @@ const sendFriend = () => {
       margin-left: 10px;
       font-family: 'Gill Sans', sans-serif;
       .basic-info-display-nickname {
+        margin: 0;
         color: white;
         font-size: x-large;
         font-weight: bolder;
       }
       .basic-info-display-username {
+        margin: 0;
         color: lightgray;
         font-size: medium;
       }
@@ -302,8 +311,10 @@ const sendFriend = () => {
     //font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     font-size: medium;
-    margin-left: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
     .basic-info-description-content {
+      word-break: break-word;
     }
 
     //font-weight: lighter;
