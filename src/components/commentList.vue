@@ -26,6 +26,7 @@ const comments = ref<any[]>([])
 const onLoad = () => {
   loading.value = true
   getCommets(porps.id, {}).then((value) => {
+    comments.value = []
     const { data } = value
     data.forEach((item: any) => {
       comments.value.push({
@@ -35,7 +36,6 @@ const onLoad = () => {
         content: item.commentContent,
       })
     })
-    console.log(comments.value)
     loading.value = false
     finished.value = true
   })

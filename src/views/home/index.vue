@@ -54,15 +54,9 @@ const page = reactive({
 })
 let totalPosts = ref(+Infinity)
 const onLoad = () => {
-  console.log(
-    `load执行了,postList长度为${postList.value.length},total的长度为${
-      postList.value.length * 2
-    },currPage为${page.currPage}`
-  )
   loading.value = true
   getPosts({ ...page }).then((value) => {
     console.log('home page post length:', value.data.length)
-
     for (let i = 0; i < value.data.length; i = i + 2) {
       if (i + 1 !== value.data.length) {
         postList.value.push([value.data[i], value.data[i + 1]])
@@ -72,8 +66,6 @@ const onLoad = () => {
       totalPosts.value = value.data[i].totalPosts
       page.currPage = page.currPage + 2
       if (postList.value.length * 2 >= totalPosts.value) {
-        console.log('结束时的长度为', postList.value.length * 2)
-
         finished.value = true
         break
       }
@@ -95,6 +87,8 @@ const onChange = (value: number) => {
   postList.value = []
   finished.value = false
   totalPosts.value = 0
+  page.currPage = 0
+  page.pageSize = 10
 }
 </script>
 
@@ -102,7 +96,6 @@ const onChange = (value: number) => {
 .homeContainer {
   margin-bottom: 38px;
   overflow: hidden;
-
   .search {
     position: fixed;
     z-index: 1;
@@ -118,7 +111,7 @@ const onChange = (value: number) => {
     margin-top: 160px;
     .list {
       margin-top: 100px;
-      height: 83vh;
+      height: 74vh;
       overflow-y: auto;
     }
   }

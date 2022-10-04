@@ -1,6 +1,11 @@
 <template>
   <div class="commentItem">
-    <van-image round fit="cover" :src="comment.avatar" class="avatar" />
+    <van-image
+      round
+      fit="cover"
+      :src="`http://${comment.avatar}`"
+      class="avatar"
+    />
     <div class="comment-content">
       <p style="color: gray">
         {{
