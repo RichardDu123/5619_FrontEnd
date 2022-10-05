@@ -118,11 +118,11 @@ getPostById(postId, {}).then((value) => {
   pageContent.loved = data.loved
   pageContent.userId = data.userId
   pageContent.topic = data.topic
-  pageContent.userAvatar = `http://${data.userAvatar}`
+  pageContent.userAvatar = `${data.userAvatar}`
   pageContent.nickName = data.nickName
   pageContent.userName = data.userName
   data.imageUrlList.forEach((item: string[]) => {
-    pageContent.imageUrlList.push(`http://${item}`)
+    pageContent.imageUrlList.push(`${item}`)
   })
   pageContent.content = data.postContent
 })

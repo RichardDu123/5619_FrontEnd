@@ -5,11 +5,7 @@
       :class="{ onlyOne: isOnlyOne }"
       @click="handleItemClick(data[0].postId)"
     >
-      <van-image
-        :src="`http://${data[0].imageUrlList[0]}`"
-        fit="cover"
-        class="img"
-      >
+      <van-image :src="`${data[0].imageUrlList[0]}`" fit="cover" class="img">
         <template v-slot:loading>
           <van-loading type="spinner" size="20" />
         </template>
@@ -30,10 +26,9 @@
         <div class="rightFoot">
           <van-image
             round
-            :src="`http://${
-              avatar !== undefined ? avatar : data[0].userAvatar
-            }`"
+            :src="`${avatar !== undefined ? avatar : data[0].userAvatar}`"
             class="avatar"
+            fit="cover"
           />
         </div>
       </div>
@@ -43,11 +38,7 @@
       v-if="data[1].postId"
       @click="handleItemClick(data[1].postId)"
     >
-      <van-image
-        :src="`http://${data[1].imageUrlList[0]}`"
-        fit="cover"
-        class="img"
-      >
+      <van-image :src="`${data[1].imageUrlList[0]}`" fit="cover" class="img">
         <template v-slot:loading>
           <van-loading type="spinner" size="20" />
         </template>
@@ -68,10 +59,9 @@
         <div class="rightFoot">
           <van-image
             round
-            :src="`http://${
-              avatar !== undefined ? avatar : data[1].userAvatar
-            }`"
+            :src="`${avatar !== undefined ? avatar : data[1].userAvatar}`"
             class="avatar"
+            fit="cover"
           />
         </div>
       </div>

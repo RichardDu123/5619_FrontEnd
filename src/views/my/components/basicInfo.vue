@@ -154,7 +154,7 @@ const route = useRoute()
 if (props.type === 'my') {
   getProfile({}).then((value) => {
     const { data } = value
-    defaultUrl.value = `http://${data.userImageAddress}`
+    defaultUrl.value = `${data.userImageAddress}`
     nickName.value = data.nickName
     userName.value = data.userName
     description.value = data.description
@@ -163,7 +163,7 @@ if (props.type === 'my') {
 } else {
   getProfileById(route.params.userId as string, {}).then((value) => {
     const { data } = value
-    defaultUrl.value = `http://${data.userImageAddress}`
+    defaultUrl.value = `${data.userImageAddress}`
     nickName.value = data.nickName
     userName.value = data.userName
     description.value = data.description

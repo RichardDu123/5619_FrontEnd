@@ -6,7 +6,7 @@
           class="friend-card"
           :desc="data.description"
           :title="data.name"
-          :thumb="`http://${data.userAvatar}`"
+          :thumb="`${data.userAvatar}`"
           centered
         />
         <!--        <van-card :border="false" :value="name" />-->

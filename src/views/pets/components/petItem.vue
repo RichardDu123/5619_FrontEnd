@@ -6,7 +6,7 @@
           class="pet-card"
           :desc="data.petDescription"
           :title="data.petName"
-          :thumb="`http://${data.petImageAddress}`"
+          :thumb="`${data.petImageAddress}`"
           centered
         >
           <template #tags>

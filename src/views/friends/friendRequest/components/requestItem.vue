@@ -6,7 +6,7 @@
           class="request-card"
           :desc="data.requestText"
           :title="data.userName"
-          :thumb="`http://${data.userAvatar}`"
+          :thumb="`${data.userAvatar}`"
           centered
         />
         <template #right>

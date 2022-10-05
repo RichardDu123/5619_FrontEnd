@@ -43,3 +43,6 @@ export const addComment = (postId: string, params: object): Promise<any> => {
 export const getCommets = (postId: string, params: object): Promise<any> => {
   return request(`getCommentsByPostId/${postId}`, 'get', params)
 }
+export const getPostsOrderByLove = (params: object): Promise<any> => {
+  return request(`getPostsOrderByLove`, 'get', params)
+}

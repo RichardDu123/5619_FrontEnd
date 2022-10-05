@@ -1,10 +1,6 @@
 <template>
   <div class="petContainer">
-    <van-image
-      class="petImg"
-      :src="`http://${pet.petImageAddress}`"
-      fit="cover"
-    />
+    <van-image class="petImg" :src="`${pet.petImageAddress}`" fit="cover" />
     <div class="petInfo">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-zhenhuichongtubiaozhizuo-kuozhan-"></use>
