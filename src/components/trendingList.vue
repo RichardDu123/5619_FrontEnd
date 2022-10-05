@@ -14,7 +14,7 @@
 import { defineComponent, ref } from 'vue'
 import { TrendingPost } from '@/types'
 import TrendingItem from '@cp/trendingItem.vue'
-import { getTrendingPost } from '@/api/search'
+import { getTrendingPosts } from '@/api/search'
 
 export default defineComponent({
   components: {
@@ -27,7 +27,7 @@ export default defineComponent({
 
     const onLoad = () => {
       // loading.value = true
-      getTrendingPost({}).then((value) => {
+      getTrendingPosts({}).then((value) => {
         console.log(value)
         const { data } = value
         data.forEach((item: any) => {
