@@ -11,3 +11,6 @@ export const createPet = (params: object): Promise<any> => {
 export const getPetById = (url: string, params: object): Promise<any> => {
   return request(`/pet/${url}`, 'get', params)
 }
+export const deletePetById = (id: number, params: object): Promise<any> => {
+  return request(`/pet/${id}`, 'delete', params)
+}

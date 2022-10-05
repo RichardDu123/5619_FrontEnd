@@ -3,7 +3,7 @@ export interface Pet {
   category: string
   petImageAddress: string
   petDescription: string
-  petId: string
+  petId: number
 }
 
 export interface Post {

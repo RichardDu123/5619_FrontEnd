@@ -21,6 +21,7 @@
           :key="item"
           @click="handlePet(item.petId)"
           :type="type"
+          @update-table="updateTable"
         />
       </van-list>
     </div>
@@ -44,10 +45,9 @@ export default {
     const finished = ref(false)
     const petList = ref<Pet[]>([])
     const onLoad = () => {
+      loading.value = true
       GetPetList({}).then((value) => {
         for (let i = 0; i < value.data.length; i++) {
-          // console.log('name:' + value.data[i].petName)
-          // console.log('avatar:' + value.data[i].petImageAddress)
           const pet: Pet = {
             petName: value.data[i].petName,
             category: value.data[i].category,
@@ -76,7 +76,12 @@ export default {
     //type
     const route = useRoute()
     const type = route.params.type as string
-
+    //update Tabel
+    const updateTable = () => {
+      finished.value = false
+      petList.value = []
+      onLoad()
+    }
     return {
       PetItem,
       petList,
@@ -86,6 +91,7 @@ export default {
       onLoad,
       onClickLeft,
       handlePet,
+      updateTable,
     }
   },
 }

@@ -20,7 +20,7 @@
             text="Delete"
             type="danger"
             class="delete-button"
-            @click="handleDelete"
+            @click="handleDelete(data.petId)"
           />
         </template>
       </van-swipe-cell>
@@ -32,6 +32,7 @@
 import 'vant/es/dialog/style'
 import { Pet } from '@/types'
 import { Dialog } from 'vant'
+import { deletePetById } from '@/api/pet'
 defineProps({
   data: {
     type: Object as () => Pet,
@@ -42,8 +43,8 @@ defineProps({
     required: true,
   },
 })
-
-const handleDelete = () => {
+const emit = defineEmits(['updateTable'])
+const handleDelete = (id: number) => {
   Dialog.confirm({
     title: 'Are you sure to delete this pet?',
     message: 'Click OK to delete this pet',
@@ -52,6 +53,9 @@ const handleDelete = () => {
   })
     .then(() => {
       // on confirm
+      deletePetById(id, {}).then(() => {
+        emit('updateTable')
+      })
     })
     .catch(() => {
       // on cancel
