@@ -4,6 +4,7 @@
       <van-nav-bar title="Home" class="myNav" />
       <van-search
         v-model="searchVal"
+        shape="round"
         placeholder="Search by title"
         @focus="onFocus"
       />
