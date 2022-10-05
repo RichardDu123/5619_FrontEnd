@@ -3,11 +3,7 @@
     <van-image round fit="cover" :src="`${comment.avatar}`" class="avatar" />
     <div class="comment-content">
       <p style="color: gray">
-        {{
-          comment.nickName === 'lazy to set name'
-            ? comment.userName
-            : comment.nickName
-        }}
+        {{ comment.nickName }}
       </p>
       <p>
         {{ comment.content }}

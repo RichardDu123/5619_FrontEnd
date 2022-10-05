@@ -331,8 +331,6 @@ const sendFriend = () => {
 
     //font-weight: lighter;
   }
-  .pet-gallery-container {
-  }
   .add-first-pet {
     margin-top: 20px;
     text-align: center;

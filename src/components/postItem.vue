@@ -16,7 +16,7 @@
         size="mini"
         class="delete"
         color="linear-gradient(to right, #ff6034, #ee0a24)"
-        @click.stop="handleDelete"
+        @click.stop="handleDelete(0)"
         v-if="isDeleteShow"
       />
       <div class="foot">
@@ -49,7 +49,7 @@
         size="mini"
         class="delete"
         color="linear-gradient(to right, #ff6034, #ee0a24)"
-        @click="handleDelete"
+        @click.stop="handleDelete(1)"
         v-if="isDeleteShow"
       />
       <div class="foot">
@@ -87,7 +87,7 @@ const props = defineProps({
   },
 })
 const emits = defineEmits(['updatePosts'])
-const handleDelete = () => {
+const handleDelete = (index: number) => {
   Dialog.confirm({
     title: 'Are you sure to delete the post?',
     message: 'Click OK to delete the post',
@@ -96,7 +96,7 @@ const handleDelete = () => {
   })
     .then(() => {
       // on confirm
-      deletePostById(props.data[0].postId, {}).then(() => {
+      deletePostById(props.data[index].postId, {}).then(() => {
         emits('updatePosts')
       })
     })
