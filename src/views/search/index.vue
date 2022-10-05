@@ -4,41 +4,60 @@
       <van-nav-bar left-arrow @click-left="onClickLeft" title="Search" />
       <van-search
         ref="target"
-        v-model="searchVal"
         shape="round"
-        show-action
-        action-text="search"
+        v-model="keyword"
         placeholder="Search by title"
+        @search="onSearch"
       />
     </div>
+    <div class="before-search" v-if="!hasSearched">
+      <van-cell class="trending-posts-header">
+        <van-icon class="trending-posts-header-icon" name="chart-trending-o" />
+        <span class="trending-posts-header-label">Trending</span>
+      </van-cell>
 
-    <van-cell class="trending-posts-header">
-      <van-icon class="trending-posts-header-icon" name="chart-trending-o" />
-      <span class="trending-posts-header-label">Trending</span>
-    </van-cell>
+      <div class="search-page-trending-posts">
+        <TrendingList></TrendingList>
+      </div>
 
-    <div class="search-page-trending-posts">
-      <TrendingList></TrendingList>
+      <van-divider :style="{ padding: '0 16px' }"> Advertisement </van-divider>
+
+      <div @load="onLoadAdvertisement">
+        <img class="search-page-ads-image" :src="adUrl" />
+      </div>
     </div>
 
-    <van-divider :style="{ padding: '0 16px' }"> Advertisement </van-divider>
-
-    <div @load="onLoadAdvertisement">
-      <img class="search-page-ads-image" :src="adUrl" />
+    <div class="after-search" v-if="hasSearched">
+      <van-list
+        v-model:loading="loading"
+        :finished="finished"
+        finished-text="THE END"
+        class="list"
+      >
+        <PostItem
+          v-for="(item, index) in searchedPostList"
+          :key="index"
+          :data="item"
+        />
+        <template #loading><van-loading color="#1989fa" /></template>
+      </van-list>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { SearchInstance } from 'vant'
 import TrendingList from '@cp/trendingList.vue'
-import { getAdvertisement } from '@/api/search'
+import { getAdvertisement, getSearchPosts } from '@/api/search'
+import { Post } from '@/types'
+import PostItem from '@cp/postItem.vue'
 
 export default {
   components: {
     TrendingList,
+    PostItem,
   },
   setup() {
     //back to homepage
@@ -54,7 +73,7 @@ export default {
     })
 
     // load advertisement image
-    const adUrl = ref('images/michael-sum-LEpfefQf4rU-unsplash.jpg')
+    const adUrl = ref<string>('images/michael-sum-LEpfefQf4rU-unsplash.jpg')
     const onLoadAdvertisement = () => {
       getAdvertisement({})
         .then((value) => {
@@ -67,14 +86,62 @@ export default {
         })
     }
 
-    const searchVal = ref('')
+    // get posts by keyword
+    const keyword = ref<string>('')
+    const searchedPostList = ref<Array<Post[]>>([])
+    const loading = ref<boolean>(false)
+    const finished = ref<boolean>(false)
+    const hasSearched = ref<boolean>(false)
+
+    let totalPosts = ref(+Infinity)
+    const page = reactive({
+      currPage: 0,
+      pageSize: 10,
+    })
+    const fillData = (value: any) => {
+      for (let i = 0; i < value.data.length; i = i + 2) {
+        if (i + 1 !== value.data.length) {
+          searchedPostList.value.push([value.data[i], value.data[i + 1]])
+        } else {
+          searchedPostList.value.push([value.data[i], {}])
+        }
+        totalPosts.value = value.data[i].totalPosts
+        page.currPage = page.currPage + 2
+        if (searchedPostList.value.length * 2 >= totalPosts.value) {
+          finished.value = true
+          break
+        }
+      }
+      if (
+        totalPosts.value - searchedPostList.value.length * 2 <
+        page.pageSize
+      ) {
+        page.pageSize = totalPosts.value - searchedPostList.value.length * 2
+      }
+    }
+
+    const onSearch = () => {
+      hasSearched.value = true
+      searchedPostList.value = []
+      console.log(keyword.value)
+      getSearchPosts(keyword.value as string, {}).then((value) => {
+        console.log(value)
+        fillData(value)
+        loading.value = false
+      })
+    }
 
     return {
+      loading,
+      finished,
       adUrl,
       target,
-      searchVal,
+      keyword,
+      searchedPostList,
+      hasSearched,
       onClickLeft,
       onLoadAdvertisement,
+      onSearch,
     }
   },
 }
@@ -116,6 +183,10 @@ export default {
     display: block;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .after-search {
+    margin-top: 30%;
   }
 }
 </style>
