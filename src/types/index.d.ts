@@ -25,3 +25,12 @@ export interface NewFriendRequest {
   requestText: string
   userAvatar: string
 }
+
+export interface TrendingPost {
+  topic: string
+  postId: number
+}
+
+export interface Advertisement {
+  imgUrl: string
+}
