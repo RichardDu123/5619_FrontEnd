@@ -9,26 +9,41 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     redirect: '/home',
     component: () => import('@/views/layout/index.vue'),
+    meta: {
+      keepAlive: false,
+    },
     children: [
       {
         path: 'home',
         name: 'home',
         component: () => import('@/views/home/index.vue'),
+        meta: {
+          keepAlive: false,
+        },
       },
       {
         path: 'my',
         name: 'my',
         component: () => import('@/views/my/index.vue'),
+        meta: {
+          keepAlive: false,
+        },
       },
       {
         path: 'friends',
         name: 'friends',
         component: () => import('@/views/friends/index.vue'),
+        meta: {
+          keepAlive: false,
+        },
       },
       {
         path: 'new',
         name: 'new',
         component: () => import('@/views/new/index.vue'),
+        meta: {
+          keepAlive: false,
+        },
       },
     ],
   },
@@ -36,51 +51,81 @@ const routes: RouteRecordRaw[] = [
     path: '/login',
     name: 'login',
     component: () => import('@views/auth/index.vue'),
+    meta: {
+      keepAlive: false,
+    },
   },
   {
     path: '/addPost',
     name: 'addPost',
     component: () => import('@views/new/posts/index.vue'),
+    meta: {
+      keepAlive: false,
+    },
   },
   {
     path: '/addPet',
     name: 'addPet',
     component: () => import('@views/new/pets/index.vue'),
+    meta: {
+      keepAlive: false,
+    },
   },
   {
     path: '/pets/:type',
     name: 'pets',
     component: () => import('@views/pets/index.vue'),
+    meta: {
+      keepAlive: false,
+    },
   },
   {
     path: '/search',
     name: 'search',
     component: () => import('@views/search/index.vue'),
+    meta: {
+      keepAlive: false,
+    },
   },
   {
     path: '/post/:postId',
     name: 'post',
     component: () => import('@/components/postPage.vue'),
+    meta: {
+      keepAlive: false,
+    },
   },
   {
     path: '/friendList',
     name: 'friendList',
     component: () => import('@views/friends/friendList/index.vue'),
+    meta: {
+      keepAlive: false,
+    },
   },
   {
     path: '/friendRequest',
     name: 'friendRequest',
     component: () => import('@views/friends/friendRequest/index.vue'),
+    meta: {
+      keepAlive: false,
+    },
   },
   {
     path: '/user/:userId',
     name: 'user',
     component: () => import('@/views/user/index.vue'),
+    meta: {
+      keepAlive: false,
+    },
   },
   {
     path: '/pet/:petId',
     name: 'pet',
     component: () => import('@/components/petPage.vue'),
+    meta: {
+      keepAlive: false,
+    },
   },
 ]
 

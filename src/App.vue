@@ -1,19 +1,24 @@
 <template>
   <router-view v-slot="{ Component }">
     <transition :name="aniName" mode="out-in">
-      <component :is="Component" />
+      <keep-alive :include="keepAlive">
+        <component :is="Component" />
+      </keep-alive>
     </transition>
   </router-view>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { ref, toRef } from 'vue'
+import { useRouteStore } from '@/stores/index'
 
 //only login page has animation
 const router = useRouter()
 const aniName = ref<string>('')
 // 调用全局钩子
+const routerStore = useRouteStore()
+const keepAlive = toRef(routerStore, 'keepAlive')
 router.beforeEach((to, from) => {
   if (to.path === '/login' || from.path === '/login') {
     aniName.value = 'ani'
@@ -22,7 +27,13 @@ router.beforeEach((to, from) => {
   } else {
     aniName.value = ''
   }
+  if (to.path === '/search' && from.path === '/home') {
+    routerStore.addKeepAlive('search')
+  } else if (to.path === '/home' && from.name === 'search') {
+    routerStore.deleteKeepAlive('search')
+  }
 })
+console.log(router.options.routes)
 </script>
 <style scoped lang="less">
 .ani-enter-active,

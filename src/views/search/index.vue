@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import { useRouter } from 'vue-router'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { SearchInstance } from 'vant'
 import TrendingList from '@cp/trendingList.vue'
 import { getAdvertisement, getSearchPosts } from '@/api/search'
@@ -55,6 +55,7 @@ import { Post } from '@/types'
 import PostItem from '@cp/postItem.vue'
 
 export default {
+  name: 'search',
   components: {
     TrendingList,
     PostItem,
@@ -93,11 +94,6 @@ export default {
     const finished = ref<boolean>(false)
     const hasSearched = ref<boolean>(false)
 
-    let totalPosts = ref(+Infinity)
-    const page = reactive({
-      currPage: 0,
-      pageSize: 10,
-    })
     const fillData = (value: any) => {
       for (let i = 0; i < value.data.length; i = i + 2) {
         if (i + 1 !== value.data.length) {
@@ -105,18 +101,6 @@ export default {
         } else {
           searchedPostList.value.push([value.data[i], {}])
         }
-        totalPosts.value = value.data[i].totalPosts
-        page.currPage = page.currPage + 2
-        if (searchedPostList.value.length * 2 >= totalPosts.value) {
-          finished.value = true
-          break
-        }
-      }
-      if (
-        totalPosts.value - searchedPostList.value.length * 2 <
-        page.pageSize
-      ) {
-        page.pageSize = totalPosts.value - searchedPostList.value.length * 2
       }
     }
 
@@ -128,6 +112,7 @@ export default {
         console.log(value)
         fillData(value)
         loading.value = false
+        finished.value = true
       })
     }
 
