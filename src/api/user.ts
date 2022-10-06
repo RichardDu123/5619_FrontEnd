@@ -19,3 +19,6 @@ export const resetPassword = (params: object): Promise<any> => {
 export const updateUserInfo = (params: object): Promise<any> => {
   return request('/edit', 'post', params)
 }
+export const logout = (params: object): Promise<any> => {
+  return request('/logout', 'get', params)
+}

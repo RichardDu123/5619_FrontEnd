@@ -113,6 +113,7 @@ const pageContent = reactive({
 const postId = route.params.postId as string
 getPostById(postId, {}).then((value) => {
   const { data } = value
+  console.log(data)
   pageContent.postId = data.postId
   pageContent.love = data.love
   pageContent.loved = data.loved
@@ -145,7 +146,7 @@ const postMessage = () => {
 const router = useRouter()
 const userStore = useUserStore()
 const handleAvatarClick = () => {
-  if (pageContent.userId === userStore.userInfo.id) {
+  if (pageContent.userId === userStore.userId) {
     router.push({
       name: 'my',
     })

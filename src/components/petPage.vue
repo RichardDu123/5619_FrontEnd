@@ -58,7 +58,6 @@ export default {
     const currRoute = useRoute()
     getPetById(currRoute.params.petId as string, {}).then((value) => {
       const { data } = value
-      console.log(value)
       petContent.petAvatar = data.petImageAddress
       petContent.petName = data.petName
       petContent.description = data.petDescription

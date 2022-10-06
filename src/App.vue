@@ -33,7 +33,6 @@ router.beforeEach((to, from) => {
     routerStore.deleteKeepAlive('search')
   }
 })
-console.log(router.options.routes)
 </script>
 <style scoped lang="less">
 .ani-enter-active,

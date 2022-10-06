@@ -133,15 +133,8 @@ const onSubmit = (): void => {
     password: password.value,
   })
     .then((value) => {
-      console.log(value)
       let { data } = value
-      userStore.setUser({
-        uuid: data.uuid,
-        userImageAddress: data.userImageAddress,
-        userName: data.userName,
-        id: data.id,
-        nickName: data.nickName,
-      })
+      userStore.setUser(data)
       isLoading.value = false
       router.push({ name: 'home' })
     })

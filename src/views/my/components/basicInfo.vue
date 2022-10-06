@@ -130,6 +130,7 @@ import PetItem from '@views/my/components/petItem.vue'
 import { usePostStore } from '@/stores/post'
 import { computed } from 'vue'
 import { getProfile, getProfileById } from '@/api/post'
+import { logout } from '@/api/user'
 import { useRoute, useRouter } from 'vue-router'
 import { updateUserInfo } from '@/api/user'
 import { Notify } from 'vant'
@@ -229,9 +230,11 @@ const handleEditClick = () => {
 //logout
 const userStore = useUserStore()
 const handleLogoutClick = () => {
-  userStore.$reset()
-  router.push({
-    name: 'login',
+  logout({}).then(() => {
+    userStore.$reset()
+    router.push({
+      name: 'login',
+    })
   })
 }
 

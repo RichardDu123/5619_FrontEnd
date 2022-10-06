@@ -99,6 +99,7 @@ const onChange = (value: number) => {
   totalPosts.value = 0
   page.currPage = 0
   page.pageSize = 10
+  onLoad()
 }
 </script>
 
