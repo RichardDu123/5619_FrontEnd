@@ -74,7 +74,9 @@ export default {
     })
 
     // load advertisement image
-    const adUrl = ref<string>('images/michael-sum-LEpfefQf4rU-unsplash.jpg')
+    const adUrl = ref<string>(
+      'src/assets/images/images/michael-sum-LEpfefQf4rU-unsplash.jpg'
+    )
     const onLoadAdvertisement = () => {
       getAdvertisement({})
         .then((value) => {

@@ -5,7 +5,7 @@
         <component :is="Component" />
       </transition>
     </router-view>
-    <van-tabbar v-model="currTag">
+    <van-tabbar v-model="currTag" class="tabBar">
       <van-tabbar-item name="home" @click="handlePush('home')" icon="home-o"
         >Home</van-tabbar-item
       >
@@ -41,6 +41,9 @@ onBeforeRouteUpdate((to) => {
 </script>
 
 <style lang="less" scoped>
+.tabBar {
+  position: fixed;
+}
 .animation-enter-active,
 .animation-leave-active {
   transition: all 0.5s ease;
