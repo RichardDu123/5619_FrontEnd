@@ -1,8 +1,11 @@
 <template>
-  <van-cell class="trending-item" @click="handleItemClick(trendingPost.postId)">
+  <van-cell
+    class="trending-item"
+    @click="handleItemClick(trendingPost!.postId)"
+  >
     <van-icon class="trending-icon" name="fire" />
     <span class="trending-topic"
-      >{{ trendingPost.topic }} {{ trendingPost.postId }}</span
+      >{{ trendingPost!.topic }} {{ trendingPost!.postId }}</span
     >
   </van-cell>
 </template>
