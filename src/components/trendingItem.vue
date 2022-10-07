@@ -45,7 +45,5 @@ export default defineComponent({
     margin: 1vw 2vw 1vw 1vw;
     //z-index: 1;
   }
-  .trending-topic {
-  }
 }
 </style>
