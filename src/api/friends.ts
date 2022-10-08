@@ -32,3 +32,7 @@ export const CheckFriendshipStatus = (
 ): Promise<any> => {
   return request(`/friends/status/${id}`, 'get', params)
 }
+
+export const DeleteFriend = (id: string, params: object): Promise<any> => {
+  return request(`/friends/delete/${id}`, 'delete', params)
+}
