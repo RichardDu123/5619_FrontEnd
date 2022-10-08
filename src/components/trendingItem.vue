@@ -1,8 +1,11 @@
 <template>
-  <van-cell class="trending-item" @click="handleItemClick(trendingPost.postId)">
+  <van-cell
+    class="trending-item"
+    @click="handleItemClick(trendingPost!.postId)"
+  >
     <van-icon class="trending-icon" name="fire" />
     <span class="trending-topic"
-      >{{ trendingPost.topic }} {{ trendingPost.postId }}</span
+      >{{ trendingPost!.topic }} {{ trendingPost!.postId }}</span
     >
   </van-cell>
 </template>
@@ -41,8 +44,6 @@ export default defineComponent({
     color: red;
     margin: 1vw 2vw 1vw 1vw;
     //z-index: 1;
-  }
-  .trending-topic {
   }
 }
 </style>
