@@ -45,23 +45,30 @@
           <p class="basic-info-display-username">username: {{ userName }}</p>
         </div>
       </div>
-      <div class="basic-info-description">
+      <van-row class="basic-info-bottom">
         <!--        <span class="basic-info-description-prefix">About me: </span>-->
-        <span class="basic-info-description-content">{{ description }}</span>
-      </div>
+        <van-col span="16">
+          <span class="basic-info-description-content">{{ description }}</span>
+        </van-col>
 
-      <div class="user-page-add-friend-container" v-if="type === 'user'">
-        <van-button
-          hairline
-          plain
-          icon="plus"
-          type="primary"
-          @click="sendFriend"
-          class="basic-info-send-button"
-          size="small"
-          >Friend</van-button
+        <van-col
+          span="8"
+          class="basic-info-add-friend-container"
+          v-if="type === 'user'"
         >
-      </div>
+          <van-button
+            hairline
+            plain
+            type="primary"
+            @click="sendFriend"
+            class="basic-info-send-button"
+            size="small"
+          >
+            {{ friendStatus }}
+          </van-button>
+        </van-col>
+      </van-row>
+
       <div class="change-info-container" v-if="status !== 'Edit'">
         <van-divider
           :style="{
@@ -133,14 +140,19 @@ import { getProfile, getProfileById } from '@/api/post'
 import { logout } from '@/api/user'
 import { useRoute, useRouter } from 'vue-router'
 import { updateUserInfo } from '@/api/user'
-import { Notify } from 'vant'
+import { Notify, Toast } from 'vant'
 import 'vant/es/notify/style'
 import { useUserStore } from '@/stores'
+import { SendFriendRequest } from '@/api/friends'
 const props = defineProps({
   type: {
     type: String,
     required: true,
     default: 'my',
+  },
+  friendStatus: {
+    type: String,
+    default: 'Add Friend',
   },
 })
 //data
@@ -243,10 +255,48 @@ onUnmounted(() => {
   postStore.isDeleteShow = false
 })
 
-//user profile
+// friend request
+// const requestIcon = ref('')
+// onMounted(() => {
+
+// })
+
 const sendFriend = () => {
-  console.log('send friend')
+  console.log('send friend request')
+  console.log(route.params.userId)
+  console.log('friend status:', props.friendStatus)
+  Toast.clear()
+  if (props.friendStatus == 'Add Friend') {
+    SendFriendRequest(route.params.userId as string, {}).then((value) => {
+      console.log(value)
+      const { data } = value
+      console.log(data)
+      if (data == 'Directly be friends') {
+        Toast.success('Congrats! Add friend successfully!')
+      } else if (data == 'Request have been sent') {
+        Toast.success('Your request has been successfully sent!')
+      } else {
+        Toast.fail('An error occurred!')
+      }
+    })
+  } else if (props.friendStatus == 'Request Sent') {
+    SendFriendRequest(route.params.userId as string, {}).then((value) => {
+      console.log(value)
+      const { message } = value
+      console.log(message)
+      if (message == 'Do not add again') {
+        Toast.fail('Please do not request multiple times!')
+      } else if (message == 'You are already friends') {
+        Toast.fail('Congrats! Add friend successfully!')
+      } else {
+        Toast.fail('An error occurred!')
+      }
+    })
+  } else if (props.friendStatus == 'Delete Friend') {
+    console.log('delete friend')
+  }
 }
+//
 </script>
 
 <style scoped lang="less">
@@ -279,16 +329,7 @@ const sendFriend = () => {
       margin-right: 10px;
     }
   }
-  .user-page-add-friend-container {
-    width: 100%;
-    margin-top: 5px;
-    display: inline-block;
-    .basic-info-send-button {
-      color: crimson;
-      float: right;
-      margin-right: 10px;
-    }
-  }
+
   .avatarLine {
     display: flex;
     //align-items: center;
@@ -322,16 +363,24 @@ const sendFriend = () => {
       }
     }
   }
-  .basic-info-description {
+  .basic-info-bottom {
     //font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     font-size: medium;
     margin-left: 40px;
-    margin-right: 40px;
+    margin-right: 20px;
     .basic-info-description-content {
       word-break: break-word;
     }
-
+    .basic-info-add-friend-container {
+      width: 100%;
+      margin-top: 5px;
+      .basic-info-send-button {
+        color: crimson;
+        float: right;
+        margin-right: 10px;
+      }
+    }
     //font-weight: lighter;
   }
   .add-first-pet {

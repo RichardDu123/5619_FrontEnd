@@ -7,33 +7,19 @@
       class="myNav"
       fixed
     />
-    <div class="friend-request-list-container">
-      <van-list
-        class="friend-request-list"
-        v-model="loading"
-        :finished="finished"
-        finished-text="No more requests"
-        @load="onLoad"
-      >
-        <FriendRequest
-          v-for="item in friendRequestList"
-          :data="item"
-          :key="item"
-        />
-      </van-list>
-    </div>
+    <RequestList></RequestList>
   </div>
 </template>
 
 <script lang="ts">
 import router from '../../../router'
-import FriendRequest from '@views/friends/friendRequest/components/requestItem.vue'
 import { ref } from 'vue'
 import { GetFriendRequestList } from '@/api/friends'
 import { NewFriendRequest } from '@/types'
+import RequestList from '@views/friends/friendRequest/components/requestList.vue'
 
 export default {
-  components: { FriendRequest },
+  components: { RequestList },
 
   setup() {
     const friendRequestList = ref<NewFriendRequest[]>([])

@@ -1,5 +1,5 @@
 <template>
-  <div class="userContainer">
+  <div class="userContainer" @load="onLoadFriendButton">
     <van-nav-bar
       title="User Profile"
       class="userNav"
@@ -8,7 +8,11 @@
       left-arrow
       @click-left="onClickLeft"
     />
-    <BasicInfo class="user-page-basic-info" type="user" />
+    <BasicInfo
+      class="user-page-basic-info"
+      type="user"
+      :friendStatus="friendStatus"
+    />
     <van-divider :style="{ padding: '0 16px' }"> User's Posts </van-divider>
     <div>
       <van-list
@@ -36,15 +40,31 @@ import { Post } from '@/types'
 import { ref } from 'vue'
 import { getProfileById } from '@/api/post'
 import { useRoute, useRouter } from 'vue-router'
+import { CheckFriendshipStatus } from '@/api/friends'
 const posts = ref<Array<Post[]>>([])
 const loading = ref(false)
 const finished = ref(false)
 const route = useRoute()
 const avatar = ref('')
+const friendStatus = ref('')
+const onLoadFriendButton = () => {
+  console.log('check friendship')
+}
 const onLoad = () => {
   loading.value = true
+  CheckFriendshipStatus(route.params.userId as string, {}).then((value) => {
+    console.log('check:', value)
+    const { data } = value
+    if (data == 'Requesting') {
+      friendStatus.value = 'Request Sent'
+    } else if (data == 'Friend') {
+      friendStatus.value = 'Delete Friend'
+    } else {
+      friendStatus.value = 'Add Friend'
+    }
+  })
   getProfileById(route.params.userId as string, {}).then((value) => {
-    console.log(value)
+    console.log('get profile:', value)
     avatar.value = value.data.userImageAddress
     const {
       data: { postList },
