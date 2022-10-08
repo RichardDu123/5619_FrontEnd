@@ -253,7 +253,7 @@ const sendFriend = () => {
 .basic-info-container {
   //margin: 30px 10px;
   .basic-info {
-    background-image: url('src/assets/images/images/hans-ott-DH88eixP5GI-unsplash.jpg');
+    background-image: url('@/assets/images/background.jpg');
     padding-bottom: 10px;
   }
 
