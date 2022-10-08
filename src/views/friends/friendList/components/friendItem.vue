@@ -26,12 +26,15 @@ import { Dialog } from 'vant'
 import { User } from '@/types'
 import 'vant/es/dialog/style'
 import { defineComponent } from 'vue'
+import { DeleteFriend } from '@/api/friends'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   props: {
     friend: Object as () => User,
   },
   setup() {
+    const route = useRoute()
     const handleDelete = () => {
       Dialog.confirm({
         title: 'Are you sure to delete this friend?',
@@ -40,10 +43,12 @@ export default defineComponent({
         cancelButtonText: 'No',
       })
         .then(() => {
-          // on confirm
+          DeleteFriend(route.params.id as string, {}).then((value) => {
+            console.log(value)
+          })
         })
-        .catch(() => {
-          // on cancel
+        .catch((error) => {
+          console.log(error)
         })
     }
     return {
