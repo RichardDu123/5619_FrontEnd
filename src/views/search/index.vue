@@ -158,7 +158,7 @@ export default {
 
   .search-page-trending-posts {
     overflow: auto;
-    height: 100vw;
+    height: 60vw;
   }
 
   .search-page-ads-image {
@@ -170,6 +170,7 @@ export default {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 20px;
   }
 
   .after-search {

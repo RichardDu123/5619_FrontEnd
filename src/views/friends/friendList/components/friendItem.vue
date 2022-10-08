@@ -1,55 +1,56 @@
 <template>
-  <div class="friend-list">
-    <div class="friend-item">
-      <van-swipe-cell>
-        <van-card
-          class="friend-card"
-          :desc="data.description"
-          :title="data.name"
-          :thumb="`${data.userAvatar}`"
-          centered
+  <div class="friend-item">
+    <van-swipe-cell>
+      <van-card
+        class="friend-card"
+        :desc="friend.description"
+        :title="friend.name"
+        :thumb="`${friend.userAvatar}`"
+        centered
+      />
+      <template #right>
+        <van-button
+          square
+          text="Delete"
+          type="danger"
+          class="delete-button"
+          @click="handleDelete"
         />
-        <!--        <van-card :border="false" :value="name" />-->
-        <template #right>
-          <van-button
-            square
-            text="Delete"
-            type="danger"
-            class="delete-button"
-            @click="handleDelete"
-          />
-        </template>
-      </van-swipe-cell>
-    </div>
+      </template>
+    </van-swipe-cell>
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { Dialog } from 'vant'
 import { User } from '@/types'
 import 'vant/es/dialog/style'
+import { defineComponent } from 'vue'
 
-defineProps({
-  data: {
-    type: Object as () => User,
-    required: true,
+export default defineComponent({
+  props: {
+    friend: Object as () => User,
+  },
+  setup() {
+    const handleDelete = () => {
+      Dialog.confirm({
+        title: 'Are you sure to delete this friend?',
+        message: 'Click OK to delete this friend',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+      })
+        .then(() => {
+          // on confirm
+        })
+        .catch(() => {
+          // on cancel
+        })
+    }
+    return {
+      handleDelete,
+    }
   },
 })
-
-const handleDelete = () => {
-  Dialog.confirm({
-    title: 'Are you sure to delete this friend?',
-    message: 'Click OK to delete this friend',
-    confirmButtonText: 'Yes',
-    cancelButtonText: 'No',
-  })
-    .then(() => {
-      // on confirm
-    })
-    .catch(() => {
-      // on cancel
-    })
-}
 </script>
 
 <style scoped lang="less">

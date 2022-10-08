@@ -1,77 +1,80 @@
 <template>
-  <div class="friend-request-list">
-    <div class="friend-request-item">
-      <van-swipe-cell>
-        <van-card
-          class="request-card"
-          :desc="data.requestText"
-          :title="data.userName"
-          :thumb="`${data.userAvatar}`"
-          centered
+  <div class="friend-request-item">
+    <van-swipe-cell>
+      <van-card
+        class="request-card"
+        :desc="friendRequest.description"
+        :title="friendRequest.name"
+        :thumb="`${friendRequest.userAvatar}`"
+        centered
+      />
+      <template #right>
+        <van-button
+          class="approve-button"
+          square
+          type="danger"
+          text="Approve"
+          @click="handleApprove"
         />
-        <template #right>
-          <van-button
-            class="approve-button"
-            square
-            type="danger"
-            text="Approve"
-            @click="handleApprove"
-          />
-          <van-button
-            class="deny-button"
-            square
-            type="primary"
-            text="Deny"
-            @click="handleDeny"
-          />
-        </template>
-      </van-swipe-cell>
-    </div>
+        <van-button
+          class="deny-button"
+          square
+          type="primary"
+          text="Deny"
+          @click="handleDeny"
+        />
+      </template>
+    </van-swipe-cell>
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import 'vant/es/dialog/style'
-import { NewFriendRequest } from '@/types'
+import { User } from '@/types'
 import { Dialog } from 'vant'
-import { PostFriendRequestDecision } from '@/api/friends'
+import { AcceptFriendRequest, RejectFriendRequest } from '@/api/friends'
+import { defineComponent } from 'vue'
+import { useRoute } from 'vue-router'
 
-// const isApprove = ref(false)
-const handleApprove = () => {
-  // isApprove.value = true
-  PostFriendRequestDecision({
-    isApprove: true,
-  }).then((value) => {
-    console.log(value)
-  })
-}
-
-defineProps({
-  data: {
-    type: Object as () => NewFriendRequest,
-    required: true,
+export default defineComponent({
+  props: {
+    friendRequest: Object as () => User,
+    userId: Number,
   },
-})
-
-const handleDeny = () => {
-  Dialog.confirm({
-    title: 'Are you sure to delete this friend request?',
-    message: 'Click OK to delete this friend request',
-    confirmButtonText: 'Yes',
-    cancelButtonText: 'No',
-  })
-    .then(() => {
-      // on confirm
-      PostFriendRequestDecision({
-        isApprove: false,
-      }).then((value) => {
+  setup() {
+    const route = useRoute()
+    const handleApprove = () => {
+      // isApprove.value = true
+      console.log(route.params.userId)
+      AcceptFriendRequest(route.params.userId as string, {}).then((value) => {
         console.log(value)
       })
-    })
-    .catch(() => {
-      // on cancel
-    })
-}
+    }
+    const handleDeny = () => {
+      Dialog.confirm({
+        title: 'Are you sure to reject this friend request?',
+        message: 'Click OK to reject this friend request',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+      })
+        .then(() => {
+          // on confirm
+          RejectFriendRequest(route.params.userId as string, {}).then(
+            (value) => {
+              console.log(value)
+            }
+          )
+        })
+        .catch(() => {
+          // on cancel
+        })
+    }
+    return {
+      handleApprove,
+      handleDeny,
+    }
+  },
+})
 </script>
 
 <style scoped lang="less">

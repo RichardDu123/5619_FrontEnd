@@ -32,7 +32,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'friends',
         name: 'friends',
-        component: () => import('@/views/friends/index.vue'),
+        component: () => import('@/views/friends/friendList/index.vue'),
         meta: {
           keepAlive: false,
         },
