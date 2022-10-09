@@ -13,7 +13,7 @@
       type="user"
       :friendStatus="friendStatus"
     />
-    <van-divider :style="{ padding: '0 16px' }"> User's Posts </van-divider>
+    <van-divider :style="{ padding: '0 10px' }"> User's Posts </van-divider>
     <div>
       <van-list
         v-model:loading="loading"

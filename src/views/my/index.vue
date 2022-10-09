@@ -2,12 +2,15 @@
   <div class="myContainer">
     <van-nav-bar title="My Profile" class="myNav" fixed />
     <BasicInfo type="my" />
-    <van-divider :style="{ padding: '0 16px' }"> My Posts </van-divider>
+    <van-divider :style="{ padding: '0 10px' }"> My Posts </van-divider>
     <div class="add-first-post" @click="toAddPostPage" @load="onLoad">
-      <van-row justify="center" v-if="posts.length === 0">
-        <van-col><van-icon name="add-o" /></van-col>
-        <van-col span="10">Add your first post</van-col>
-      </van-row>
+      <van-button
+        icon="add-o"
+        type="primary"
+        block
+        color="linear-gradient(to right, #ff6034, #ee0a24)"
+        >Add your first post</van-button
+      >
     </div>
     <div>
       <van-list
@@ -77,8 +80,8 @@ const toAddPostPage = () => {
 
 <style lang="less" scoped>
 .myContainer {
-  //position: relative;
   .add-first-post {
+    margin: 0 20px;
     text-align: center;
   }
   .logout {

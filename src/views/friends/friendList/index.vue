@@ -18,15 +18,18 @@
 </template>
 
 <script lang="ts">
-import router from '@/router'
 import FriendList from '@views/friends/friendList/components/friendList.vue'
+import { useRouter } from 'vue-router'
 
 export default {
   components: { FriendList },
 
   setup() {
+    const router = useRouter()
     const toRequestPage = () => {
-      router.push('/friendRequest')
+      router.push({
+        name: 'friendRequest',
+      })
     }
 
     return {
