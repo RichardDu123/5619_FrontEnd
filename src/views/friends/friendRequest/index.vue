@@ -28,11 +28,12 @@ export default {
 
     const onLoad = () => {
       GetFriendRequestList({}).then((value) => {
+        console.log(value)
         for (let i = 0; i < value.data.length; i++) {
           const request: NewFriendRequest = {
             userName: value.data[i].userName,
             requestText: value.data[i].requestText,
-            userAvatar: value.data[i].userAvatar,
+            userAvatar: value.data[i].userImageAddress,
           }
           friendRequestList.value.push(request)
         }

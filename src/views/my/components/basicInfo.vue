@@ -140,10 +140,12 @@ import { getProfile, getProfileById } from '@/api/post'
 import { logout } from '@/api/user'
 import { useRoute, useRouter } from 'vue-router'
 import { updateUserInfo } from '@/api/user'
-import { Notify, Toast } from 'vant'
+import { Notify, Toast, Dialog } from 'vant'
 import 'vant/es/notify/style'
+import 'vant/es/toast/style'
+import 'vant/es/dialog/style'
 import { useUserStore } from '@/stores'
-import { SendFriendRequest } from '@/api/friends'
+import { SendFriendRequest, DeleteFriend } from '@/api/friends'
 const props = defineProps({
   type: {
     type: String,
@@ -275,6 +277,7 @@ const sendFriend = () => {
         Toast.success('Congrats! Add friend successfully!')
       } else if (data == 'Request have been sent') {
         Toast.success('Your request has been successfully sent!')
+        window.location.reload()
       } else {
         Toast.fail('An error occurred!')
       }
@@ -293,7 +296,16 @@ const sendFriend = () => {
       }
     })
   } else if (props.friendStatus == 'Delete Friend') {
-    console.log('delete friend')
+    DeleteFriend(route.params.userId as string, {}).then(() => {
+      Dialog.confirm({
+        title: 'Are you sure to delete this friend?',
+        message: 'Click OK to delete this friend',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+      }).then(() => {
+        window.location.reload()
+      })
+    })
   }
 }
 //

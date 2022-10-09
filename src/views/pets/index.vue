@@ -18,8 +18,8 @@
         <PetItem
           v-for="item in petList"
           :data="item"
-          :key="item"
-          @click="handlePet(item.petId)"
+          :key="item.petId"
+          @click="handlePet(String(item.petId))"
           :type="type"
           @update-table="updateTable"
         />

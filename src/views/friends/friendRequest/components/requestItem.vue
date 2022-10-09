@@ -3,9 +3,9 @@
     <van-swipe-cell>
       <van-card
         class="request-card"
-        :desc="friendRequest.description"
-        :title="friendRequest.name"
-        :thumb="`${friendRequest.userAvatar}`"
+        :desc="friendRequest!.description"
+        :title="friendRequest!.name"
+        :thumb="`${friendRequest!.userAvatar}`"
         centered
       />
       <template #right>
@@ -34,20 +34,16 @@ import { User } from '@/types'
 import { Dialog } from 'vant'
 import { AcceptFriendRequest, RejectFriendRequest } from '@/api/friends'
 import { defineComponent } from 'vue'
-import { useRoute } from 'vue-router'
 
 export default defineComponent({
   props: {
     friendRequest: Object as () => User,
-    userId: Number,
   },
-  setup() {
-    const route = useRoute()
+  setup(props, { emit }) {
     const handleApprove = () => {
       // isApprove.value = true
-      console.log(route.params.userId)
-      AcceptFriendRequest(route.params.userId as string, {}).then((value) => {
-        console.log(value)
+      AcceptFriendRequest(props.friendRequest!.userId, {}).then(() => {
+        emit('updateTable')
       })
     }
     const handleDeny = () => {
@@ -59,11 +55,9 @@ export default defineComponent({
       })
         .then(() => {
           // on confirm
-          RejectFriendRequest(route.params.userId as string, {}).then(
-            (value) => {
-              console.log(value)
-            }
-          )
+          RejectFriendRequest(props.friendRequest!.userId, {}).then(() => {
+            emit('updateTable')
+          })
         })
         .catch(() => {
           // on cancel

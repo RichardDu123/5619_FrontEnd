@@ -12,14 +12,14 @@ export const AcceptFriendRequest = (
   id: string,
   params: object
 ): Promise<any> => {
-  return request('/friends/${id}', 'post', params)
+  return request(`/friends/${id}`, 'post', params)
 }
 
 export const RejectFriendRequest = (
   id: string,
   params: object
 ): Promise<any> => {
-  return request('/friends/${id}', 'delete', params)
+  return request(`/friends/${id}`, 'delete', params)
 }
 
 export const SendFriendRequest = (id: string, params: object): Promise<any> => {

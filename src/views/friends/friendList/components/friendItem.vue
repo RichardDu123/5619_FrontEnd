@@ -3,9 +3,9 @@
     <van-swipe-cell>
       <van-card
         class="friend-card"
-        :desc="friend.description"
-        :title="friend.name"
-        :thumb="`${friend.userAvatar}`"
+        :desc="friend!.description"
+        :title="friend!.name"
+        :thumb="`${friend!.userAvatar}`"
         centered
       />
       <template #right>
@@ -27,14 +27,12 @@ import { User } from '@/types'
 import 'vant/es/dialog/style'
 import { defineComponent } from 'vue'
 import { DeleteFriend } from '@/api/friends'
-import { useRoute } from 'vue-router'
 
 export default defineComponent({
   props: {
     friend: Object as () => User,
   },
-  setup() {
-    const route = useRoute()
+  setup(props, { emit }) {
     const handleDelete = () => {
       Dialog.confirm({
         title: 'Are you sure to delete this friend?',
@@ -43,8 +41,8 @@ export default defineComponent({
         cancelButtonText: 'No',
       })
         .then(() => {
-          DeleteFriend(route.params.id as string, {}).then((value) => {
-            console.log(value)
+          DeleteFriend(props.friend!.userId, {}).then(() => {
+            emit('updateTable')
           })
         })
         .catch((error) => {

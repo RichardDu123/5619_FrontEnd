@@ -18,6 +18,7 @@ export interface User {
   name: string
   description: string
   userAvatar: string
+  userId: string
 }
 
 export interface NewFriendRequest {

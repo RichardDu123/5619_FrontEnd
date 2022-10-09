@@ -10,6 +10,7 @@
       v-for="(item, index) in friendList"
       :friend="item"
       :key="index"
+      @updateTable="handleUpdate"
     />
   </van-list>
 </template>
@@ -34,7 +35,8 @@ export default defineComponent({
           const friend: User = {
             name: value.data[i].nickName,
             description: value.data[i].description,
-            userAvatar: value.data[i].userAvatar,
+            userAvatar: value.data[i].userImageAddress,
+            userId: value.data[i].id,
           }
           friendList.value.push(friend)
         }
@@ -42,11 +44,16 @@ export default defineComponent({
         finished.value = true
       })
     }
+    const handleUpdate = () => {
+      friendList.value = []
+      onLoad()
+    }
     return {
       finished,
       loading,
       friendList,
       onLoad,
+      handleUpdate,
     }
   },
 })
