@@ -20,7 +20,7 @@
         <TrendingList></TrendingList>
       </div>
 
-      <van-divider :style="{ padding: '0 16px' }"> Advertisement </van-divider>
+      <van-divider :style="{ padding: '0 10px' }"> Advertisement </van-divider>
 
       <div @load="onLoadAdvertisement">
         <img class="search-page-ads-image" :src="adUrl" />

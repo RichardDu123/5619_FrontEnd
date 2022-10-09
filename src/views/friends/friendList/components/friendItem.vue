@@ -7,6 +7,7 @@
         :title="friend!.name"
         :thumb="`${friend!.userAvatar}`"
         centered
+        @click="toUserPage(friend.userId)"
       />
       <template #right>
         <van-button
@@ -27,6 +28,7 @@ import { User } from '@/types'
 import 'vant/es/dialog/style'
 import { defineComponent } from 'vue'
 import { DeleteFriend } from '@/api/friends'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   props: {
@@ -49,7 +51,19 @@ export default defineComponent({
           console.log(error)
         })
     }
+
+    const router = useRouter()
+    const toUserPage = (id: string) => {
+      router.push({
+        name: 'user',
+        params: {
+          userId: id,
+        },
+      })
+    }
     return {
+      router,
+      toUserPage,
       handleDelete,
     }
   },

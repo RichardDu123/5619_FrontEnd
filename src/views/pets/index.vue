@@ -32,9 +32,8 @@
 import { GetPetList } from '@/api/pet'
 import { ref } from 'vue'
 import PetItem from '@views/pets/components/petItem.vue'
-import router from '../../router'
 import { Pet } from '@/types'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 export default {
   components: {
@@ -44,6 +43,7 @@ export default {
     const loading = ref(false)
     const finished = ref(false)
     const petList = ref<Pet[]>([])
+
     const onLoad = () => {
       loading.value = true
       GetPetList({}).then((value) => {
@@ -62,9 +62,11 @@ export default {
       })
     }
 
+    const router = useRouter()
     const onClickLeft = () => {
       router.back()
     }
+
     const handlePet = (id: string) => {
       router.push({
         name: 'pet',
@@ -74,6 +76,7 @@ export default {
       })
     }
     //type
+
     const route = useRoute()
     const type = route.params.type as string
     //update Tabel
@@ -88,6 +91,8 @@ export default {
       loading,
       finished,
       type,
+      route,
+      router,
       onLoad,
       onClickLeft,
       handlePet,

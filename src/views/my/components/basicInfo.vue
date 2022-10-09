@@ -72,7 +72,7 @@
       <div class="change-info-container" v-if="status !== 'Edit'">
         <van-divider
           :style="{
-            padding: '0 16px',
+            padding: '0 10px',
             color: 'white',
             borderColor: 'white',
           }"
@@ -104,19 +104,26 @@
       </div>
     </div>
     <div class="pet-gallery-container">
-      <van-divider :style="{ padding: '0 16px' }"> Pet Gallery </van-divider>
+      <van-divider :style="{ padding: '0 10px' }"> Pet Gallery </van-divider>
       <div
         class="add-first-pet"
         @click="toAddPetPage"
         v-if="petList.length === 0 && type === 'my'"
       >
-        <van-row justify="center">
-          <van-col><van-icon name="add-o" /></van-col>
-          <van-col span="10">Add your first pet</van-col>
-        </van-row>
+        <van-button
+          icon="add-o"
+          type="primary"
+          block
+          color="linear-gradient(to right, #ff6034, #ee0a24)"
+          >Add your first pet</van-button
+        >
       </div>
-      <div v-if="petList.length === 0 && type === 'user'">
-        This guy is very lazy to add pets
+      <div
+        v-if="petList.length === 0 && type === 'user'"
+        class="pet-gallery-alter"
+      >
+        <van-icon name="smile-o" style="margin: 5px" />
+        <span>This guy is very lazy to add pets</span>
       </div>
 
       <div class="swipeBanner" v-if="petList.length !== 0">
@@ -257,12 +264,6 @@ onUnmounted(() => {
   postStore.isDeleteShow = false
 })
 
-// friend request
-// const requestIcon = ref('')
-// onMounted(() => {
-
-// })
-
 const sendFriend = () => {
   console.log('send friend request')
   console.log(route.params.userId)
@@ -396,8 +397,9 @@ const sendFriend = () => {
     //font-weight: lighter;
   }
   .add-first-pet {
-    margin-top: 20px;
+    margin: 0 20px;
     text-align: center;
+    color: #faad14;
   }
   .swipeBanner {
     // margin-left: 18px;
@@ -422,6 +424,13 @@ const sendFriend = () => {
       background-color: #39a9ed;
       border-radius: 15px;
       margin: auto;
+    }
+  }
+
+  .pet-gallery-container {
+    text-align: center;
+    .pet-gallery-alter {
+      background-color: white;
     }
   }
 }
