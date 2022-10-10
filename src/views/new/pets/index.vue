@@ -15,7 +15,13 @@
         fit="cover"
         @click="triggerUpload"
       />
-      <van-uploader v-show="false" :after-read="afterReadAvatar" ref="target" />
+      <van-uploader
+        v-show="false"
+        :after-read="afterReadAvatar"
+        ref="target"
+        :max-size="5 * 1024 * 1024"
+        @oversize="onOversize"
+      />
       <div class="nameWrapper">
         <van-cell-group class="name" inset>
           <van-field v-model="petName" placeholder="Meow" />
@@ -76,8 +82,9 @@
 import { useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
 import { createPet } from '@/api/pet'
-import { Notify } from 'vant'
+import { Notify, Toast } from 'vant'
 import 'vant/es/notify/style'
+import 'vant/es/toast/style'
 export default {
   setup() {
     // route back
@@ -125,6 +132,10 @@ export default {
         route.back()
       })
     }
+    //oversize
+    const onOversize = () => {
+      Toast.fail('image size show be smaller than 10MB')
+    }
 
     return {
       petName,
@@ -139,6 +150,7 @@ export default {
       afterReadAvatar,
       triggerUpload,
       onClickSubmitPet,
+      onOversize,
     }
   },
 }

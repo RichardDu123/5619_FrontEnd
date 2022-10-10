@@ -41,6 +41,7 @@ export default {
 
 <style lang="less" scoped>
 .friend-page {
+  width: 100%;
   .friend-request-button-container {
     justify-content: center;
     display: flex;

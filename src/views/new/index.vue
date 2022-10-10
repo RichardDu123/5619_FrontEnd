@@ -19,6 +19,7 @@
 <style scoped lang="less">
 .newContainer {
   padding-top: 50px;
+  width: 100%;
 
   .panels {
     height: 500px;

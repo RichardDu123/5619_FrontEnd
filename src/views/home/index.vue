@@ -14,6 +14,7 @@
           v-model="option"
           :options="options"
           @change="onChange"
+          class="popUp"
         />
       </van-dropdown-menu>
     </div>
@@ -107,6 +108,12 @@ const onChange = (value: number) => {
 .homeContainer {
   margin-bottom: 38px;
   overflow: hidden;
+  width: 100%;
+  .popUp {
+    :deep(.van-popup) {
+      position: relative;
+    }
+  }
   .search {
     position: fixed;
     z-index: 1;

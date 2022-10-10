@@ -110,12 +110,13 @@ import {
 import SignUp from './components/signUp.vue'
 import { getUserInfo, resetPassword } from '@/api/user'
 import { useRouter } from 'vue-router'
-import { Dialog, Toast } from 'vant'
+import { Dialog, Toast, Notify } from 'vant'
 import 'vant/es/dialog/style'
 import { FormInstance } from 'vant/lib/form'
 import { FieldInstance } from 'vant/lib/field'
 import { useUserStore } from '@/stores'
 import 'vant/es/toast/style'
+import 'vant/es/notify/style'
 import { sendCode } from '@/api/user'
 
 const show = ref<boolean>(false)
@@ -137,6 +138,7 @@ const onSubmit = (): void => {
       userStore.setUser(data)
       isLoading.value = false
       router.push({ name: 'home' })
+      Notify({ type: 'success', message: 'Welcome' })
     })
     .catch((err) => {
       isLoading.value = false

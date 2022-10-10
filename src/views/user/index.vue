@@ -4,9 +4,9 @@
       title="User Profile"
       class="userNav"
       fixed
-      placeholder
       left-arrow
       @click-left="onClickLeft"
+      placeholder
     />
     <BasicInfo
       class="user-page-basic-info"

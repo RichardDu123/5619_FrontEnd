@@ -14,6 +14,8 @@
         :max-count="6"
         class="img"
         accept="image/png, image/jpeg"
+        :max-size="5 * 1024 * 1024"
+        @oversize="onOversize"
       />
     </div>
     <van-cell-group inset>
@@ -70,8 +72,9 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { submitPosts } from '@/api/post'
 import { computed } from 'vue'
-import { Notify } from 'vant'
+import { Notify, Toast } from 'vant'
 import 'vant/es/notify/style'
+import 'vant/es/toast/style'
 export default {
   setup() {
     const fileList = ref([])
@@ -99,6 +102,10 @@ export default {
         router.back()
       })
     }
+    //oversize
+    const onOversize = () => {
+      Toast.fail('image size show be smaller than 10MB')
+    }
 
     return {
       title,
@@ -108,6 +115,7 @@ export default {
 
       onClickLeft,
       onClickSubmitPost,
+      onOversize,
     }
   },
 }

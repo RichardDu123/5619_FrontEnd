@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 export const useUserStore = defineStore('user', {
   state: () => ({
-    userId: '',
+    userId: window.localStorage.getItem('userId'),
   }),
   actions: {
     setUser(userId: string): void {

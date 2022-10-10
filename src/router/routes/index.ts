@@ -19,6 +19,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/home/index.vue'),
         meta: {
           keepAlive: false,
+          idx: 1,
         },
       },
       {
@@ -27,6 +28,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/my/index.vue'),
         meta: {
           keepAlive: false,
+          idx: 2,
         },
       },
       {
@@ -35,6 +37,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/friends/friendList/index.vue'),
         meta: {
           keepAlive: false,
+          idx: 3,
         },
       },
       {
@@ -43,6 +46,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/new/index.vue'),
         meta: {
           keepAlive: false,
+          idx: 4,
         },
       },
     ],

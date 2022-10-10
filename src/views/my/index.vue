@@ -3,7 +3,12 @@
     <van-nav-bar title="My Profile" class="myNav" fixed />
     <BasicInfo type="my" />
     <van-divider :style="{ padding: '0 10px' }"> My Posts </van-divider>
-    <div class="add-first-post" @click="toAddPostPage" @load="onLoad">
+    <div
+      class="add-first-post"
+      @click="toAddPostPage"
+      @load="onLoad"
+      v-if="posts.length === 0"
+    >
       <van-button
         icon="add-o"
         type="primary"
@@ -80,6 +85,7 @@ const toAddPostPage = () => {
 
 <style lang="less" scoped>
 .myContainer {
+  width: 100%;
   .add-first-post {
     margin: 0 20px;
     text-align: center;

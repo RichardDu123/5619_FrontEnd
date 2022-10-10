@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view v-slot="{ Component }">
-      <transition name="animation" mode="out-in">
+      <transition :name="aniNmae">
         <component :is="Component" />
       </transition>
     </router-view>
@@ -35,29 +35,56 @@ const handlePush = (tag: string) => {
   currTag.value = tag
   router.push(tag)
 }
-onBeforeRouteUpdate((to) => {
+//animation
+const aniNmae = ref('')
+onBeforeRouteUpdate((to, from) => {
   currTag.value = to.name as string
+  if (Number(from.meta.idx) < Number(to.meta.idx)) {
+    aniNmae.value = 'right'
+  } else {
+    aniNmae.value = 'left'
+  }
 })
 </script>
 
 <style lang="less" scoped>
 .tabBar {
-  position: fixed;
+  position: absolute;
+  bottom: 0;
 }
-.animation-enter-active,
-.animation-leave-active {
+.right-enter-active,
+.right-leave-active {
   transition: all 0.5s ease;
 }
 
-.animation-enter-from,
-.animation-leave-to {
+.right-leave-to {
   transform: translateX(-100%);
-  opacity: 0;
+  position: fixed;
+}
+.right-enter-from {
+  transform: translateX(100%);
+  position: fixed;
 }
 
-.animation-enter-to,
-.animation-leave-from {
+.right-enter-to,
+.right-leave-from,
+.left-enter-to,
+.left-leave-from {
   transform: none;
-  opacity: 1;
+  position: fixed;
+}
+
+.left-enter-active,
+.left-leave-active {
+  transition: all 0.5s ease;
+}
+
+.left-leave-to {
+  transform: translateX(100%);
+  position: fixed;
+}
+.left-enter-from {
+  transform: translateX(-100%);
+  position: fixed;
 }
 </style>

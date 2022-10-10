@@ -96,7 +96,6 @@ import 'vant/es/notify/style'
 import { useUserStore } from '@/stores'
 const route = useRoute()
 //render page
-
 const pageContent = reactive({
   postId: '',
   topic: '',

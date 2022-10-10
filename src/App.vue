@@ -1,7 +1,7 @@
 <template>
   <router-view v-slot="{ Component }">
     <transition :name="aniName" mode="out-in">
-      <keep-alive :include="keepAlive">
+      <keep-alive :include="keep">
         <component :is="Component" />
       </keep-alive>
     </transition>
@@ -18,7 +18,7 @@ const router = useRouter()
 const aniName = ref<string>('')
 // 调用全局钩子
 const routerStore = useRouteStore()
-const keepAlive = toRef(routerStore, 'keepAlive')
+const keep = toRef(routerStore, 'keepAlive')
 router.beforeEach((to, from) => {
   if (to.path === '/login' || from.path === '/login') {
     aniName.value = 'ani'
@@ -27,6 +27,7 @@ router.beforeEach((to, from) => {
   } else {
     aniName.value = ''
   }
+  //搜索路由缓存
   if (to.path === '/search' && from.path === '/home') {
     routerStore.addKeepAlive('search')
   } else if (to.path === '/home' && from.name === 'search') {
@@ -37,7 +38,7 @@ router.beforeEach((to, from) => {
 <style scoped lang="less">
 .ani-enter-active,
 .ani-leave-active {
-  transition: all 0.5s ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .ani-enter-from,

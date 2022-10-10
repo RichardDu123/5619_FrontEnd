@@ -7,7 +7,7 @@
         :title="friend!.name"
         :thumb="`${friend!.userAvatar}`"
         centered
-        @click="toUserPage(friend.userId)"
+        @click="toUserPage(friend!.userId)"
       />
       <template #right>
         <van-button

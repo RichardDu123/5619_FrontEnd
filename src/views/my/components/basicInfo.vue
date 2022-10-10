@@ -37,6 +37,8 @@
           ref="target"
           v-show="false"
           v-if="type === 'my'"
+          :max-size="5 * 1024 * 1024"
+          @oversize="onOversize"
         ></van-uploader>
         <div class="basic-info-display-info">
           <p class="basic-info-display-nickname">
@@ -310,6 +312,9 @@ const sendFriend = () => {
   }
 }
 //
+const onOversize = () => {
+  Toast.fail('image size show be smaller than 10MB')
+}
 </script>
 
 <style scoped lang="less">
