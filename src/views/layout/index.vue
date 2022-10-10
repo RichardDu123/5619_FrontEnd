@@ -49,7 +49,7 @@ onBeforeRouteUpdate((to, from) => {
 
 <style lang="less" scoped>
 .tabBar {
-  position: absolute;
+  position: fixed;
   bottom: 0;
 }
 .right-enter-active,

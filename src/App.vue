@@ -38,7 +38,7 @@ router.beforeEach((to, from) => {
 <style scoped lang="less">
 .ani-enter-active,
 .ani-leave-active {
-  transition: all 0.3s ease-out;
+  transition: all 0.5s ease-out;
 }
 
 .ani-enter-from,
