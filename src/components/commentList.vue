@@ -30,13 +30,16 @@ const onLoad = () => {
     const { data } = value
     console.log(data)
     data.forEach((item: any) => {
+      console.log(item)
       comments.value.push({
         userName: item.userName,
         nickName: item.nickName,
         avatar: item.userAvatar,
         content: item.commentContent,
+        timestamp: item.commentTime,
       })
     })
+
     loading.value = false
     finished.value = true
   })

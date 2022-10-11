@@ -203,13 +203,6 @@ const toPetPage = () => {
         type: 'my',
       },
     })
-  } else {
-    router.push({
-      name: 'pets',
-      params: {
-        type: 'user',
-      },
-    })
   }
 }
 

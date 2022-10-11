@@ -22,9 +22,7 @@
 
       <van-divider :style="{ padding: '0 10px' }"> Advertisement </van-divider>
 
-      <div @load="onLoadAdvertisement">
-        <img class="search-page-ads-image" :src="adUrl" />
-      </div>
+      <div class="search-page-ads-image"></div>
     </div>
 
     <div class="after-search" v-if="hasSearched">
@@ -50,7 +48,7 @@ import { useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { SearchInstance } from 'vant'
 import TrendingList from '@cp/trendingList.vue'
-import { getAdvertisement, getSearchPosts } from '@/api/search'
+import { getSearchPosts } from '@/api/search'
 import { Post } from '@/types'
 import PostItem from '@cp/postItem.vue'
 
@@ -72,20 +70,6 @@ export default {
     onMounted(() => {
       target.value?.focus()
     })
-
-    // load advertisement image
-    const adUrl = ref<string>('advertisement')
-    const onLoadAdvertisement = () => {
-      getAdvertisement({})
-        .then((value) => {
-          console.log(value)
-          const { data } = value
-          adUrl.value = data.imgUrl
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
 
     // get posts by keyword
     const keyword = ref<string>('')
@@ -119,13 +103,11 @@ export default {
     return {
       loading,
       finished,
-      adUrl,
       target,
       keyword,
       searchedPostList,
       hasSearched,
       onClickLeft,
-      onLoadAdvertisement,
       onSearch,
     }
   },
@@ -161,9 +143,10 @@ export default {
 
   .search-page-ads-image {
     width: 80%;
-    height: auto;
+    height: 200px;
     border-radius: 20px;
-    border: 2px solid gold;
+    background-image: url('@/assets/images/adv.jpeg');
+    background-size: cover;
     object-fit: cover;
     display: block;
     margin-left: auto;
