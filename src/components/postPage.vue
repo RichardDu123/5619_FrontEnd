@@ -21,6 +21,7 @@
             ? pageContent.userName
             : pageContent.nickName
         }}</span>
+        <span class="date">{{ format(pageContent.timestamp) }}</span>
       </div>
     </div>
     <div class="post-content-container">
@@ -94,6 +95,7 @@ import { computed } from 'vue'
 import { Notify } from 'vant'
 import 'vant/es/notify/style'
 import { useUserStore } from '@/stores'
+import { format } from '@/utils/day'
 const route = useRoute()
 //render page
 const pageContent = reactive({
@@ -108,6 +110,7 @@ const pageContent = reactive({
   love: 0,
   loved: false,
   userId: '',
+  timestamp: 0,
 })
 const postId = route.params.postId as string
 getPostById(postId, {}).then((value) => {
@@ -125,6 +128,7 @@ getPostById(postId, {}).then((value) => {
     pageContent.imageUrlList.push(`${item}`)
   })
   pageContent.content = data.postContent
+  pageContent.timestamp = data.posTime
 })
 //comment
 const show = ref(false)
@@ -210,6 +214,11 @@ const clickComment = () => {
         width: 60px;
         height: 60px;
         margin-right: 20px;
+      }
+      .date {
+        margin-left: auto;
+        margin-right: 20px;
+        color: #969799;
       }
     }
   }
