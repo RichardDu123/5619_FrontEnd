@@ -78,7 +78,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/pets/:type',
     name: 'pets',
-    component: () => import('@views/pets/index.vue'),
+    component: () => import('@views/pets/petList/index.vue'),
     meta: {
       keepAlive: false,
     },
@@ -126,7 +126,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/pet/:petId',
     name: 'pet',
-    component: () => import('@/components/petPage.vue'),
+    component: () => import('@views/pets/petProfile/index.vue'),
     meta: {
       keepAlive: false,
     },

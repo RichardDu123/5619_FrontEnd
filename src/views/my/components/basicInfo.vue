@@ -316,8 +316,10 @@ const onOversize = () => {
 .basic-info-container {
   //margin: 30px 10px;
   .basic-info {
-    background-image: url('@/assets/images/background.jpg');
+    background-image: url('@/assets/images/user_background.jpg');
     padding-bottom: 10px;
+    background-size: auto 100%;
+    //object-fit: scale-down;
   }
 
   .basic-info-options {
