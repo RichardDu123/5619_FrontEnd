@@ -148,6 +148,7 @@ const postMessage = () => {
 //avatar click
 const router = useRouter()
 const userStore = useUserStore()
+console.log(userStore.userId)
 const handleAvatarClick = () => {
   if (pageContent.userId === userStore.userId) {
     router.push({

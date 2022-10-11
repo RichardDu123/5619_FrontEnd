@@ -211,9 +211,17 @@ const sendEmail = () => {
   }
 }
 const resetPass = () => {
-  resetPassword({ userName: emailUser.value, code: code.value }).then(
-    (value) => [Toast(value)]
-  )
+  resetPassword({
+    userName: emailUser.value,
+    code: code.value,
+    password: newPassword.value,
+  })
+    .then(() => {
+      Toast('Success')
+    })
+    .catch((err) => {
+      Toast(err.response.statusText)
+    })
 }
 </script>
 

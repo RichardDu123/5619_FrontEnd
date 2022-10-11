@@ -240,7 +240,9 @@ const handleEditClick = () => {
   } else {
     postStore.isDeleteShow = false
     updateUserInfo({
-      userImageAddress: avatarUrl.value,
+      userImageAddress: fileList.value.length
+        ? fileList.value[fileList.value.length - 1].content
+        : '',
       nickName: nickName.value,
       description: description.value,
     }).then((value) => {
@@ -279,8 +281,8 @@ const sendFriend = () => {
       if (data == 'Directly be friends') {
         Toast.success('Congrats! Add friend successfully!')
       } else if (data == 'Request have been sent') {
-        Toast.success('Your request has been successfully sent!')
         window.location.reload()
+        Toast.success('Your request has been successfully sent!')
       } else {
         Toast.fail('An error occurred!')
       }
