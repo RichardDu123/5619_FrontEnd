@@ -24,6 +24,9 @@ npm run lint
 ```
 
 
-Yuqiao:8:06
+- external api
+- num of favorite
+- profile add some hints
+- 
 
 
