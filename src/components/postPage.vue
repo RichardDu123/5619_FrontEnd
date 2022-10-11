@@ -177,6 +177,11 @@ const clickLove = async () => {
     await createLove(pageContent.postId, {})
     pageContent.loved = true
     pageContent.love++
+    Notify({
+      type: 'success',
+      message: 'Thank you for your like!',
+      duration: 500,
+    })
   } else {
     await deleteLove(pageContent.postId, {})
     pageContent.loved = false

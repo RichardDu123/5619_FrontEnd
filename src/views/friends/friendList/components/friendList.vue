@@ -30,6 +30,7 @@ export default defineComponent({
     const finished = ref<boolean>(false)
     const loading = ref<boolean>(true)
     const onLoad = () => {
+      friendList.value = []
       GetFriendList({}).then((value) => {
         for (let i = 0; i < value.data.length; i++) {
           const friend: User = {

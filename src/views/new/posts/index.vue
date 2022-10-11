@@ -16,10 +16,12 @@
         accept="image/png, image/jpeg"
         :max-size="5 * 1024 * 1024"
         @oversize="onOversize"
+        upload-text="Post Images"
+        upload-icon="plus"
       />
     </div>
     <van-cell-group inset>
-      <van-field v-model="title" placeholder="Add Title" />
+      <van-field v-model="title" placeholder="Please add title here" />
     </van-cell-group>
 
     <van-divider></van-divider>
@@ -31,7 +33,7 @@
         autosize
         type="textarea"
         maxlength="100"
-        placeholder="Add text"
+        placeholder="Please add description of your post here"
         show-word-limit
       />
     </van-cell-group>

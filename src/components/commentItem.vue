@@ -1,6 +1,12 @@
 <template>
   <div class="commentItem">
-    <van-image round fit="cover" :src="`${comment.avatar}`" class="avatar" />
+    <van-image
+      round
+      fit="cover"
+      :src="`${comment.avatar}`"
+      class="avatar"
+      @click="handleAvatarClick"
+    />
     <div class="comment-content">
       <div class="header">
         <p style="color: gray">
@@ -18,7 +24,17 @@
 
 <script setup lang="ts">
 import { format } from '@/utils/day'
-defineProps<{ comment: any }>()
+import { useRouter } from 'vue-router'
+const props = defineProps<{ comment: any }>()
+const router = useRouter()
+const handleAvatarClick = () => {
+  router.push({
+    name: 'user',
+    params: {
+      userId: props.comment.userId,
+    },
+  })
+}
 </script>
 
 <style scoped lang="less">

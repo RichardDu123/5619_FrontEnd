@@ -14,7 +14,12 @@
         class="avatar"
         fit="cover"
         @click="triggerUpload"
-      />
+      >
+        <template v-slot:loading>
+          <van-icon name="plus" />
+          <span>Avatar</span>
+        </template>
+      </van-image>
       <van-uploader
         v-show="false"
         :after-read="afterReadAvatar"
@@ -24,7 +29,7 @@
       />
       <div class="nameWrapper">
         <van-cell-group class="name" inset>
-          <van-field v-model="petName" placeholder="Meow" />
+          <van-field v-model="petName" placeholder="Add your pet name here" />
         </van-cell-group>
       </div>
     </div>
@@ -36,7 +41,7 @@
           autosize
           type="textarea"
           maxlength="100"
-          placeholder="Add text"
+          placeholder="Add your pet description here"
           show-word-limit
         />
       </van-cell-group>
@@ -46,6 +51,8 @@
           multiple
           :max-count="6"
           class="img"
+          upload-text="Pet Images"
+          upload-icon="plus"
         />
       </div>
       <div class="tag-choice-container">
