@@ -114,7 +114,7 @@ const signup = () => {
     userName: username.value,
     password: password.value,
     email: Email.value,
-    avatar: `https://avatars.dicebear.com/api/adventurer/${username.value}.jpg`,
+    userImageAddress: `https://avatars.dicebear.com/api/adventurer/${username.value}.jpg`,
   }).then((value) => {
     if (value.message === 'Success') {
       Toast('success')
