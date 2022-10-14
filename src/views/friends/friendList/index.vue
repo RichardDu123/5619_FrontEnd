@@ -33,7 +33,6 @@ export default {
       })
     }
     GetFriendRequestList({}).then((value) => {
-      console.log(value)
       reqNum.value = value.data.length
     })
     return {
