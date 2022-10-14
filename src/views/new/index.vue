@@ -18,8 +18,11 @@
 
 <style scoped lang="less">
 .newContainer {
-  padding-top: 50px;
   width: 100%;
+  height: 100vh;
+  overflow: auto;
+  background-image: url('@/assets/images/new_background.jpg');
+  background-size: cover;
 
   .panels {
     height: 500px;

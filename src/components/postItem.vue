@@ -24,6 +24,8 @@
           {{ data[0].topic }}
         </div>
         <div class="rightFoot">
+          <van-icon name="like" color="red" class="love" />
+          <span>{{ data[0].love }}</span>
           <van-image
             round
             :src="`${avatar !== undefined ? avatar : data[0].userAvatar}`"
@@ -57,6 +59,8 @@
           {{ data[1].topic }}
         </div>
         <div class="rightFoot">
+          <van-icon name="like" color="red" class="love" />
+          <span>{{ data[1].love }}</span>
           <van-image
             round
             :src="`${avatar !== undefined ? avatar : data[1].userAvatar}`"
@@ -164,11 +168,19 @@ const handleItemClick = (id: string) => {
         .mixin-line-clamp(1);
       }
       .rightFoot {
+        flex-shrink: 0;
+        font-size: 16px;
+        .love {
+          display: inline-block;
+          margin-top: 10px;
+          margin-right: 2px;
+          font-size: 16px;
+        }
         .avatar {
-          margin-top: 3px;
           margin-right: 5px;
           width: 32px;
           height: 32px;
+          vertical-align: middle;
         }
       }
     }

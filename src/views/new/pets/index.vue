@@ -24,7 +24,7 @@
         v-show="false"
         :after-read="afterReadAvatar"
         ref="target"
-        :max-size="5 * 1024 * 1024"
+        :max-size="10 * 1024 * 1024"
         @oversize="onOversize"
       />
       <div class="nameWrapper">

@@ -14,7 +14,7 @@
         :max-count="6"
         class="img"
         accept="image/png, image/jpeg"
-        :max-size="5 * 1024 * 1024"
+        :max-size="10 * 1024 * 1024"
         @oversize="onOversize"
         upload-text="Post Images"
         upload-icon="plus"

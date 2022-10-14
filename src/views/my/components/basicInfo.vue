@@ -9,7 +9,7 @@
           type="primary"
           @click="handleLogoutClick"
           class="basic-info-logout-button"
-          size="mini"
+          size="small"
           >Log out</van-button
         >
         <van-button
@@ -19,7 +19,7 @@
           type="primary"
           @click="handleEditClick"
           class="basic-info-edit-button"
-          size="mini"
+          size="small"
           >{{ status }}</van-button
         >
       </div>
@@ -37,7 +37,7 @@
           ref="target"
           v-show="false"
           v-if="type === 'my'"
-          :max-size="5 * 1024 * 1024"
+          :max-size="10 * 1024 * 1024"
           @oversize="onOversize"
         ></van-uploader>
         <div class="basic-info-display-info">
@@ -129,7 +129,6 @@
       </div>
 
       <div class="swipeBanner" v-if="petList.length !== 0">
-        <van-icon name="edit" class="edit" />
         <van-swipe vertical :autoplay="3000" lazy-render class="swipe">
           <van-swipe-item v-for="pet in petList" :key="pet"
             ><pet-item @click="toPetPage" :pet="pet"
@@ -288,7 +287,8 @@ const sendFriend = () => {
       if (message == 'Do not add again') {
         Toast.fail('Please do not request multiple times!')
       } else if (message == 'You are already friends') {
-        Toast.fail('Congrats! Add friend successfully!')
+        window.location.reload()
+        Toast.success('Congrats! Add friend successfully!')
       } else {
         Toast.fail('An error occurred!')
       }
@@ -319,6 +319,7 @@ const onOversize = () => {
     background-image: url('@/assets/images/user_background.jpg');
     padding-bottom: 10px;
     background-size: auto 100%;
+    background-size: cover;
     //object-fit: scale-down;
   }
 
@@ -362,29 +363,31 @@ const onOversize = () => {
     }
     .basic-info-display-info {
       margin-top: auto;
+      font-size: 32px;
       margin-bottom: auto;
       margin-left: 10px;
       font-family: 'Gill Sans', sans-serif;
       .basic-info-display-nickname {
         margin: 0;
         color: white;
-        font-size: x-large;
+        font-size: 25px;
         font-weight: bolder;
       }
       .basic-info-display-username {
         margin: 0;
-        color: lightgray;
-        font-size: medium;
+        font-size: 18px;
+        color: lighten(black, 30%);
       }
     }
   }
   .basic-info-bottom {
     //font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
-    font-size: medium;
+    font-size: 16px;
     margin-left: 40px;
     margin-right: 20px;
     .basic-info-description-content {
+      color: lighten(black, 30%);
       word-break: break-word;
     }
     .basic-info-add-friend-container {
@@ -408,14 +411,6 @@ const onOversize = () => {
     margin-top: 18px;
     padding: 0 15px;
     position: relative;
-    .edit {
-      position: absolute;
-      top: 5px;
-      right: 22px;
-      font-size: 20px;
-      z-index: 2;
-      color: white;
-    }
     .swipe {
       height: 150px;
     }

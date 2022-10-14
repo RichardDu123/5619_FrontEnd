@@ -23,6 +23,7 @@
         :finished="finished"
         finished-text="THE END"
         @load="onLoad"
+        class="list"
       >
         <div v-if="posts.length !== 0">
           <PostItem
@@ -86,6 +87,7 @@ const toAddPostPage = () => {
 <style lang="less" scoped>
 .myContainer {
   width: 100%;
+  overflow: auto;
   .add-first-post {
     margin: 0 20px;
     text-align: center;
@@ -95,6 +97,9 @@ const toAddPostPage = () => {
     top: 60px;
     right: 20px;
     position: absolute;
+  }
+  .list {
+    margin-bottom: 50px;
   }
   //padding-bottom: 50px;
   //padding-top: 50px;

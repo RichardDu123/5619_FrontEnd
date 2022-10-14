@@ -4,9 +4,7 @@
     @click="handleItemClick(trendingPost!.postId)"
   >
     <van-icon class="trending-icon" name="fire" />
-    <span class="trending-topic"
-      >{{ trendingPost!.topic }} {{ trendingPost!.postId }}</span
-    >
+    <span class="trending-topic">{{ trendingPost!.topic }}</span>
   </van-cell>
 </template>
 

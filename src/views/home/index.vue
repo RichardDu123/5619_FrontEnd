@@ -82,11 +82,17 @@ const onLoad = () => {
   loading.value = true
   if (option.value === 0) {
     getPosts({ ...page }).then((value) => {
+      if (value.data.length === 0) {
+        finished.value = true
+      }
       fillData(value)
       loading.value = false
     })
   } else {
     getPostsOrderByLove({ ...page }).then((value) => {
+      if (value.data.length === 0) {
+        finished.value = true
+      }
       fillData(value)
       loading.value = false
     })
@@ -107,7 +113,7 @@ const onChange = (value: number) => {
 <style lang="less" scoped>
 .homeContainer {
   margin-bottom: 38px;
-  overflow: hidden;
+  overflow: auto;
   width: 100%;
   .popUp {
     :deep(.van-popup) {
@@ -130,7 +136,7 @@ const onChange = (value: number) => {
     .list {
       margin-top: 100px;
       height: 74vh;
-      overflow-y: auto;
+      overflow-y: scroll;
     }
   }
 }

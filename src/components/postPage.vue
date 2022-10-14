@@ -211,6 +211,7 @@ const clickComment = () => {
     z-index: 1;
     width: 100%;
     .avatarBanner {
+      font-size: 16px;
       padding: 10px 0 10px 20px;
       display: flex;
       justify-self: start;
@@ -230,7 +231,10 @@ const clickComment = () => {
   }
 
   .post-content-container {
+    font-size: 16px;
     margin-top: 82px;
+    overflow: auto;
+    margin-bottom: 50px;
     //background-color: white;
     .imgSwipe {
       margin-top: 20px;

@@ -12,14 +12,14 @@
         <van-button
           class="approve-button"
           square
-          type="danger"
+          type="primary"
           text="Approve"
           @click="handleApprove"
         />
         <van-button
           class="deny-button"
           square
-          type="primary"
+          type="danger"
           text="Deny"
           @click="handleDeny"
         />

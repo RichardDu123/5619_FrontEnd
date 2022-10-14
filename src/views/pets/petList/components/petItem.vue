@@ -19,7 +19,7 @@
           text="Delete"
           type="danger"
           class="delete-button"
-          @click="handleDelete(data.petId)"
+          @click="handleDelete(pet.petId)"
         />
       </template>
     </van-swipe-cell>
@@ -36,7 +36,7 @@ import { useRouter } from 'vue-router'
 
 export default defineComponent({
   props: {
-    pet: Object as () => Pet,
+    pet: { type: Object as () => Pet, required: true },
     type: String,
   },
   emits: ['updateTable'],

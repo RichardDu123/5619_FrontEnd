@@ -12,6 +12,7 @@ export interface Post {
   postId: string
   userId: string
   userAvatar: string
+  love: number
 }
 
 export interface User {

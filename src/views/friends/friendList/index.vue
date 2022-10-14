@@ -7,10 +7,9 @@
         round
         type="success"
         @click="toRequestPage"
-        >Friend Request
+        >{{ reqNum }} Friend Requests
       </van-button>
     </div>
-
     <div class="friend-list-container">
       <FriendList></FriendList>
     </div>
@@ -20,19 +19,25 @@
 <script lang="ts">
 import FriendList from '@views/friends/friendList/components/friendList.vue'
 import { useRouter } from 'vue-router'
-
+import { GetFriendRequestList } from '@/api/friends'
+import { ref } from 'vue'
 export default {
   components: { FriendList },
 
   setup() {
     const router = useRouter()
+    const reqNum = ref(0)
     const toRequestPage = () => {
       router.push({
         name: 'friendRequest',
       })
     }
-
+    GetFriendRequestList({}).then((value) => {
+      console.log(value)
+      reqNum.value = value.data.length
+    })
     return {
+      reqNum,
       toRequestPage,
     }
   },

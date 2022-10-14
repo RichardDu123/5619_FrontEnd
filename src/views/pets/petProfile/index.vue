@@ -8,19 +8,12 @@
       fixed
     />
     <div class="petBasicInfo">
-      <!--      <van-image round :src="petContent.petAvatar" class="avatar" fit="cover" />-->
-      <!--      <div class="nameWrapper">-->
-      <!--        <van-cell-group class="name" inset>-->
-      <!--          <van-field v-model="petContent.petName" placeholder="Meow" readonly />-->
-      <!--        </van-cell-group>-->
-      <!--      </div>-->
       <div class="pet-avatar-line">
         <van-image
           round
-          :src="avatarUrl"
+          :src="petContent.petAvatar"
           class="pet-avatar"
           fit="cover"
-          @click="avatarClick"
         />
         <van-uploader
           accept="image/png, image/jpeg"
@@ -31,16 +24,6 @@
         <div class="pet-name">
           <p style="font-size: large">{{ petContent.petName }}</p>
         </div>
-        <van-button
-          hairline
-          icon="edit"
-          type="primary"
-          @click="handleEditClick"
-          class="pet-edit-button"
-          size="small"
-        >
-          {{ status }}
-        </van-button>
       </div>
       <div class="pet-intro">
         <van-cell-group inset>
@@ -96,10 +79,9 @@
 <script lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import { computed, reactive, ref } from 'vue'
-import { ImagePreview, Notify } from 'vant'
+import { ImagePreview } from 'vant'
 import 'vant/es/image-preview/style'
 import { getPetById } from '@/api/pet'
-import { updateUserInfo } from '@/api/user'
 import { usePetStore } from '@/stores/pet'
 
 export default {
@@ -124,6 +106,7 @@ export default {
       petContent.petName = data.petName
       petContent.description = data.petDescription
       petContent.petImgList = data.petImageList
+      console.log(data.petImageList)
     })
     const handlePreview = () => {
       ImagePreview(petContent.petImgList)
@@ -136,12 +119,6 @@ export default {
 
     const target = ref<any>(null)
     const fileList = ref<any>([])
-    const avatarClick = () => {
-      console.log(status.value)
-      if (status.value === 'Save') {
-        target.value.chooseFile()
-      }
-    }
     const defaultUrl = ref('')
     const avatarUrl = computed(() => {
       return !fileList.value.length
@@ -151,22 +128,6 @@ export default {
 
     const petDescription = ref('')
     const petName = ref('')
-    const handleEditClick = () => {
-      if (status.value === 'Edit') {
-        petStore.isDeleteShow = true
-      } else {
-        petStore.isDeleteShow = false
-        updateUserInfo({
-          userImageAddress: avatarUrl.value,
-          nickName: petName.value,
-          description: petDescription.value,
-        }).then((value) => {
-          if (value.message === 'Success') {
-            Notify({ type: 'success', message: 'Successfully update.' })
-          }
-        })
-      }
-    }
 
     return {
       target,
@@ -179,8 +140,6 @@ export default {
       route,
       defaultUrl,
       avatarUrl,
-      avatarClick,
-      handleEditClick,
       onClickLeft,
       handlePreview,
     }
@@ -189,6 +148,16 @@ export default {
 </script>
 
 <style scoped lang="less">
+.imgSwipe {
+  margin-top: 20px;
+  height: 200px;
+  width: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
 .petBasicInfo {
   padding-top: 50px;
   justify-content: space-between;
@@ -196,6 +165,7 @@ export default {
   background-image: url('@/assets/images/pet_background.jpg');
   background-size: 100% 100%;
   padding-bottom: 20px;
+
   .pet-avatar-line {
     display: flex;
     .pet-avatar {
