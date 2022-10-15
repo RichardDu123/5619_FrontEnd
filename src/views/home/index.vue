@@ -121,9 +121,9 @@ const onChange = (value: number) => {
     }
   }
   .search {
-    position: fixed;
-    z-index: 1;
-    width: 100%;
+    // position: fixed;
+    // z-index: 1;
+    // width: 100%;
     .dropDown {
       :deep(.van-dropdown-menu__bar) {
         box-shadow: none;
@@ -132,9 +132,8 @@ const onChange = (value: number) => {
   }
 
   .home-post-list-container {
-    margin-top: 160px;
+    // margin-top: 160px;
     .list {
-      margin-top: 100px;
       height: 74vh;
       overflow-y: scroll;
     }
