@@ -170,10 +170,11 @@ const handleItemClick = (id: string) => {
       .rightFoot {
         flex-shrink: 0;
         font-size: 16px;
+        margin-left: 6px;
         .love {
           display: inline-block;
           margin-top: 10px;
-          margin-right: 2px;
+          //margin-left: 2px;
           font-size: 16px;
         }
         .avatar {

@@ -7,6 +7,10 @@
       class="myNav"
       fixed
     />
+    <van-divider style="padding: 0 16px; font-size: large"
+      ><van-icon name="add-o" style="margin-right: 5px" /> upload post
+      images</van-divider
+    >
     <div class="add-post-upload-image">
       <van-uploader
         v-model="fileList"
@@ -20,11 +24,18 @@
         upload-icon="plus"
       />
     </div>
+    <van-divider style="padding: 0 16px; font-size: large">
+      <van-icon name="records" style="margin-right: 5px" />add
+      title</van-divider
+    >
     <van-cell-group inset>
       <van-field v-model="title" placeholder="Please add title here" />
     </van-cell-group>
 
-    <van-divider></van-divider>
+    <van-divider style="padding: 0 16px; font-size: large">
+      <van-icon name="records" style="margin-right: 5px" />add
+      description</van-divider
+    >
 
     <van-cell-group inset>
       <van-field
@@ -38,7 +49,9 @@
       />
     </van-cell-group>
 
-    <van-divider></van-divider>
+    <van-divider style="padding: 0 16px; font-size: large">
+      <van-icon name="records" style="margin-right: 5px" />add tag</van-divider
+    >
 
     <div class="tag-choice-container">
       <van-radio-group v-model="checked">
@@ -128,14 +141,25 @@ export default {
   padding-top: 50px;
 
   .add-post-upload-image {
-    margin-top: 15px;
-    margin-left: 15px;
-    margin-bottom: 5px;
+    margin: 15px 15px 5px;
+    border-radius: 4px;
     display: flex;
     justify-content: space-evenly;
-
+    background-color: white;
     .img {
       flex: 1;
+      :deep(.van-uploader__upload) {
+        margin: 4px;
+        width: 157px;
+        height: 157px;
+      }
+      :deep(.van-uploader__preview-image) {
+        width: 157px;
+        height: 157px;
+      }
+      :deep(.van-uploader__preview) {
+        margin: 4px;
+      }
     }
   }
 }

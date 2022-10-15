@@ -29,7 +29,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    margin: 50px 20px;
+    margin: 140px 20px;
 
     .Panel {
       height: 200px;

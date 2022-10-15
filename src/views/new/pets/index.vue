@@ -7,6 +7,10 @@
       class="myNav"
       fixed
     />
+    <van-divider style="margin-top: 60px; padding: 0 16px; font-size: large">
+      <van-icon name="records" style="margin-right: 5px" />add pet basic
+      info</van-divider
+    >
     <div class="petBasicInfo">
       <van-image
         round
@@ -45,6 +49,10 @@
           show-word-limit
         />
       </van-cell-group>
+      <van-divider style="padding: 0 16px; font-size: large"
+        ><van-icon name="add-o" style="margin-right: 5px" />upload pet
+        image</van-divider
+      >
       <div class="add-pet-image">
         <van-uploader
           v-model="petImageList"
@@ -55,6 +63,10 @@
           upload-icon="plus"
         />
       </div>
+      <van-divider style="padding: 0 16px; font-size: large"
+        ><van-icon name="records" style="margin-right: 5px" />choose pet
+        category</van-divider
+      >
       <div class="tag-choice-container">
         <van-radio-group v-model="checked">
           <van-cell-group inset>
@@ -165,7 +177,7 @@ export default {
 
 <style scoped lang="less">
 .petBasicInfo {
-  padding-top: 50px;
+  //padding-top: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -173,9 +185,6 @@ export default {
   .avatar {
     width: 110px;
     height: 110px;
-    //margin-top: 1px;
-    //padding-right: 10px;
-    //padding-left: 10px;
     border: 2px solid white;
   }
   .name {
@@ -194,10 +203,13 @@ export default {
     margin: 15px 2px 5px;
     display: flex;
     justify-content: space-evenly;
+    background-color: white;
+    border-radius: 4px;
 
     .img {
       flex: 1;
       :deep(.van-uploader__upload) {
+        margin: 4px;
         width: 157px;
         height: 157px;
       }
