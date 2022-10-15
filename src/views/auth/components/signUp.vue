@@ -1,7 +1,12 @@
 <template>
   <div class="signup" ref="target">
     <div class="signUpBox">
-      <van-form @submit="onSubmit" class="sigUpForm" ref="form">
+      <van-form
+        @submit="onSubmit"
+        @failed="onFailed"
+        class="sigUpForm"
+        ref="form"
+      >
         <van-cell-group inset>
           <van-field
             v-model="username"
@@ -87,12 +92,21 @@ const repasswordValidator = (pwd: string): string | boolean => {
 //handle signUp
 const isLoading = ref<boolean>(false)
 const onSubmit = (): void => {
-  isLoading.value = true
-  setTimeout(() => {
-    isLoading.value = false
-  }, 2000)
+  signUp({
+    userName: username.value,
+    password: password.value,
+    email: Email.value,
+    userImageAddress: `https://avatars.dicebear.com/api/adventurer/${username.value}.jpg`,
+  }).then((value) => {
+    if (value.message === 'Success') {
+      Toast('success')
+      emit('complete')
+    }
+  })
 }
-
+const onFailed = () => {
+  Toast('invalid input')
+}
 //handle clickoutside to close the layout
 const target = ref(null)
 const emit = defineEmits(['complete'])
@@ -108,20 +122,6 @@ onClickOutside(target, () => {
   }
   emit('complete')
 })
-
-const signup = () => {
-  signUp({
-    userName: username.value,
-    password: password.value,
-    email: Email.value,
-    userImageAddress: `https://avatars.dicebear.com/api/adventurer/${username.value}.jpg`,
-  }).then((value) => {
-    if (value.message === 'Success') {
-      Toast('success')
-      emit('complete')
-    }
-  })
-}
 
 //success icon show or not
 const isSuccessShow = ref(false)
