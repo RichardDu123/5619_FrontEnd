@@ -6,6 +6,18 @@
     finished-text="THE END"
     @load="onLoad"
   >
+    <div v-if="friendList.length === 0" class="no-friend">
+      <div>
+        <van-icon
+          name="flower-o"
+          size="40px"
+          style="width: 100%; justify-content: center; display: flex"
+        />
+      </div>
+      <div style="text-align: center">
+        <p>Try to add some friends</p>
+      </div>
+    </div>
     <FriendItem
       v-for="(item, index) in friendList"
       :friend="item"
@@ -60,4 +72,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.no-friend {
+}
+</style>

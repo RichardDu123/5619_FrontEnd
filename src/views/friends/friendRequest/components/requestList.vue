@@ -6,6 +6,18 @@
     finished-text="THE END"
     @load="onLoad"
   >
+    <div v-if="requestList.length === 0" class="no-request">
+      <div>
+        <van-icon
+          name="envelop-o"
+          size="40px"
+          style="width: 100%; justify-content: center; display: flex"
+        />
+      </div>
+      <div style="text-align: center">
+        <p>You don't have any friend invitation yet</p>
+      </div>
+    </div>
     <RequestItem
       v-for="(item, index) in requestList"
       :friendRequest="item"

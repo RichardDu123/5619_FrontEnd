@@ -1,6 +1,10 @@
 <template>
   <div class="friend-page">
     <van-nav-bar title="Your Friends" class="myNav" fixed />
+    <van-divider style="margin-top: 60px; padding: 0 16px; font-size: large"
+      >Click to view friend requests</van-divider
+    >
+
     <div class="friend-request-button-container">
       <van-button
         class="request-button"
@@ -10,6 +14,7 @@
         >{{ reqNum }} Friend Requests
       </van-button>
     </div>
+    <van-divider style="padding: 0 16px; font-size: large">Friends</van-divider>
     <div class="friend-list-container">
       <FriendList></FriendList>
     </div>
@@ -49,8 +54,9 @@ export default {
   .friend-request-button-container {
     justify-content: center;
     display: flex;
+    background-color: white;
+    padding: 10px 0;
     .request-button {
-      margin-top: 60px;
       width: 300px;
       background-color: coral;
       border: 1px solid coral;

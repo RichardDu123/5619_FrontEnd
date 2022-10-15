@@ -32,6 +32,25 @@
         finished-text="THE END"
         class="list"
       >
+        <div v-if="searchedPostList.length === 0" class="no-search">
+          <div>
+            <van-icon
+              name="warn-o"
+              size="40px"
+              style="width: 100%; justify-content: center; display: flex"
+            />
+          </div>
+          <div
+            style="
+              text-align: center;
+              max-width: 80%;
+              margin-right: auto;
+              margin-left: auto;
+            "
+          >
+            <p>Cannot find any search result. Please try other keywords.</p>
+          </div>
+        </div>
         <PostItem
           v-for="(item, index) in searchedPostList"
           :key="index"
