@@ -55,7 +55,6 @@
             class="submitBtn"
             native-type="submit"
             :loading="isLoading"
-            @click="signup"
           >
             Sign Up
           </van-button>

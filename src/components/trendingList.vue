@@ -1,6 +1,11 @@
 <template>
   <div class="trending-list-container">
-    <van-list v-model:loading="loading" :finished="finished" @load="onLoad">
+    <van-list
+      v-model:loading="loading"
+      :finished="finished"
+      @load="onLoad"
+      loading-text="loading..."
+    >
       <TrendingItem
         v-for="(item, index) in trendingPostList"
         :key="index"

@@ -33,7 +33,12 @@
       />
       <div class="nameWrapper">
         <van-cell-group class="name" inset>
-          <van-field v-model="petName" placeholder="Add your pet name here" />
+          <van-field
+            v-model="petName"
+            placeholder="Add name here"
+            label="Pet Name:"
+            autofocus
+          />
         </van-cell-group>
       </div>
     </div>

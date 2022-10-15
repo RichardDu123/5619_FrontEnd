@@ -16,11 +16,7 @@
           class="avatar"
           @click="handleAvatarClick"
         />
-        <span>{{
-          pageContent.nickName === 'lazy to set name'
-            ? pageContent.userName
-            : pageContent.nickName
-        }}</span>
+        <span>{{ pageContent.nickName }}</span>
         <span class="date">{{ format(pageContent.timestamp) }}</span>
       </div>
     </div>
