@@ -9,12 +9,15 @@
     />
     <div class="petBasicInfo">
       <div class="pet-avatar-line">
-        <van-image
-          round
-          :src="petContent.petAvatar"
-          class="pet-avatar"
-          fit="cover"
-        />
+        <div style="width: 100%">
+          <van-image
+            round
+            :src="petContent.petAvatar"
+            class="pet-avatar"
+            fit="cover"
+          />
+        </div>
+
         <van-uploader
           accept="image/png, image/jpeg"
           v-model="fileList"
@@ -22,7 +25,12 @@
           v-show="false"
         ></van-uploader>
         <div class="pet-name">
-          <p style="font-size: large">{{ petContent.petName }}</p>
+          <p style="font-size: large; color: black; margin-right: 10px">
+            pet name:
+          </p>
+          <p style="vertical-align: center; font-size: large">
+            {{ petContent.petName }}
+          </p>
         </div>
       </div>
       <div class="pet-intro">
@@ -167,17 +175,23 @@ export default {
   padding-bottom: 20px;
 
   .pet-avatar-line {
-    display: flex;
+    //display: flex;
+    //align-items: center;
     .pet-avatar {
-      margin: 20px 20px;
+      margin-left: auto;
+      margin-right: auto;
+      //margin: 20px 20px;
       width: 110px;
       height: 110px;
       border: 2px solid white;
     }
     .pet-name {
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      text-align: center;
       color: white;
-      width: 110px;
-      margin: auto;
+      width: 200px;
     }
     .pet-edit-button {
       width: 80px;

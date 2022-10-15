@@ -3,7 +3,7 @@
     <van-nav-bar
       left-arrow
       @click-left="onClickLeft"
-      title="Your Friend Request"
+      title="My Friend Request"
       class="myNav"
       fixed
     />

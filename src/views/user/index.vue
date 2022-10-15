@@ -21,6 +21,18 @@
         finished-text="THE END"
         @load="onLoad"
       >
+        <div v-if="posts.length === 0" class="pet-gallery-alter">
+          <div>
+            <van-icon
+              name="smile-o"
+              size="40px"
+              style="width: 100%; justify-content: center; display: flex"
+            />
+          </div>
+          <div style="text-align: center">
+            <p>This guy is very lazy to add posts</p>
+          </div>
+        </div>
         <PostItem
           v-for="(item, index) in posts"
           :key="index"

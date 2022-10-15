@@ -3,23 +3,21 @@
     <div class="basic-info">
       <div class="profile-page-option-container" v-if="type === 'my'">
         <van-button
-          hairline
-          plain
           icon="exchange"
           type="primary"
           @click="handleLogoutClick"
           class="basic-info-logout-button"
           size="small"
+          color="linear-gradient(to right, burlywood, salmon)"
           >Log out</van-button
         >
         <van-button
-          hairline
-          plain
           icon="edit"
           type="primary"
           @click="handleEditClick"
           class="basic-info-edit-button"
           size="small"
+          color="linear-gradient(to right, burlywood, salmon)"
           >{{ status }}</van-button
         >
       </div>
@@ -116,16 +114,24 @@
           icon="add-o"
           type="primary"
           block
-          color="linear-gradient(to right, #ff6034, #ee0a24)"
-          >Add your first pet</van-button
+          color="linear-gradient(to right, burlywood, salmon)"
+          >Click to add your first pet</van-button
         >
       </div>
       <div
         v-if="petList.length === 0 && type === 'user'"
         class="pet-gallery-alter"
       >
-        <van-icon name="smile-o" style="margin: 5px" />
-        <span>This guy is very lazy to add pets</span>
+        <div>
+          <van-icon
+            name="smile-o"
+            size="40px"
+            style="width: 100%; justify-content: center; display: flex"
+          />
+        </div>
+        <div style="text-align: center">
+          <p>This guy is very lazy to add pets</p>
+        </div>
       </div>
 
       <div class="swipeBanner" v-if="petList.length !== 0">
@@ -335,12 +341,14 @@ const onOversize = () => {
     margin-top: 55px;
     display: inline-block;
     .basic-info-edit-button {
-      color: black;
+      width: 80px;
+      color: white;
       float: right;
       margin-right: 5px;
     }
     .basic-info-logout-button {
-      color: black;
+      width: 80px;
+      color: white;
       float: right;
       margin-right: 10px;
     }
@@ -427,7 +435,7 @@ const onOversize = () => {
   .pet-gallery-container {
     text-align: center;
     .pet-gallery-alter {
-      background-color: white;
+      //background-color: white;
     }
   }
 }

@@ -3,7 +3,7 @@
     <van-nav-bar
       left-arrow
       @click-left="onClickLeft"
-      title="Your Pets"
+      title="My Pets"
       class="myNav"
       fixed
     />
