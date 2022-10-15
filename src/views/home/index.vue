@@ -57,7 +57,7 @@ const options = [
 ]
 const page = reactive({
   currPage: 0,
-  pageSize: 10,
+  pageSize: 30,
 })
 let totalPosts = ref(+Infinity)
 const fillData = (value: any) => {
@@ -105,7 +105,7 @@ const onChange = (value: number) => {
   finished.value = false
   totalPosts.value = 0
   page.currPage = 0
-  page.pageSize = 10
+  page.pageSize = 30
   onLoad()
 }
 </script>
