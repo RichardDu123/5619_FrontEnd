@@ -13,7 +13,7 @@
         icon="add-o"
         type="primary"
         block
-        color="linear-gradient(to right, #ff6034, #ee0a24)"
+        color="linear-gradient(to right, burlywood, salmon)"
         >Add your first post</van-button
       >
     </div>
