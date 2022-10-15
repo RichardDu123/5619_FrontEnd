@@ -1,6 +1,6 @@
 <template>
   <div class="friend-page">
-    <van-nav-bar title="Your Friends" class="myNav" fixed />
+    <van-nav-bar title="My Friends" class="myNav" fixed />
     <van-divider style="margin-top: 60px; padding: 0 16px; font-size: large"
       >Click to view friend requests</van-divider
     >
@@ -11,7 +11,7 @@
         round
         type="success"
         @click="toRequestPage"
-        >{{ reqNum }} Friend Requests
+        >Friend Requests: {{ reqNum }}
       </van-button>
     </div>
     <van-divider style="padding: 0 16px; font-size: large">Friends</van-divider>

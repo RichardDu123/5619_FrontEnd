@@ -14,7 +14,7 @@
         type="primary"
         block
         color="linear-gradient(to right, burlywood, salmon)"
-        >Add your first post</van-button
+        >Click to add your first post</van-button
       >
     </div>
     <div>

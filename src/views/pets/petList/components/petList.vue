@@ -4,9 +4,21 @@
       class="pet-list"
       v-model:loading="loading"
       :finished="finished"
-      finished-text="No more pets"
+      finished-text="THE END"
       @load="onLoad"
     >
+      <div v-if="petList.length === 0" class="no-pet">
+        <div>
+          <van-icon
+            name="gem-o"
+            size="40px"
+            style="width: 100%; justify-content: center; display: flex"
+          />
+        </div>
+        <div style="text-align: center">
+          <p>You haven't added any pets yet</p>
+        </div>
+      </div>
       <PetItem
         v-for="item in petList"
         :pet="item"

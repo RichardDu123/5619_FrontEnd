@@ -250,15 +250,16 @@ const clickComment = () => {
       //margin: 20px 20px;
       padding: 0 20px;
       word-wrap: break-word;
-      max-height: 330px;
+      height: 320px;
       overflow-y: scroll;
+      background-color: white;
     }
   }
 
   .footer {
     border-top: 1px solid lightgray;
     padding-top: 15px;
-    margin-bottom: 15px;
+    padding-bottom: 15px;
     z-index: 1;
     width: 100%;
     position: fixed;
@@ -266,6 +267,7 @@ const clickComment = () => {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    background-color: white;
     .footer-button {
       width: 300px;
     }

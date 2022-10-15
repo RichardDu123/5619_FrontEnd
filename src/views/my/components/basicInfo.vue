@@ -115,15 +115,23 @@
           type="primary"
           block
           color="linear-gradient(to right, burlywood, salmon)"
-          >Add your first pet</van-button
+          >Click to add your first pet</van-button
         >
       </div>
       <div
         v-if="petList.length === 0 && type === 'user'"
         class="pet-gallery-alter"
       >
-        <van-icon name="smile-o" style="margin: 5px" />
-        <span>This guy is very lazy to add pets</span>
+        <div>
+          <van-icon
+            name="smile-o"
+            size="40px"
+            style="width: 100%; justify-content: center; display: flex"
+          />
+        </div>
+        <div style="text-align: center">
+          <p>This guy is very lazy to add pets</p>
+        </div>
       </div>
 
       <div class="swipeBanner" v-if="petList.length !== 0">
@@ -427,7 +435,7 @@ const onOversize = () => {
   .pet-gallery-container {
     text-align: center;
     .pet-gallery-alter {
-      background-color: white;
+      //background-color: white;
     }
   }
 }
