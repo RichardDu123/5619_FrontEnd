@@ -9,7 +9,7 @@
     />
     <div class="petBasicInfo">
       <div class="pet-avatar-line">
-        <div style="width: 100%">
+        <div class="pet-avatar">
           <van-image
             round
             :src="petContent.petAvatar"
@@ -17,18 +17,9 @@
             fit="cover"
           />
         </div>
-
-        <van-uploader
-          accept="image/png, image/jpeg"
-          v-model="fileList"
-          ref="target"
-          v-show="false"
-        ></van-uploader>
         <div class="pet-name">
-          <p style="font-size: large; color: black; margin-right: 10px">
-            pet name:
-          </p>
-          <p style="vertical-align: center; font-size: large">
+          <p class="pet-name-label">Nickname:</p>
+          <p class="pet-name-content">
             {{ petContent.petName }}
           </p>
         </div>
@@ -46,41 +37,34 @@
           />
         </van-cell-group>
       </div>
-      <div class="change-info-container" v-if="status !== 'Edit'">
-        <van-divider
-          :style="{
-            padding: '0 10px',
-            color: 'white',
-            borderColor: 'white',
-          }"
-        >
-          Change your profile below
-        </van-divider>
-        <div>
-          <van-cell-group inset>
-            <van-field
-              v-model="petContent.petName"
-              label="Pet Name: "
-              placeholder="Please enter your pet name"
-            />
-            <van-field
-              v-model="petContent.description"
-              rows="2"
-              autosize
-              type="textarea"
-              maxlength="50"
-              placeholder="Description of yourself"
-            />
-          </van-cell-group>
-        </div>
+    </div>
+    <van-divider :style="{ padding: '0 10px' }"> Photos </van-divider>
+    <div v-if="petContent.petImgList.length !== 0">
+      <van-swipe :autoplay="3000" lazy-render class="imgSwipe">
+        <van-swipe-item v-for="image in petContent.petImgList" :key="image">
+          <img :src="image" @click="handlePreview" />
+        </van-swipe-item>
+      </van-swipe>
+    </div>
+    <div v-if="petContent.petImgList.length === 0" class="no-pet-image">
+      <div>
+        <van-icon
+          name="flower-o"
+          size="40px"
+          style="width: 100%; justify-content: center; display: flex"
+        />
+      </div>
+      <div
+        style="
+          text-align: center;
+          max-width: 80%;
+          margin-right: auto;
+          margin-left: auto;
+        "
+      >
+        <p>Add some photos for your pet.</p>
       </div>
     </div>
-    <van-divider :style="{ padding: '0 10px' }"> Pet Gallery </van-divider>
-    <van-swipe :autoplay="3000" lazy-render class="imgSwipe">
-      <van-swipe-item v-for="image in petContent.petImgList" :key="image">
-        <img :src="image" @click="handlePreview" />
-      </van-swipe-item>
-    </van-swipe>
   </div>
 </template>
 
@@ -167,31 +151,37 @@ export default {
   }
 }
 .petBasicInfo {
-  padding-top: 50px;
-  justify-content: space-between;
-  align-items: center;
+  padding-top: 60px;
   background-image: url('@/assets/images/pet_background.jpg');
   background-size: 100% 100%;
   padding-bottom: 20px;
 
   .pet-avatar-line {
-    //display: flex;
-    //align-items: center;
     .pet-avatar {
       margin-left: auto;
       margin-right: auto;
-      //margin: 20px 20px;
       width: 110px;
       height: 110px;
-      border: 2px solid white;
     }
     .pet-name {
       margin-left: auto;
       margin-right: auto;
-      display: flex;
-      text-align: center;
       color: white;
-      width: 200px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      .pet-name-label {
+        font-size: large;
+        margin-right: 10px;
+        margin-left: auto;
+        color: black;
+        font-family: 'Gill Sans', sans-serif;
+      }
+      .pet-name-content {
+        margin-right: auto;
+        vertical-align: center;
+        font-size: large;
+      }
     }
     .pet-edit-button {
       width: 80px;
