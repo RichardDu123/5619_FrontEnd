@@ -1,12 +1,12 @@
 import axios from 'axios'
 import router from '../router'
 
-const BASE_URL = 'http://localhost:4000/'
+const BASE_URL = '/api'
 
 //create axios instance
 const instance = axios.create({
   baseURL: BASE_URL,
-  timeout: 5000,
+  timeout: 10000,
 })
 
 //router interceptors
@@ -25,7 +25,6 @@ instance.interceptors.response.use(
     }
   }
 )
-
 //export instance
 export default (
   url: string,

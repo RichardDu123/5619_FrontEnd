@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import components from 'unplugin-vue-components/vite'
 import banner from 'vite-plugin-banner'
 import pkg from './package.json'
+// @ts-ignore
 import px2vw from 'postcss-px-to-viewport'
 import { VantResolver } from 'unplugin-vue-components/resolvers'
 
@@ -23,13 +24,13 @@ export default defineConfig({
    */
   server: {
     port: 3000,
-    // proxy: {
-    //   '/devapi': {
-    //     target: 'http://192.168.10.198',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/devapi/, ''),
-    //   },
-    // },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
   },
 
   // build: {

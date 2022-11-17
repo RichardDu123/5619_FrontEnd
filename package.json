@@ -18,9 +18,12 @@
   "dependencies": {
     "@vueuse/core": "^9.1.1",
     "axios": "^0.27.2",
+    "dayjs": "^1.11.5",
+    "mitt": "^3.0.0",
     "pinia": "^2.0.14",
+    "pinia-plugin-persist": "^1.0.0",
     "postcss-px-to-viewport": "^1.1.1",
-    "vant": "^3.5.4",
+    "vant": "^3.6.1",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"
   },

@@ -24,6 +24,9 @@ npm run lint
 ```
 
 
-Yan: test dev branch 5:24123345
+- external api
+- num of favorite
+- profile add some hints
+- 
 
 
